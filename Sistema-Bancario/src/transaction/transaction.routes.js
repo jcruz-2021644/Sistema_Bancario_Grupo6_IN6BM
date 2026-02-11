@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { createAccount, getAccounts } from "./accounts.controller.js";
+import { createTransaction, getTransactions } from "./transaction.controller.js";
 
 const router = Router();
 
 router.post(
     '/create',
-    createAccount
+    createTransaction
 )
 router.get(
     '/',
-    getAccounts
+    getTransactions
 )
 
 export default router;

@@ -1,10 +1,10 @@
-import Account from './accounts.model.js';
+import Card from './cards.model.js';
 
 //agregar
-export const createAccount = async (req, res) => {
+export const createCard = async (req, res) => {
     try {
 
-        const accountData = req.body;
+        const cardData = req.body;
 
         /* if(req.file){
              const extension = req.file.path.split('.').pop();
@@ -16,25 +16,25 @@ export const createAccount = async (req, res) => {
              fieldData.photo = 'fields/kinal_sports_nyvxo5';
          }
  */
-        const account = new Account(accountData);
-        await account.save();
+        const card = new Card(cardData);
+        await card.save();
 
         res.status(201).json({
             success: true,
-            message: 'Cuenta creada exitosamente',
-            data: account
+            message: 'Tarjeta creada exitosamente',
+            data: card
         })
 
     } catch (error) {
         res.status(400).json({
             success: false,
-            message: 'Error al crear la cuenta',
+            message: 'Error al crear la tarjeta',
             error: error.message
         })
     }
 }
 
-export const getAccounts = async (req, res) => {
+export const getCards = async (req, res) => {
     try {
         const { page = 1, limit = 10, status = 'activa' } = req.query;
         const filter = { status };
@@ -44,15 +44,15 @@ export const getAccounts = async (req, res) => {
             sort: { createdAt: -1 }
         }
 
-        const accounts = await Account.find(filter)
+        const cards = await Card.find(filter)
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .sort(options.sort);
-        const total = await Account.countDocuments(filter);
+        const total = await Card.countDocuments(filter);
 
         res.status(200).json({
             success: true,
-            data: accounts,
+            data: cards,
             pagination: {
                 currentPage: page,
                 totalPages: Math.ceil(total / limit),
@@ -63,7 +63,7 @@ export const getAccounts = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error al obtener las cuentas',    
+            message: 'Error al obtener las tarjetas',
             error: error.message
         })
     }

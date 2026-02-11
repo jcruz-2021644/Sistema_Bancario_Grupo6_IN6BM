@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { createAccount, getAccounts } from "./accounts.controller.js";
+import { createNotification, getNotifications } from "./notifications.controller.js";
 
 const router = Router();
 
 router.post(
     '/create',
-    createAccount
+    createNotification
 )
 router.get(
     '/',
-    getAccounts
+    getNotifications
 )
 
 export default router;

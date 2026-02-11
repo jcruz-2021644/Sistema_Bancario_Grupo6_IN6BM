@@ -1,7 +1,7 @@
-import Account from './accounts.model.js';
+import AccountLock from './accountLock.model.js';
 
 //agregar
-export const createAccount = async (req, res) => {
+export const createAccountLock = async (req, res) => {
     try {
 
         const accountData = req.body;
@@ -16,56 +16,52 @@ export const createAccount = async (req, res) => {
              fieldData.photo = 'fields/kinal_sports_nyvxo5';
          }
  */
-        const account = new Account(accountData);
-        await account.save();
+        const accountLock = new AccountLock(accountData);
+        await accountLock.save();
 
         res.status(201).json({
             success: true,
-            message: 'Cuenta creada exitosamente',
-            data: account
+            message: 'Cuenta bloqueada exitosamente',
+            data: accountLock
         })
 
     } catch (error) {
         res.status(400).json({
             success: false,
-            message: 'Error al crear la cuenta',
+            message: 'Error al bloquear la cuenta',
             error: error.message
         })
     }
 }
-
-export const getAccounts = async (req, res) => {
+export const getAccountLocks = async (req, res) => {
     try {
-        const { page = 1, limit = 10, status = 'activa' } = req.query;
-        const filter = { status };
-        const options = {
-            page: parseInt(page),
-            limit: parseInt(limit),
-            sort: { createdAt: -1 }
-        }
+        const { page = 1, limit = 10, status = 'bloqueado' } = req.query;
 
-        const accounts = await Account.find(filter)
-            .limit(limit * 1)
+        const filter = { status };
+
+        const accountLocks = await AccountLock.find(filter)
+            .limit(parseInt(limit))
             .skip((page - 1) * limit)
-            .sort(options.sort);
-        const total = await Account.countDocuments(filter);
+            .sort({ createdAt: -1 });
+
+        const total = await AccountLock.countDocuments(filter);
 
         res.status(200).json({
             success: true,
-            data: accounts,
+            data: accountLocks,
             pagination: {
-                currentPage: page,
+                currentPage: parseInt(page),
                 totalPages: Math.ceil(total / limit),
                 totalRecords: total,
-                limit
+                limit: parseInt(limit)
             }
-        })
+        });
+
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error al obtener las cuentas',    
+            message: 'Error al obetener los bloqueos de cuenta',
             error: error.message
-        })
+        });
     }
-
-}
+};

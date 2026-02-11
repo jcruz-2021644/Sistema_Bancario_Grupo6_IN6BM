@@ -1,10 +1,10 @@
-import Account from './accounts.model.js';
+import Notification from './notifications.model.js';
 
 //agregar
-export const createAccount = async (req, res) => {
+export const createNotification = async (req, res) => {
     try {
 
-        const accountData = req.body;
+        const notificationData = req.body;
 
         /* if(req.file){
              const extension = req.file.path.split('.').pop();
@@ -16,43 +16,43 @@ export const createAccount = async (req, res) => {
              fieldData.photo = 'fields/kinal_sports_nyvxo5';
          }
  */
-        const account = new Account(accountData);
-        await account.save();
+        const notification = new Notification(notificationData);
+        await notification.save();
 
         res.status(201).json({
             success: true,
-            message: 'Cuenta creada exitosamente',
-            data: account
+            message: 'Notificación creada exitosamente',
+            data: notification
         })
 
     } catch (error) {
         res.status(400).json({
             success: false,
-            message: 'Error al crear la cuenta',
+            message: 'Error al crear la notificación',
             error: error.message
         })
     }
 }
 
-export const getAccounts = async (req, res) => {
+export const getNotifications = async (req, res) => {
     try {
-        const { page = 1, limit = 10, status = 'activa' } = req.query;
-        const filter = { status };
+        const { page = 1, limit = 10, channel = 'email' } = req.query;
+        const filter = { channel };
         const options = {
             page: parseInt(page),
             limit: parseInt(limit),
             sort: { createdAt: -1 }
         }
 
-        const accounts = await Account.find(filter)
+        const notifications = await Notification.find(filter)
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .sort(options.sort);
-        const total = await Account.countDocuments(filter);
+        const total = await Notification.countDocuments(filter);
 
         res.status(200).json({
             success: true,
-            data: accounts,
+            data: notifications,
             pagination: {
                 currentPage: page,
                 totalPages: Math.ceil(total / limit),
@@ -63,7 +63,7 @@ export const getAccounts = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error al obtener las cuentas',    
+            message: 'Error al mandar las notificaciones',    
             error: error.message
         })
     }

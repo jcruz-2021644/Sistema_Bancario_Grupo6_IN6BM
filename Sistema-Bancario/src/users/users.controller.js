@@ -1,10 +1,10 @@
-import Account from './accounts.model.js';
+import User from './users.model.js';
 
 //agregar
-export const createAccount = async (req, res) => {
+export const createUser = async (req, res) => {
     try {
 
-        const accountData = req.body;
+        const userData = req.body;
 
         /* if(req.file){
              const extension = req.file.path.split('.').pop();
@@ -16,27 +16,27 @@ export const createAccount = async (req, res) => {
              fieldData.photo = 'fields/kinal_sports_nyvxo5';
          }
  */
-        const account = new Account(accountData);
-        await account.save();
+        const user = new User(userData);
+        await user.save();
 
         res.status(201).json({
             success: true,
-            message: 'Cuenta creada exitosamente',
-            data: account
+            message: 'Usuario creado exitosamente',
+            data: user
         })
 
     } catch (error) {
         res.status(400).json({
             success: false,
-            message: 'Error al crear la cuenta',
+            message: 'Error al crear el usuario',
             error: error.message
         })
     }
 }
 
-export const getAccounts = async (req, res) => {
+export const getUsers = async (req, res) => {
     try {
-        const { page = 1, limit = 10, status = 'activa' } = req.query;
+        const { page = 1, limit = 10, status = 'activo' } = req.query;
         const filter = { status };
         const options = {
             page: parseInt(page),
@@ -44,15 +44,15 @@ export const getAccounts = async (req, res) => {
             sort: { createdAt: -1 }
         }
 
-        const accounts = await Account.find(filter)
+        const users = await User.find(filter)
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .sort(options.sort);
-        const total = await Account.countDocuments(filter);
+        const total = await User.countDocuments(filter);
 
         res.status(200).json({
             success: true,
-            data: accounts,
+            data: users,
             pagination: {
                 currentPage: page,
                 totalPages: Math.ceil(total / limit),
@@ -63,7 +63,7 @@ export const getAccounts = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error al obtener las cuentas',    
+            message: 'Error al obtener las monedas',
             error: error.message
         })
     }

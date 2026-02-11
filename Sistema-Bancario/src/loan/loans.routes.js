@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { createAccount, getAccounts } from "./accounts.controller.js";
+import { createLoan, getLoans } from "./loans.controller.js";
 
 const router = Router();
 
 router.post(
     '/create',
-    createAccount
+    createLoan
 )
 router.get(
     '/',
-    getAccounts
+    getLoans
 )
 
 export default router;

@@ -1,10 +1,10 @@
-import Account from './accounts.model.js';
+import AccountStatement from './accountStatements.model.js';
 
 //agregar
-export const createAccount = async (req, res) => {
+export const createAccountStatement = async (req, res) => {
     try {
 
-        const accountData = req.body;
+        const accountStatementData = req.body;
 
         /* if(req.file){
              const extension = req.file.path.split('.').pop();
@@ -16,43 +16,43 @@ export const createAccount = async (req, res) => {
              fieldData.photo = 'fields/kinal_sports_nyvxo5';
          }
  */
-        const account = new Account(accountData);
-        await account.save();
+        const accountStatement = new AccountStatement(accountStatementData);
+        await accountStatement.save();
 
         res.status(201).json({
             success: true,
-            message: 'Cuenta creada exitosamente',
-            data: account
+            message: 'Estado de cuenta creado exitosamente',
+            data: accountStatement
         })
 
     } catch (error) {
         res.status(400).json({
             success: false,
-            message: 'Error al crear la cuenta',
+            message: 'Error al crear el estado de cuenta',
             error: error.message
         })
     }
 }
 
-export const getAccounts = async (req, res) => {
+export const getAccountStatements = async (req, res) => {
     try {
-        const { page = 1, limit = 10, status = 'activa' } = req.query;
-        const filter = { status };
+        const { page = 1, limit = 10, accountId } = req.query;
+        const filter = { accountId };
         const options = {
             page: parseInt(page),
             limit: parseInt(limit),
             sort: { createdAt: -1 }
         }
 
-        const accounts = await Account.find(filter)
+        const accountStatements = await AccountStatement.find(filter)
             .limit(limit * 1)
             .skip((page - 1) * limit)
             .sort(options.sort);
-        const total = await Account.countDocuments(filter);
+        const total = await AccountStatement.countDocuments(filter);
 
         res.status(200).json({
             success: true,
-            data: accounts,
+            data: accountStatements,
             pagination: {
                 currentPage: page,
                 totalPages: Math.ceil(total / limit),
@@ -63,7 +63,7 @@ export const getAccounts = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error al obtener las cuentas',    
+            message: 'Error al mandar los estados de cuenta',    
             error: error.message
         })
     }

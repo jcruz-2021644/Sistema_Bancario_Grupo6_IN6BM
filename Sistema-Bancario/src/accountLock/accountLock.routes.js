@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { createAccount, getAccounts } from "./accounts.controller.js";
+import { createAccountLock, getAccountLocks } from "./accountLock.controller.js";
 
 const router = Router();
 
 router.post(
     '/create',
-    createAccount
+    createAccountLock
 )
 router.get(
     '/',
-    getAccounts
+    getAccountLocks
 )
 
 export default router;

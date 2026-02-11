@@ -7,7 +7,16 @@ import { dbConnection } from './db.js';
 import { corsOptions } from './cors-configuration.js';
 import { helmetConfiguration } from './helmet-configuration.js';
 
-import fieldsRoutes from '../src/coins/coins.routes.js';
+import currencyRoutes from '../src/coins/coins.routes.js';
+import accountsRoutes from '../src/accounts/accounts.routes.js';
+import usersRoutes from '../src/users/users.routes.js';
+import transactionRoutes from '../src/transaction/transaction.routes.js';
+import cardRoutes from '../src/card/cards.routes.js';
+import loanRoutes from '../src/loan/loans.routes.js';
+import notificationRoutes from '../src/notifications/notifications.routes.js';
+import accountStatementsRoutes from '../src/accountStatement/accountStatements.routes.js';
+import accountLockRoutes from '../src/accountLock/accountLock.routes.js';
+
 
 const BASE_PATH = '/api/v1';
 
@@ -21,8 +30,15 @@ const middlewares = (app) => {
 
 //rutas para conectar los enpoint
 const routes = (app) => {
-    app.use(`${BASE_PATH}/coins`, fieldsRoutes);
-
+    app.use(`${BASE_PATH}/coins`, currencyRoutes);
+    app.use(`${BASE_PATH}/accounts`, accountsRoutes);
+    app.use(`${BASE_PATH}/users`, usersRoutes);
+    app.use(`${BASE_PATH}/transaction`, transactionRoutes);
+    app.use(`${BASE_PATH}/cards`, cardRoutes);
+    app.use(`${BASE_PATH}/loan`, loanRoutes);
+    app.use(`${BASE_PATH}/notifications`, notificationRoutes);
+    app.use(`${BASE_PATH}/accountStatements`, accountStatementsRoutes);
+    app.use(`${BASE_PATH}/accountLocks`, accountLockRoutes);
 
 
 
@@ -54,7 +70,7 @@ export const initServer = async () => {
         routes(app);
 
         app.listen(PORT, () => {
-            console.log(`KinalSport Admin Server running on port ${PORT}`);
+            console.log(`Sistema Bancario Admin Server running on port ${PORT}`);
             console.log(`Health check: http://localhost:${PORT}${BASE_PATH}/health`);
         })
     } catch (error) {
