@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createCurrency, getCurrencies } from "./coins.controller.js";
+import { createCurrency, getCurrencies, updateCurrency, deleteCurrency } from "./coins.controller.js";
 
 const router = Router();
 
@@ -11,5 +11,13 @@ router.get(
     '/',
     getCurrencies
 )
+router.put(
+    '/:id',
+    updateCurrency
+)
 
+router.delete(
+    '/:id',
+    deleteCurrency
+)
 export default router;

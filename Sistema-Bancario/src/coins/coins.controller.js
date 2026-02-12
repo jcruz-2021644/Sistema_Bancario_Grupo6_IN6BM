@@ -69,3 +69,60 @@ export const getCurrencies = async (req, res) => {
     }
 
 }
+
+export const updateCurrency = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const currencyData = req.body;
+        const currency = await Currency.findByIdAndUpdate(
+            id,
+            currencyData,
+            { new: true, runValidators: true }
+        );
+
+        if (!currency) {
+            return res.status(404).json({
+                success: false,
+                message: 'Moneda no encontrada'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Moneda actualizada exitosamente',
+            data: currency
+        });
+
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Error al actualizar la moneda',
+            error: error.message
+        });
+    }
+}
+
+export const deleteCurrency = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const currency = await Currency.findByIdAndDelete(id);
+
+        if (!currency) {
+            return res.status(404).json({
+                success: false,
+                message: 'Moneda no encontrada'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Moneda eliminada exitosamente'
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Error al eliminar la moneda',
+            error: error.message
+        });
+    }
+}
