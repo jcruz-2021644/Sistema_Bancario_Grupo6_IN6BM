@@ -67,5 +67,87 @@ export const getAccountStatements = async (req, res) => {
             error: error.message
         })
     }
-
 }
+
+export const updateAccountStatement = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const accountStatementData = req.body;
+        const accountStatement = await AccountStatement.findByIdAndUpdate(
+            id,
+            accountStatementData,
+            { new: true, runValidators: true }
+        );
+
+        if (!accountStatement) {
+            return res.status(404).json({
+                success: false,
+                message: 'Estado de cuenta no encontrado'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Estado de cuenta actualizado exitosamente',
+            data: accountStatement
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Error al actualizar el estado de cuenta',
+            error: error.message
+        })
+    }
+}
+
+export const deleteAccountStatement = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const accountStatement = await AccountStatement.findByIdAndDelete(id);
+
+        if (!accountStatement) {
+            return res.status(404).json({
+                success: false,
+                message: 'Estado de cuenta no encontrado'
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Estado de cuenta eliminado exitosamente'
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Error al eliminar el estado de cuenta',
+            error: error.message
+        })
+    }
+}
+
+export const getAccountStatementById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const accountStatement = await AccountStatement.findById(id);
+
+        if (!accountStatement) {
+            return res.status(404).json({
+                success: false,
+                message: 'Estado de cuenta no encontrado'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: accountStatement
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al buscar el estado de cuenta',
+            error: error.message
+        });
+    }
+};
