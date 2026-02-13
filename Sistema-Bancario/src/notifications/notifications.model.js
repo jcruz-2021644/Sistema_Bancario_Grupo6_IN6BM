@@ -58,6 +58,14 @@ const notificationSchema = mongoose.Schema({
             message: 'Prioridad no válida'
         },
         default: 'media'
+    },
+        status: {
+        type: String,
+        enum: {
+            values: ['activa', 'inactiva'],
+            message: 'Estado no válido'
+        },
+        default: 'activa'
     }
 }, {
     timestamps: true,
