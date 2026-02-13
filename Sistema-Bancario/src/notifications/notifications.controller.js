@@ -1,21 +1,13 @@
 import Notification from './notifications.model.js';
 
-//agregar
 export const createNotification = async (req, res) => {
     try {
-
         const notificationData = req.body;
-
-        /* if(req.file){
-             const extension = req.file.path.split('.').pop();
-             const filename = req.file.filename;
-             const relativePath = filename.substring(filename.indexOf('fields/'));
-         
-             fieldData.photo = `$(relativePath).$(extension)`;
-         }else{
-             fieldData.photo = 'fields/kinal_sports_nyvxo5';
-         }
- */
+        
+        if (!notificationData.status) {
+            notificationData.status = 'activa';
+        }
+        
         const notification = new Notification(notificationData);
         await notification.save();
 
@@ -38,34 +30,151 @@ export const getNotifications = async (req, res) => {
     try {
         const { page = 1, limit = 10, channel = 'email' } = req.query;
         const filter = { channel };
-        const options = {
-            page: parseInt(page),
-            limit: parseInt(limit),
-            sort: { createdAt: -1 }
-        }
 
         const notifications = await Notification.find(filter)
-            .limit(limit * 1)
+            .limit(parseInt(limit))
             .skip((page - 1) * limit)
-            .sort(options.sort);
+            .sort({ createdAt: -1 });
+
         const total = await Notification.countDocuments(filter);
 
         res.status(200).json({
             success: true,
             data: notifications,
             pagination: {
-                currentPage: page,
+                currentPage: parseInt(page),
                 totalPages: Math.ceil(total / limit),
                 totalRecords: total,
-                limit
+                limit: parseInt(limit)
             }
         })
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error al mandar las notificaciones',    
+            message: 'Error al obtener las notificaciones',    
             error: error.message
         })
     }
+}
 
+export const getNotificationById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const notification = await Notification.findById(id);
+        if (!notification) {
+            return res.status(404).json({
+                success: false,
+                message: 'Notificación no encontrada'
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: notification
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al buscar la notificación',
+            error: error.message
+        });
+    }
+}
+
+export const updateNotification = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const notificationData = req.body;
+        
+        const notification = await Notification.findByIdAndUpdate(
+            id,
+            notificationData,
+            { new: true, runValidators: true }
+        );
+
+        if (!notification) {
+            return res.status(404).json({
+                success: false,
+                message: 'Notificación no encontrada'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Notificación actualizada exitosamente',
+            data: notification
+        });
+
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Error al actualizar la notificación',
+            error: error.message
+        });
+    }
+}
+
+export const deleteNotification = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const notification = await Notification.findByIdAndDelete(id);
+
+        if (!notification) {
+            return res.status(404).json({
+                success: false,
+                message: 'Notificación no encontrada'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Notificación eliminada exitosamente'
+        });
+        
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Error al eliminar la notificación',
+            error: error.message
+        });
+    }
+}
+
+export const changeNotificationStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        const allowedStatus = ['activa', 'inactiva'];
+        if (!allowedStatus.includes(status)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Estado no permitido'
+            });
+        }
+
+        const notification = await Notification.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true }
+        );
+
+        if (!notification) {
+            return res.status(404).json({
+                success: false,
+                message: 'Notificación no encontrada'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Notificación ${status} correctamente`,
+            data: notification
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al cambiar estado',
+            error: error.message
+        });
+    }
 }
