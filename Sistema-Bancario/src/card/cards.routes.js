@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createCard, getCards } from "./cards.controller.js";
+import { createCard, getCards, updateCard, deleteCard, getCardById, changeCardStatus } from "./cards.controller.js";
 
 const router = Router();
 
@@ -11,5 +11,20 @@ router.get(
     '/',
     getCards
 )
-
+router.put(
+    '/:id',
+    updateCard
+)
+router.delete(
+    '/:id',
+    deleteCard
+)
+router.get(
+    '/:id',
+    getCardById
+)
+router.patch(
+    '/:id/status', 
+    changeCardStatus
+)
 export default router;
