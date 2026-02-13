@@ -69,3 +69,81 @@ export const getTransactions = async (req, res) => {
     }
 
 }
+
+export const updateTransaction = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const transactionData = req.body;
+        const transaction = await Transaction.findByIdAndUpdate(
+            id,
+            transactionData,
+            { new: true, runValidators: true }
+        );
+        if (!transaction) {
+            return res.status(404).json({
+                success: false,
+                message: 'Transacción no encontrada'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Transacción actualizada exitosamente',
+            data: transaction
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Error al actualizar la transacción',
+            error: error.message
+        });
+    }
+}
+
+export const deleteTransaction = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const transaction = await Transaction.findByIdAndDelete(id);
+
+        if (!transaction) {
+            return res.status(404).json({
+                success: false,
+                message: 'Transacción no encontrada'
+            })
+        }
+        
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: 'Error al eliminar la transacción',
+            error: error.message
+        })
+    }
+}
+
+export const getTransactionById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const transaction = await Transaction.findById(id);
+
+        if (!transaction) {
+            return res.status(404).json({
+                success: false,
+                message: 'Transacción no encontrada'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: transaction
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al buscar la transacción',
+            error: error.message
+        });
+    }
+};
