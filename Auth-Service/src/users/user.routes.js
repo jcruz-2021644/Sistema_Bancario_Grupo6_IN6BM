@@ -3,6 +3,7 @@ import {
     updateUserRole,
     getUserRoles,
     getUsersByRole,
+    forceUpdateUserRole,
 } from './user.controller.js';
 
 const router = Router();
@@ -16,4 +17,5 @@ router.get('/:userId/roles', ...getUserRoles);
 // GET /api/v1/users/by-role/:roleName
 router.get('/by-role/:roleName', ...getUsersByRole);
 
+router.put('/:userId/force-role', ...forceUpdateUserRole);
 export default router;

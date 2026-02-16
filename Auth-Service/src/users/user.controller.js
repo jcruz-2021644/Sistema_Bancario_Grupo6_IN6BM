@@ -84,3 +84,39 @@ export const getUsersByRole = [
         return res.status(200).json(payload);
     }),
 ];
+
+export const forceUpdateUserRole = [
+    validateJWT,  // Solo necesitas estar autenticado, no ser admin
+    asyncHandler(async (req, res) => {
+        const { userId } = req.params;
+        const { roleName } = req.body || {};
+
+        const normalized = (roleName || '').trim().toUpperCase();
+        if (!ALLOWED_ROLES.includes(normalized)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Role not allowed. Use ADMIN_ROLE or USER_ROLE',
+            });
+        }
+
+        const user = await findUserById(userId);
+        if (!user) {
+            return res.status(404).json({ 
+                success: false, 
+                message: 'User not found' 
+            });
+        }
+
+        const { updatedUser } = await setUserSingleRole(
+            user,
+            normalized,
+            sequelize
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: `Usuario actualizado a ${normalized}`,
+            user: buildUserResponse(updatedUser)
+        });
+    }),
+];
