@@ -1,11 +1,12 @@
 import { Router } from "express";
 import { createTransaction, getTransactions, updateTransaction, deleteTransaction, getTransactionById } from "./transaction.controller.js";
-import { get } from "mongoose";
+import { validateCreateTransaction, validateUpdateTransaction, validateTransactionById } from "../../middlewares/transaction-validators.js";
 
 const router = Router();
 
 router.post(
     '/create',
+    validateCreateTransaction,
     createTransaction
 )
 router.get(
@@ -14,14 +15,17 @@ router.get(
 )
 router.put(
     '/:id',
+    validateUpdateTransaction,
     updateTransaction
 )
 router.delete(
     '/:id',
+    validateTransactionById,
     deleteTransaction
 )
 router.get(
-    '/:id', 
+    '/:id',
+    validateTransactionById,
     getTransactionById
 )
 export default router;
