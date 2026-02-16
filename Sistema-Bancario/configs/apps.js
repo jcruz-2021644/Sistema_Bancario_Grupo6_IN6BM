@@ -9,7 +9,6 @@ import { helmetConfiguration } from './helmet-configuration.js';
 
 import currencyRoutes from '../src/coins/coins.routes.js';
 import accountsRoutes from '../src/accounts/accounts.routes.js';
-import usersRoutes from '../src/users/users.routes.js';
 import transactionRoutes from '../src/transaction/transaction.routes.js';
 import cardRoutes from '../src/card/cards.routes.js';
 import loanRoutes from '../src/loan/loans.routes.js';
@@ -32,7 +31,6 @@ const middlewares = (app) => {
 const routes = (app) => {
     app.use(`${BASE_PATH}/coins`, currencyRoutes);
     app.use(`${BASE_PATH}/accounts`, accountsRoutes);
-    app.use(`${BASE_PATH}/users`, usersRoutes);
     app.use(`${BASE_PATH}/transaction`, transactionRoutes);
     app.use(`${BASE_PATH}/cards`, cardRoutes);
     app.use(`${BASE_PATH}/loan`, loanRoutes);
