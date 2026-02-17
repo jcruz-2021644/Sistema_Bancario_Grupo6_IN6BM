@@ -13,7 +13,7 @@ export const validateCreateNotification = [
     body('notificationType')
         .notEmpty()
         .withMessage('El tipo de notificación es requerido')
-        .isIn(['TRANSACTION', 'SECURITY', 'ACCOUNT', 'PROMOTIONAL', 'ALERT'])
+        .isIn(['alerta', 'confirmacion', 'informativa', 'seguridad'])
         .withMessage('Tipo de notificación no válido'),
     body('message')
         .trim()
