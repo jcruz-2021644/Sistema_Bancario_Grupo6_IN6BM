@@ -10,12 +10,12 @@ export const validateCreateLoan = [
     body('userId')
         .notEmpty()
         .withMessage('El ID del usuario es requerido'),
-    body('loanAmount')
+    body('requestedAmount')
         .notEmpty()
         .withMessage('El monto del préstamo es requerido')
         .isFloat({ min: 0 })
         .withMessage('El monto debe ser mayor a 0'),
-    body('loanTerm')
+    body('termMonths')
         .notEmpty()
         .withMessage('El plazo del préstamo es requerido')
         .isInt({ min: 1 })
@@ -25,9 +25,9 @@ export const validateCreateLoan = [
         .withMessage('La tasa de interés es requerida')
         .isFloat({ min: 0 })
         .withMessage('La tasa de interés debe ser un número positivo'),
-    body('loanStatus')
+    body('status')
         .optional()
-        .isIn(['PENDING', 'APPROVED', 'REJECTED', 'ACTIVE', 'COMPLETED'])
+        .isIn(['solicitado', 'aprobado', 'rechazado', 'desembolsado', 'pagado', 'vencido'])
         .withMessage('Estado de préstamo no válido'),
     checkValidators,
 ];
@@ -39,9 +39,9 @@ export const validateUpdateLoan = [
     param('id')
         .notEmpty()
         .withMessage('El ID del préstamo es requerido'),
-    body('loanStatus')
+    body('status')
         .optional()
-        .isIn(['PENDING', 'APPROVED', 'REJECTED', 'ACTIVE', 'COMPLETED'])
+        .isIn(['solicitado', 'aprobado', 'rechazado', 'desembolsado', 'pagado', 'vencido'])
         .withMessage('Estado de préstamo no válido'),
     body('interestRate')
         .optional()

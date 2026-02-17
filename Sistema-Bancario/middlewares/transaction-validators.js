@@ -7,10 +7,10 @@ import { requireRole } from './validate-role.js';
 export const validateCreateTransaction = [
     validateJWT,
     requireRole('ADMIN_ROLE', 'MANAGER_ROLE', 'ATM_ROLE', 'USER_ROLE'),
-    body('fromAccountId')
+    body('sourceAccountId')
         .notEmpty()
         .withMessage('El ID de cuenta origen es requerido'),
-    body('toAccountId')
+    body('destinationAccountId')
         .notEmpty()
         .withMessage('El ID de cuenta destino es requerido'),
     body('amount')
@@ -21,16 +21,16 @@ export const validateCreateTransaction = [
     body('transactionType')
         .notEmpty()
         .withMessage('El tipo de transacción es requerido')
-        .isIn(['TRANSFER', 'DEPOSIT', 'WITHDRAWAL', 'PAYMENT'])
+        .isIn(['deposito', 'retiro', 'transferencia', 'pago_servicio', 'pago_prestamo'])
         .withMessage('Tipo de transacción no válido'),
     body('description')
         .optional()
         .trim()
         .isLength({ max: 500 })
         .withMessage('La descripción no puede exceder 500 caracteres'),
-    body('transactionStatus')
+    body('status')
         .optional()
-        .isIn(['PENDING', 'COMPLETED', 'FAILED', 'CANCELLED'])
+        .isIn(['exitosa', 'pendiente', 'rechazada', 'reversada'])
         .withMessage('Estado de transacción no válido'),
     checkValidators,
 ];
@@ -42,9 +42,9 @@ export const validateUpdateTransaction = [
     param('id')
         .notEmpty()
         .withMessage('El ID de la transacción es requerido'),
-    body('transactionStatus')
+    body('status')
         .optional()
-        .isIn(['PENDING', 'COMPLETED', 'FAILED', 'CANCELLED'])
+        .isIn(['exitosa', 'pendiente', 'rechazada', 'reversada'])
         .withMessage('Estado de transacción no válido'),
     body('description')
         .optional()

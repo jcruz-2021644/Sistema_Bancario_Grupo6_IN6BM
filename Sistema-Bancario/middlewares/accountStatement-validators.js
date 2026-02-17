@@ -10,7 +10,7 @@ export const validateCreateAccountStatement = [
     body('accountId')
         .notEmpty()
         .withMessage('El ID de la cuenta es requerido'),
-    body('statementDate')
+    body('periodStart')
         .notEmpty()
         .withMessage('La fecha del estado es requerida')
         .isISO8601()

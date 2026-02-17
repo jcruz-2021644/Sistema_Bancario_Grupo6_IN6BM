@@ -19,16 +19,15 @@ export const validateCreateCard = [
     body('cardType')
         .notEmpty()
         .withMessage('El tipo de tarjeta es requerido')
-        .isIn(['DEBIT', 'CREDIT', 'PREPAID'])
+        .isIn(['debito', 'credito'])
         .withMessage('Tipo de tarjeta no válida'),
-    body('expiryDate')
+    body('expirationDate')
         .notEmpty()
         .withMessage('La fecha de vencimiento es requerida')
-        .matches(/^\d{2}\/\d{2}$/)
         .withMessage('La fecha debe estar en formato MM/YY'),
-    body('cardStatus')
+    body('status')
         .optional()
-        .isIn(['ACTIVE', 'BLOCKED', 'EXPIRED'])
+        .isIn(['activa', 'bloqueada', 'vencida', 'cancelada'])
         .withMessage('Estado de tarjeta no válido'),
     checkValidators,
 ];
@@ -42,11 +41,11 @@ export const validateUpdateCard = [
         .withMessage('El ID de la tarjeta es requerido'),
     body('cardType')
         .optional()
-        .isIn(['DEBIT', 'CREDIT', 'PREPAID'])
+        .isIn(['debito', 'credito'])
         .withMessage('Tipo de tarjeta no válida'),
-    body('cardStatus')
+    body('status')
         .optional()
-        .isIn(['ACTIVE', 'BLOCKED', 'EXPIRED'])
+        .isIn(['activa', 'bloqueada', 'vencida', 'cancelada'])
         .withMessage('Estado de tarjeta no válido'),
     checkValidators,
 ];

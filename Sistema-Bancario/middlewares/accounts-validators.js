@@ -16,7 +16,7 @@ export const validateCreateAccount = [
     body('accountType')
         .notEmpty()
         .withMessage('El tipo de cuenta es requerido')
-        .isIn(['SAVINGS', 'CHECKING', 'INVESTMENT'])
+        .isIn(['ahorro', 'corriente', 'nomina'])
         .withMessage('Tipo de cuenta no válida'),
     body('userId')
         .notEmpty()
@@ -41,7 +41,7 @@ export const validateUpdateAccount = [
         .withMessage('El ID de la cuenta es requerido'),
     body('accountType')
         .optional()
-        .isIn(['SAVINGS', 'CHECKING', 'INVESTMENT'])
+        .isIn(['ahorro', 'corriente', 'nomina'])
         .withMessage('Tipo de cuenta no válida'),
     body('balance')
         .optional()
