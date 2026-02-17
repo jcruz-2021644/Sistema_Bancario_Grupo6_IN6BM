@@ -127,55 +127,54 @@ export const registerUserHelper = async (userData) => {
         throw error;
     }
 };
-
 export const loginUserHelper = async (emailOrUsername, password) => {
     try {
-        // Validation is now handled by express-validator middleware in routes
-
-        // Buscar usuario por email o username
         const user = await findUserByEmailOrUsername(emailOrUsername);
 
         if (!user) {
             throw new Error('Credenciales inválidas');
         }
 
-        // Verificar contraseña
+        console.log("PASSWORD INGRESADO:", password);
+        console.log("HASH EN BD:", user.Password);
+
         const isValidPassword = await verifyPassword(user.Password, password);
+
+        console.log("¿PASSWORD VÁLIDO?:", isValidPassword);
 
         if (!isValidPassword) {
             throw new Error('Credenciales inválidas');
         }
 
-        // Verificar si el email está verificado
         if (!user.UserEmail || !user.UserEmail.EmailVerified) {
             throw new Error(
-                'Debes verificar tu email antes de iniciar sesión. Revisa tu bandeja de entrada o reenvía el email de verificación.'
+                'Debes verificar tu email antes de iniciar sesión.'
             );
         }
 
-        // Verificar si el usuario está activo
         if (!user.Status) {
-            throw new Error('Tu cuenta está desactivada. Contacta al administrador.');
+            throw new Error('Tu cuenta está desactivada.');
         }
 
-        // Generate JWT with role claim
-        const role = user.UserRoles?.[0]?.Role?.Name || 'USER_ROLE';
-        const token = await generateJWT(user.Id.toString(), { role });
+        const plainUser = user.toJSON();
 
-        // Calcular fecha de expiración basada en la configuración
-        const expiresInMs = getExpirationTime(process.env.JWT_EXPIRES_IN || '30m');
+        const role = plainUser.UserRoles?.[0]?.Role?.Name || 'USER_ROLE';
+
+        const token = await generateJWT(plainUser.Id.toString(), { role });
+
+        const expiresInMs = getExpirationTime(
+            process.env.JWT_EXPIRES_IN || '30m'
+        );
         const expiresAt = new Date(Date.now() + expiresInMs);
 
-        // Build compact userDetails object
-        const fullUser = buildUserResponse(user);
         const userDetails = {
-            id: fullUser.id,
-            username: fullUser.username,
-            profilePicture: fullUser.profilePicture,
-            role: fullUser.role,
+            id: plainUser.Id,
+            username: plainUser.Username,
+            profilePicture:
+                plainUser.UserProfile?.ProfilePicture || null,
+            role,
         };
 
-        // AuthResponseDto equivalent structure
         return {
             success: true,
             message: 'Login exitoso',
