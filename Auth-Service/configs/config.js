@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const config = {
-  // JWT Configuration
+    // JWT Configuration
     jwt: {
         secret: process.env.JWT_SECRET,
         expiresIn: process.env.JWT_EXPIRES_IN,
@@ -12,7 +12,7 @@ export const config = {
         audience: process.env.JWT_AUDIENCE,
     },
 
-  // SMTP Configuration (aligned with .NET SmtpSettings)
+    // SMTP Configuration (aligned with .NET SmtpSettings)
     smtp: {
         host: process.env.SMTP_HOST,
         port: parseInt(process.env.SMTP_PORT, 10) || 587,
@@ -23,32 +23,22 @@ export const config = {
         fromName: process.env.EMAIL_FROM_NAME,
     },
 
-  // File Upload Configuration (aligned with .NET FileValidator)
+    // File Upload Configuration (aligned with .NET FileValidator)
     upload: {
         maxSize: 5 * 1024 * 1024, // 5MB (aligned with .NET)
         allowedTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'], // aligned with .NET
         uploadPath: process.env.UPLOAD_PATH,
     },
 
-  // Cloudinary Configuration
+    // Cloudinary Configuration
     cloudinary: {
         cloudName: process.env.CLOUDINARY_CLOUD_NAME,
         apiKey: process.env.CLOUDINARY_API_KEY,
         apiSecret: process.env.CLOUDINARY_API_SECRET,
         baseUrl: process.env.CLOUDINARY_BASE_URL,
-        // Expand nested env references if not supported by dotenv
-        // If CLOUDINARY_DEFAULT_AVATAR contains ${...}, build it from folder + filename
-        defaultAvatarPath:
-        process.env.CLOUDINARY_DEFAULT_AVATAR &&
-        !process.env.CLOUDINARY_DEFAULT_AVATAR.includes('${')
-            ? process.env.CLOUDINARY_DEFAULT_AVATAR
-            : [
-                process.env.CLOUDINARY_FOLDER,
-                process.env.CLOUDINARY_DEFAULT_AVATAR_FILENAME,
-            ]
-                .filter(Boolean)
-                .join('/'),
         folder: process.env.CLOUDINARY_FOLDER,
+
+        defaultAvatar: process.env.CLOUDINARY_DEFAULT_AVATAR_FILENAME,
     },
 
     // Rate Limiting (aligned with .NET AuthPolicy and ApiPolicy)
@@ -72,14 +62,14 @@ export const config = {
         passwordMinLength: 8,
         // IP Filtering (aligned with .NET IpFilteringMiddleware)
         blacklistedIPs: process.env.BLACKLISTED_IPS
-        ? process.env.BLACKLISTED_IPS.split(',').map((ip) => ip.trim())
-        : [],
+            ? process.env.BLACKLISTED_IPS.split(',').map((ip) => ip.trim())
+            : [],
         whitelistedIPs: process.env.WHITELISTED_IPS
-        ? process.env.WHITELISTED_IPS.split(',').map((ip) => ip.trim())
-        : [],
+            ? process.env.WHITELISTED_IPS.split(',').map((ip) => ip.trim())
+            : [],
         restrictedPaths: process.env.RESTRICTED_PATHS
-        ? process.env.RESTRICTED_PATHS.split(',').map((path) => path.trim())
-        : [],
+            ? process.env.RESTRICTED_PATHS.split(',').map((path) => path.trim())
+            : [],
     },
 
     // App Settings (aligned with .NET AppSettings)
@@ -90,29 +80,29 @@ export const config = {
     // Security Settings (aligned with .NET Security config)
     cors: {
         allowedOrigins: process.env.ALLOWED_ORIGINS
-        ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
-        : [],
+            ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
+            : [],
         adminAllowedOrigins: process.env.ADMIN_ALLOWED_ORIGINS
-        ? process.env.ADMIN_ALLOWED_ORIGINS.split(',').map((o) => o.trim())
-        : [],
+            ? process.env.ADMIN_ALLOWED_ORIGINS.split(',').map((o) => o.trim())
+            : [],
     },
 
     // Verification tokens
     verification: {
         // Read expirations from env (hours) for easy configuration and parity with .NET
         emailTokenExpiry:
-        (process.env.VERIFICATION_EMAIL_EXPIRY_HOURS
-            ? parseInt(process.env.VERIFICATION_EMAIL_EXPIRY_HOURS, 10)
-            : 24) *
-        60 *
-        60 *
-        1000,
+            (process.env.VERIFICATION_EMAIL_EXPIRY_HOURS
+                ? parseInt(process.env.VERIFICATION_EMAIL_EXPIRY_HOURS, 10)
+                : 24) *
+            60 *
+            60 *
+            1000,
         passwordResetExpiry:
-        (process.env.PASSWORD_RESET_EXPIRY_HOURS
-            ? parseInt(process.env.PASSWORD_RESET_EXPIRY_HOURS, 10)
-            : 1) *
-        60 *
-        60 *
-        1000,
+            (process.env.PASSWORD_RESET_EXPIRY_HOURS
+                ? parseInt(process.env.PASSWORD_RESET_EXPIRY_HOURS, 10)
+                : 1) *
+            60 *
+            60 *
+            1000,
     },
 };

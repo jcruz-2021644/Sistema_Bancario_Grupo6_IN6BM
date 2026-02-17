@@ -29,121 +29,98 @@ const getExpirationTime = (timeString) => {
 
     switch (timeUnit) {
         case 's':
-        return timeValue * 1000;
+            return timeValue * 1000;
         case 'm':
-        return timeValue * 60 * 1000;
+            return timeValue * 60 * 1000;
         case 'h':
-        return timeValue * 60 * 60 * 1000;
+            return timeValue * 60 * 60 * 1000;
         case 'd':
-        return timeValue * 24 * 60 * 60 * 1000;
+            return timeValue * 24 * 60 * 60 * 1000;
         default:
-        return 30 * 60 * 1000; // Default: 30 minutos
+            return 30 * 60 * 1000; // Default: 30 minutos
     }
 };
-
 export const registerUserHelper = async (userData) => {
     try {
         const { email, username, password, name, surname, phone, profilePicture } =
-        userData;
-
-        // Validation is now handled by express-validator middleware in routes
+            userData;
         const userExists = await checkUserExists(email, username);
         if (userExists) {
-        throw new Error(
-            'Ya existe un usuario con este email o nombre de usuario'
-        );
+            throw new Error(
+                'Ya existe un usuario con este email o nombre de usuario'
+            );
         }
-        let profilePictureToStore = profilePicture;
+        let profilePictureToStore;
         if (profilePicture) {
-        const uploadPath = config.upload.uploadPath;
+            const uploadPath = config.upload.uploadPath;
 
-        // Detectar si es un archivo local
-        const isLocalFile =
-            profilePicture.includes('uploads/') ||
-            profilePicture.includes(uploadPath) ||
-            profilePicture.startsWith('./');
+            const isLocalFile =
+                profilePicture.includes('uploads/') ||
+                profilePicture.includes(uploadPath) ||
+                profilePicture.startsWith('./');
 
-        if (isLocalFile) {
-            try {
-            // Generar nombre como .NET: profile-<12chars>.jpg
-            const ext = path.extname(profilePicture);
-            const randomHex = crypto.randomBytes(6).toString('hex');
-            const cloudinaryFileName = `profile-${randomHex}${ext}`;
-
-            profilePictureToStore = await uploadImage(
-                profilePicture,
-                cloudinaryFileName
-            );
-            } catch (err) {
-            console.error(
-                'Error uploading profile picture to Cloudinary during registration:',
-                err
-            );
-            profilePictureToStore = null;
+            if (isLocalFile) {
+                try {
+                    const ext = path.extname(profilePicture);
+                    const randomHex = crypto.randomBytes(6).toString('hex');
+                    const cloudinaryFileName = `profile-${randomHex}${ext}`;
+                    profilePictureToStore = await uploadImage(
+                        profilePicture,
+                        cloudinaryFileName
+                    );
+                } catch (err) {
+                    console.error(
+                        'Error uploading profile picture to Cloudinary during registration:',
+                        err
+                    );
+                    profilePictureToStore = config.cloudinary.defaultAvatar;
+                }
+            } else {
+                profilePictureToStore = profilePicture;
             }
         } else {
-            // Si viene una URL/ruta de Cloudinary, normalizar y almacenar solo el filename
-            profilePictureToStore = profilePicture;
-            /*try {
-            const baseUrl = config.cloudinary.baseUrl || '';
-            const folder = config.cloudinary.folder || '';
-            let normalized = profilePicture;
-            if (normalized.startsWith(baseUrl)) {
-                normalized = normalized.slice(baseUrl.length);
-            }
-            if (folder && normalized.startsWith(`${folder}/`)) {
-                normalized = normalized.slice(folder.length + 1);
-            }
-            // Si aún hay slashes, tomar el último segmento
-            profilePictureToStore = normalized.split('/').pop();
-            } catch (normErr) {
-            console.warn('Could not normalize profile picture path:', normErr);
-            // fallback: mantener nulo para usar el default
-            profilePictureToStore = null;
-            }*/
+            profilePictureToStore = config.cloudinary.defaultAvatar;
         }
-    }
 
-        // Crear el usuario
         const newUser = await createNewUser({
-        name,
-        surname,
-        username,
-        email,
-        password,
-        phone,
-        profilePicture: profilePictureToStore,
+            name,
+            surname,
+            username,
+            email,
+            password,
+            phone,
+            profilePicture: profilePictureToStore,
         });
 
-        // Generar token de verificación de email
         const verificationToken = await generateEmailVerificationToken();
-        const tokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+        const tokenExpiry = new Date(
+            Date.now() + 24 * 60 * 60 * 1000
+        ); // 24 horas
 
-        // Guardar el token en la base de datos
         await updateEmailVerificationToken(
-        newUser.Id,
-        verificationToken,
-        tokenExpiry
+            newUser.Id,
+            verificationToken,
+            tokenExpiry
         );
 
-        // Enviar email de verificación en background para no bloquear la respuesta
-        // Si falla, se registra en consola pero no afecta la respuesta
+        // Enviar email en background
         Promise.resolve()
-        .then(() => sendVerificationEmail(email, name, verificationToken))
-        .catch((err) =>
-            console.error('Async email send (verification) failed:', err)
-        );
+            .then(() =>
+                sendVerificationEmail(email, name, verificationToken)
+            )
+            .catch((err) =>
+                console.error(
+                    'Async email send (verification) failed:',
+                    err
+                )
+            );
 
-        // Note: No JWT token returned in register (aligned with .NET RegisterResponseDto)
-        // JWT will be generated only at login
-
-        // RegisterResponseDto equivalent structure
         return {
-        success: true,
-        user: buildUserResponse(newUser),
-        message:
-            'Usuario registrado exitosamente. Por favor, verifica tu email para activar la cuenta.',
-        emailVerificationRequired: true,
+            success: true,
+            user: buildUserResponse(newUser),
+            message:
+                'Usuario registrado exitosamente. Por favor, verifica tu email para activar la cuenta.',
+            emailVerificationRequired: true,
         };
     } catch (error) {
         console.error('Error en registro:', error);
@@ -159,26 +136,26 @@ export const loginUserHelper = async (emailOrUsername, password) => {
         const user = await findUserByEmailOrUsername(emailOrUsername);
 
         if (!user) {
-        throw new Error('Credenciales inválidas');
+            throw new Error('Credenciales inválidas');
         }
 
         // Verificar contraseña
         const isValidPassword = await verifyPassword(user.Password, password);
 
         if (!isValidPassword) {
-        throw new Error('Credenciales inválidas');
+            throw new Error('Credenciales inválidas');
         }
 
         // Verificar si el email está verificado
         if (!user.UserEmail || !user.UserEmail.EmailVerified) {
-        throw new Error(
-            'Debes verificar tu email antes de iniciar sesión. Revisa tu bandeja de entrada o reenvía el email de verificación.'
-        );
+            throw new Error(
+                'Debes verificar tu email antes de iniciar sesión. Revisa tu bandeja de entrada o reenvía el email de verificación.'
+            );
         }
 
         // Verificar si el usuario está activo
         if (!user.Status) {
-        throw new Error('Tu cuenta está desactivada. Contacta al administrador.');
+            throw new Error('Tu cuenta está desactivada. Contacta al administrador.');
         }
 
         // Generate JWT with role claim
@@ -192,19 +169,19 @@ export const loginUserHelper = async (emailOrUsername, password) => {
         // Build compact userDetails object
         const fullUser = buildUserResponse(user);
         const userDetails = {
-        id: fullUser.id,
-        username: fullUser.username,
-        profilePicture: fullUser.profilePicture,
-        role: fullUser.role,
+            id: fullUser.id,
+            username: fullUser.username,
+            profilePicture: fullUser.profilePicture,
+            role: fullUser.role,
         };
 
         // AuthResponseDto equivalent structure
         return {
-        success: true,
-        message: 'Login exitoso',
-        token,
-        userDetails,
-        expiresAt,
+            success: true,
+            message: 'Login exitoso',
+            token,
+            userDetails,
+            expiresAt,
         };
     } catch (error) {
         console.error('Error en login:', error);
@@ -216,23 +193,23 @@ export const verifyEmailHelper = async (token) => {
     try {
         // Verify simple token format (not JWT anymore, matching .NET)
         if (!token || typeof token !== 'string' || token.length < 40) {
-        throw new Error('Token inválido para verificación de email');
+            throw new Error('Token inválido para verificación de email');
         }
 
         // Find user by verification token (like .NET does)
         const user = await findUserByEmailVerificationToken(token);
         if (!user) {
-        throw new Error('Usuario no encontrado o token inválido');
+            throw new Error('Usuario no encontrado o token inválido');
         }
 
         // Verificar que el token no haya expirado (ya se verifica en jwt.verify, pero por seguridad)
         const userEmail = user.UserEmail;
         if (!userEmail) {
-        throw new Error('Registro de email no encontrado');
+            throw new Error('Registro de email no encontrado');
         }
 
         if (userEmail.EmailVerified) {
-        throw new Error('El email ya ha sido verificado');
+            throw new Error('El email ya ha sido verificado');
         }
 
         // Marcar el email como verificado
@@ -240,30 +217,30 @@ export const verifyEmailHelper = async (token) => {
 
         // Enviar email de bienvenida en background (aligned with .NET)
         Promise.resolve()
-        .then(async () => {
-            const { sendWelcomeEmail } = await import('./email-service.js');
-            return sendWelcomeEmail(user.Email, user.Name);
-        })
-        .catch((emailError) => {
-            console.error('Async email send (welcome) failed:', emailError);
-        });
+            .then(async () => {
+                const { sendWelcomeEmail } = await import('./email-service.js');
+                return sendWelcomeEmail(user.Email, user.Name);
+            })
+            .catch((emailError) => {
+                console.error('Async email send (welcome) failed:', emailError);
+            });
 
         // EmailResponseDto equivalent structure
         return {
-        success: true,
-        message: 'Email verificado exitosamente. Ya puedes iniciar sesión.',
-        data: {
-            email: user.Email,
-            verified: true,
-        },
+            success: true,
+            message: 'Email verificado exitosamente. Ya puedes iniciar sesión.',
+            data: {
+                email: user.Email,
+                verified: true,
+            },
         };
     } catch (error) {
         console.error('Error verificando email:', error);
 
         if (error.name === 'JsonWebTokenError') {
-        throw new Error('Token de verificación inválido');
+            throw new Error('Token de verificación inválido');
         } else if (error.name === 'TokenExpiredError') {
-        throw new Error('Token de verificación expirado');
+            throw new Error('Token de verificación expirado');
         }
 
         throw error;
@@ -275,22 +252,22 @@ export const resendVerificationEmailHelper = async (email) => {
         const user = await findUserByEmail(email.toLowerCase());
 
         if (!user) {
-        // EmailResponseDto equivalent structure
-        return {
-            success: false,
-            message: 'Usuario no encontrado',
-            data: { email, sent: false },
-        };
+            // EmailResponseDto equivalent structure
+            return {
+                success: false,
+                message: 'Usuario no encontrado',
+                data: { email, sent: false },
+            };
         }
 
         // Verificar si ya está verificado
         if (user.UserEmail && user.UserEmail.EmailVerified) {
-        // EmailResponseDto equivalent structure
-        return {
-            success: false,
-            message: 'El email ya ha sido verificado',
-            data: { email: user.Email, verified: true },
-        };
+            // EmailResponseDto equivalent structure
+            return {
+                success: false,
+                message: 'El email ya ha sido verificado',
+                data: { email: user.Email, verified: true },
+            };
         }
 
         // Generar nuevo token de verificación
@@ -302,29 +279,29 @@ export const resendVerificationEmailHelper = async (email) => {
 
         // Enviar email de forma síncrona para reportar errores correctamente
         try {
-        await sendVerificationEmail(user.Email, user.Name, verificationToken);
-        // EmailResponseDto equivalent structure
-        return {
-            success: true,
-            message: 'Email de verificación enviado exitosamente',
-            data: { email: user.Email, sent: true },
-        };
+            await sendVerificationEmail(user.Email, user.Name, verificationToken);
+            // EmailResponseDto equivalent structure
+            return {
+                success: true,
+                message: 'Email de verificación enviado exitosamente',
+                data: { email: user.Email, sent: true },
+            };
         } catch (emailError) {
-        console.error('Error sending verification email:', emailError);
-        // EmailResponseDto equivalent structure
-        return {
-            success: false,
-            message:
-            'Error al enviar el email de verificación. Por favor, intenta nuevamente más tarde.',
-            data: { email: user.Email, sent: false },
-        };
+            console.error('Error sending verification email:', emailError);
+            // EmailResponseDto equivalent structure
+            return {
+                success: false,
+                message:
+                    'Error al enviar el email de verificación. Por favor, intenta nuevamente más tarde.',
+                data: { email: user.Email, sent: false },
+            };
         }
     } catch (error) {
         console.error('Error en resendVerificationEmailHelper:', error);
         return {
-        success: false,
-        message: 'Error interno del servidor',
-        data: { email, sent: false },
+            success: false,
+            message: 'Error interno del servidor',
+            data: { email, sent: false },
         };
     }
 };
@@ -335,12 +312,12 @@ export const forgotPasswordHelper = async (email) => {
 
         // Por seguridad, siempre devolvemos éxito aunque el usuario no exista
         if (!user) {
-        // EmailResponseDto equivalent structure
-        return {
-            success: true,
-            message: 'Si el email existe, se ha enviado un enlace de recuperación',
-            data: { email, initiated: true },
-        };
+            // EmailResponseDto equivalent structure
+            return {
+                success: true,
+                message: 'Si el email existe, se ha enviado un enlace de recuperación',
+                data: { email, initiated: true },
+            };
         }
 
         // Generar token de reset
@@ -354,28 +331,28 @@ export const forgotPasswordHelper = async (email) => {
         const { sendPasswordResetEmail } = await import('./email-service.js');
         // Enviar email en background; no bloquear la respuesta
         Promise.resolve()
-        .then(() => sendPasswordResetEmail(user.Email, user.Name, resetToken))
-        .catch((emailError) => {
-            console.error(
-            `Failed to send password reset email to ${email}:`,
-            emailError
-            );
-        });
+            .then(() => sendPasswordResetEmail(user.Email, user.Name, resetToken))
+            .catch((emailError) => {
+                console.error(
+                    `Failed to send password reset email to ${email}:`,
+                    emailError
+                );
+            });
 
         // EmailResponseDto equivalent structure
         return {
-        success: true,
-        message: 'Si el email existe, se ha enviado un enlace de recuperación',
-        data: { email, initiated: true },
+            success: true,
+            message: 'Si el email existe, se ha enviado un enlace de recuperación',
+            data: { email, initiated: true },
         };
     } catch (error) {
         console.error('Error en forgotPasswordHelper:', error);
         // Por seguridad, no revelamos errores internos
         // EmailResponseDto equivalent structure
         return {
-        success: true,
-        message: 'Si el email existe, se ha enviado un enlace de recuperación',
-        data: { email, initiated: true },
+            success: true,
+            message: 'Si el email existe, se ha enviado un enlace de recuperación',
+            data: { email, initiated: true },
         };
     }
 };
@@ -384,19 +361,19 @@ export const resetPasswordHelper = async (token, newPassword) => {
     try {
         // Verify simple token format (not JWT anymore, matching .NET)
         if (!token || typeof token !== 'string' || token.length < 40) {
-        throw new Error('Token inválido para reset de contraseña');
+            throw new Error('Token inválido para reset de contraseña');
         }
 
         // Find user by password reset token (like .NET does)
         const user = await findUserByPasswordResetToken(token);
         if (!user) {
-        throw new Error('Usuario no encontrado o token inválido');
+            throw new Error('Usuario no encontrado o token inválido');
         }
 
         // Verificar que el token no haya expirado (ya se verifica en jwt.verify, pero por seguridad)
         const userPasswordReset = user.UserPasswordReset;
         if (!userPasswordReset || !userPasswordReset.PasswordResetToken) {
-        throw new Error('Token de reset inválido o ya utilizado');
+            throw new Error('Token de reset inválido o ya utilizado');
         }
 
         // Hash de la nueva contraseña
@@ -408,31 +385,31 @@ export const resetPasswordHelper = async (token, newPassword) => {
 
         // Enviar email de confirmación
         try {
-        const { sendPasswordChangedEmail } = await import('./email-service.js');
-        // Enviar email en background; no bloquear la respuesta
-        Promise.resolve()
-            .then(() => sendPasswordChangedEmail(user.Email, user.Name))
-            .catch((emailError) => {
-            console.error('Error sending password changed email:', emailError);
-            });
+            const { sendPasswordChangedEmail } = await import('./email-service.js');
+            // Enviar email en background; no bloquear la respuesta
+            Promise.resolve()
+                .then(() => sendPasswordChangedEmail(user.Email, user.Name))
+                .catch((emailError) => {
+                    console.error('Error sending password changed email:', emailError);
+                });
         } catch (emailError) {
-        console.error('Error scheduling password changed email:', emailError);
-        // No fallar la operación por error de email
+            console.error('Error scheduling password changed email:', emailError);
+            // No fallar la operación por error de email
         }
 
         // EmailResponseDto equivalent structure
         return {
-        success: true,
-        message: 'Contraseña actualizada exitosamente',
-        data: { email: user.Email, reset: true },
+            success: true,
+            message: 'Contraseña actualizada exitosamente',
+            data: { email: user.Email, reset: true },
         };
     } catch (error) {
         console.error('Error en resetPasswordHelper:', error);
 
         if (error.name === 'JsonWebTokenError') {
-        throw new Error('Token de reset inválido');
+            throw new Error('Token de reset inválido');
         } else if (error.name === 'TokenExpiredError') {
-        throw new Error('Token de reset expirado');
+            throw new Error('Token de reset expirado');
         }
 
         throw error;
