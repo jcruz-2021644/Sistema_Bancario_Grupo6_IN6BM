@@ -1,4 +1,6 @@
 import Account from './accounts.model.js';
+import { validateMinimumIncome } from '../../helpers/account.helper.js';
+import { User } from '../../../Auth-Service/src/users/user.model.js';
 
 //agregar
 export const createAccount = async (req, res) => {
@@ -6,16 +8,20 @@ export const createAccount = async (req, res) => {
 
         const accountData = req.body;
 
-        /* if(req.file){
-             const extension = req.file.path.split('.').pop();
-             const filename = req.file.filename;
-             const relativePath = filename.substring(filename.indexOf('fields/'));
-         
-             fieldData.photo = `$(relativePath).$(extension)`;
-         }else{
-             fieldData.photo = 'fields/kinal_sports_nyvxo5';
-         }
- */
+        // Buscar usuario en Sequelize
+        const user = await User.findOne({
+            where: { Id: accountData.userId }
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'Usuario no encontrado'
+            });
+        }
+
+        validateMinimumIncome(Number(user.Income));
+
         const account = new Account(accountData);
         await account.save();
 
@@ -23,16 +29,15 @@ export const createAccount = async (req, res) => {
             success: true,
             message: 'Cuenta creada exitosamente',
             data: account
-        })
+        });
 
     } catch (error) {
         res.status(400).json({
             success: false,
-            message: 'Error al crear la cuenta',
-            error: error.message
-        })
+            message: error.message
+        });
     }
-}
+};
 
 export const getAccounts = async (req, res) => {
     try {
