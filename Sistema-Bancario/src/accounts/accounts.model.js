@@ -58,8 +58,7 @@ const accountSchema = mongoose.Schema({
         required: [true, 'La moneda es requerida']
     },
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario',
+        type: String,
         required: [true, 'El usuario es requerido']
     }
 }, {
