@@ -1,14 +1,32 @@
 import Account from './accounts.model.js';
-import { validateMinimumIncome } from '../../helpers/account.helper.js';
+import {
+    validateMinimumIncome,
+    generateAccountNumber,
+    validateUniqueAccountNumber
+} from '../../helpers/account.helper.js';
 import { User } from '../../../Auth-Service/src/users/user.model.js';
+import Currency from '../coins/coins.model.js';
+
+const normalizeCurrencyCode = (accountData) => (
+    accountData.currencyCode || accountData.currency || accountData.currencyId || ''
+).toUpperCase().trim();
+
+const validateExistingCurrencyCode = async (currencyCode) => {
+    const currency = await Currency.findOne({ code: currencyCode, status: 'activa' });
+
+    if (!currency) {
+        throw new Error(`La moneda ${currencyCode} no existe o esta inactiva`);
+    }
+};
 
 //agregar
 export const createAccount = async (req, res) => {
     try {
 
         const accountData = req.body;
+        accountData.currencyCode = normalizeCurrencyCode(accountData);
+        await validateExistingCurrencyCode(accountData.currencyCode);
 
-        // Buscar usuario en Sequelize
         const user = await User.findOne({
             where: { Id: accountData.userId }
         });
@@ -21,6 +39,28 @@ export const createAccount = async (req, res) => {
         }
 
         validateMinimumIncome(Number(user.Income));
+        accountData.accountNumber = generateAccountNumber();
+
+        let retries = 0;
+        const maxRetries = 10;
+
+        while (retries < maxRetries) {
+            try {
+                await validateUniqueAccountNumber(accountData.accountNumber);
+                break;
+            } catch (error) {
+                if (error.message !== 'El numero de cuenta ya existe') {
+                    throw error;
+                }
+
+                retries += 1;
+                accountData.accountNumber = generateAccountNumber();
+            }
+        }
+
+        if (retries === maxRetries) {
+            throw new Error('No se pudo generar un numero de cuenta unico');
+        }
 
         const account = new Account(accountData);
         await account.save();
@@ -76,10 +116,16 @@ export const getAccounts = async (req, res) => {
 }
 export const updateAccount = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { accountNumber } = req.params;
         const accountData = req.body;
-        const account = await Account.findByIdAndUpdate(
-            id,
+
+        if (accountData.currencyCode || accountData.currency || accountData.currencyId) {
+            accountData.currencyCode = normalizeCurrencyCode(accountData);
+            await validateExistingCurrencyCode(accountData.currencyCode);
+        }
+
+        const account = await Account.findOneAndUpdate(
+            { accountNumber },
             accountData,
             { new: true, runValidators: true }
         );
@@ -104,12 +150,13 @@ export const updateAccount = async (req, res) => {
             error: error.message
         });
     }
-}
+};
 
 export const deleteAccount = async (req, res) => {
     try {
-        const { id } = req.params;
-        const account = await Account.findByIdAndDelete(id);
+        const { accountNumber } = req.params;
+
+        const account = await Account.findOneAndDelete({ accountNumber });
 
         if (!account) {
             return res.status(404).json({
@@ -122,6 +169,7 @@ export const deleteAccount = async (req, res) => {
             success: true,
             message: 'Cuenta eliminada exitosamente'
         });
+
     } catch (error) {
         res.status(400).json({
             success: false,
@@ -129,22 +177,26 @@ export const deleteAccount = async (req, res) => {
             error: error.message
         });
     }
-}
+};
 
-export const getAccountById = async (req, res) => {
+export const getAccountByAccountNumber = async (req, res) => {
     try {
-        const { id } = req.params;
-        const account = await Account.findById(id);
+        const { accountNumber } = req.params;
+
+        const account = await Account.findOne({ accountNumber });
+
         if (!account) {
             return res.status(404).json({
                 success: false,
                 message: 'Cuenta no encontrada'
             });
         }
+
         res.status(200).json({
             success: true,
             data: account
         });
+
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -157,7 +209,7 @@ export const getAccountById = async (req, res) => {
 
 export const changeAccountStatus = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { accountNumber } = req.params;
         const { status } = req.body;
 
         // Validar estados permitidos
@@ -170,8 +222,8 @@ export const changeAccountStatus = async (req, res) => {
             });
         }
 
-        const account = await Account.findByIdAndUpdate(
-            id,
+        const account = await Account.findOneAndUpdate(
+            { accountNumber },
             { status },
             { new: true }
         );

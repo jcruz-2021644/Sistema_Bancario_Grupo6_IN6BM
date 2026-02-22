@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createAccount, getAccounts, updateAccount, deleteAccount, getAccountById, changeAccountStatus } from "./accounts.controller.js";
+import { createAccount, getAccounts, updateAccount, deleteAccount, changeAccountStatus, getAccountByAccountNumber } from "./accounts.controller.js";
 import { validateCreateAccount, validateUpdateAccount, validateAccountById } from "../../middlewares/accounts-validators.js";
 
 const router = Router();
@@ -14,22 +14,23 @@ router.get(
     getAccounts
 )
 router.put(
-    '/:id',
+    '/:accountNumber',
     validateUpdateAccount,
     updateAccount
 )
 router.delete(
-    '/:id',
+    '/:accountNumber',
     validateAccountById,
-    deleteAccount   
+    deleteAccount
 )
 router.get(
-    '/:id',
+    '/:accountNumber',
     validateAccountById,
-    getAccountById
+    getAccountByAccountNumber
 )
 router.patch(
-    '/:id/status', 
+    '/:accountNumber/status',
+    validateAccountById,
     changeAccountStatus
 )
 export default router;

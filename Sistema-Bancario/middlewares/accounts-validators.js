@@ -7,28 +7,48 @@ import { requireRole } from './validate-role.js';
 export const validateCreateAccount = [
     validateJWT,
     requireRole('ADMIN_ROLE', 'MANAGER_ROLE', 'ATM_ROLE'),
+    body()
+        .custom((_, { req }) => {
+            if (!req.body.currencyCode && !req.body.currency && !req.body.currencyId) {
+                throw new Error('Debes enviar currencyCode (ej: GTQ)');
+            }
+            return true;
+        }),
     body('accountNumber')
-        .trim()
-        .notEmpty()
-        .withMessage('El número de cuenta es requerido')
-        .isLength({ min: 5, max: 50 })
-        .withMessage('El número de cuenta debe tener entre 5 y 50 caracteres'),
+        .optional()
+        .matches(/^[A-Z]{3}-\d{3}-\d{4}$/)
+        .withMessage('El numero de cuenta debe tener formato ABC-000-0000'),
     body('accountType')
         .notEmpty()
         .withMessage('El tipo de cuenta es requerido')
         .isIn(['ahorro', 'corriente', 'nomina'])
-        .withMessage('Tipo de cuenta no válida'),
+        .withMessage('Tipo de cuenta no valida'),
     body('userId')
         .notEmpty()
         .withMessage('El ID del usuario es requerido'),
     body('balance')
         .optional()
         .isFloat({ min: 0 })
-        .withMessage('El balance debe ser un número positivo'),
+        .withMessage('El balance debe ser un numero positivo'),
+    body('currencyCode')
+        .optional()
+        .trim()
+        .isLength({ min: 3, max: 3 })
+        .withMessage('El codigo de moneda debe tener 3 caracteres')
+        .isAlpha()
+        .withMessage('El codigo de moneda solo puede contener letras'),
     body('currency')
         .optional()
-        .isLength({ min: 1, max: 10 })
-        .withMessage('El código de moneda debe tener entre 1 y 10 caracteres'),
+        .isLength({ min: 3, max: 3 })
+        .withMessage('El codigo de moneda debe tener 3 caracteres')
+        .isAlpha()
+        .withMessage('El codigo de moneda solo puede contener letras'),
+    body('currencyId')
+        .optional()
+        .isLength({ min: 3, max: 3 })
+        .withMessage('El codigo de moneda debe tener 3 caracteres')
+        .isAlpha()
+        .withMessage('El codigo de moneda solo puede contener letras'),
     checkValidators,
 ];
 
@@ -36,30 +56,49 @@ export const validateCreateAccount = [
 export const validateUpdateAccount = [
     validateJWT,
     requireRole('ADMIN_ROLE', 'MANAGER_ROLE', 'ATM_ROLE'),
-    param('id')
+    param('accountNumber')
         .notEmpty()
-        .withMessage('El ID de la cuenta es requerido'),
+        .withMessage('El numero de cuenta es requerido')
+        .matches(/^[A-Z]{3}-\d{3}-\d{4}$/)
+        .withMessage('El numero de cuenta debe tener formato ABC-000-0000'),
     body('accountType')
         .optional()
         .isIn(['ahorro', 'corriente', 'nomina'])
-        .withMessage('Tipo de cuenta no válida'),
+        .withMessage('Tipo de cuenta no valida'),
     body('balance')
         .optional()
         .isFloat({ min: 0 })
-        .withMessage('El balance debe ser un número positivo'),
+        .withMessage('El balance debe ser un numero positivo'),
+    body('currencyCode')
+        .optional()
+        .trim()
+        .isLength({ min: 3, max: 3 })
+        .withMessage('El codigo de moneda debe tener 3 caracteres')
+        .isAlpha()
+        .withMessage('El codigo de moneda solo puede contener letras'),
     body('currency')
         .optional()
-        .isLength({ min: 1, max: 10 })
-        .withMessage('El código de moneda debe tener entre 1 y 10 caracteres'),
+        .isLength({ min: 3, max: 3 })
+        .withMessage('El codigo de moneda debe tener 3 caracteres')
+        .isAlpha()
+        .withMessage('El codigo de moneda solo puede contener letras'),
+    body('currencyId')
+        .optional()
+        .isLength({ min: 3, max: 3 })
+        .withMessage('El codigo de moneda debe tener 3 caracteres')
+        .isAlpha()
+        .withMessage('El codigo de moneda solo puede contener letras'),
     checkValidators,
 ];
 
-// Validaciones para obtener/eliminar cuenta específica
+// Validaciones para obtener/eliminar cuenta especifica
 export const validateAccountById = [
     validateJWT,
     requireRole('ADMIN_ROLE', 'MANAGER_ROLE', 'ATM_ROLE'),
-    param('id')
+    param('accountNumber')
         .notEmpty()
-        .withMessage('El ID de la cuenta es requerido'),
+        .withMessage('El numero de cuenta es requerido')
+        .matches(/^[A-Z]{3}-\d{3}-\d{4}$/)
+        .withMessage('El numero de cuenta debe tener formato ABC-000-0000'),
     checkValidators,
 ];
