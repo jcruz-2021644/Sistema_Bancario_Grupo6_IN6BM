@@ -16,7 +16,7 @@ const approxWidth = (text, fs) => String(text).length * fs * CHAR_W;
 const centerX     = (text, fs) => MARGIN_X + (CONTENT_W - approxWidth(text, fs)) / 2;
 const rightX      = (text, fs) => RIGHT_X - approxWidth(text, fs);
 
-// ─── PDF primitive operators ──────────────────────────────────────────────────
+// PDF primitive operators
 
 const opText = (x, y, font, size, text) =>
     `BT /${font} ${size} Tf ${x.toFixed(1)} ${y.toFixed(1)} Td (${escapePdfText(text)}) Tj ET`;
@@ -40,7 +40,7 @@ const opLine = (x1, y1, x2, y2, width = 0.5, r = 0.78, g = 0.78, b = 0.78) => [
     `0 0 0 RG`,
 ];
 
-// ─── Brand palette ────────────────────────────────────────────────────────────
+// Brand palette 
 
 const BLUE_D = [0.094, 0.196, 0.384];
 const BLUE_M = [0.157, 0.337, 0.627];
@@ -49,19 +49,6 @@ const GOLD   = [0.824, 0.647, 0.173];
 const GREY_L = [0.965, 0.965, 0.965];
 const WHITE  = [1, 1, 1];
 
-// ─── Layout engine ────────────────────────────────────────────────────────────
-/**
- * Command types:
- *   { type: 'coverHeader', bankName, accountOwner }
- *   { type: 'sectionHeader', text }
- *   { type: 'keyvalue', key, value, zebra? }
- *   { type: 'txRow', date, label, amount, isDebit, index }
- *   { type: 'totalRow', key, value }
- *   { type: 'divider' }
- *   { type: 'spacer', h? }
- *   { type: 'text', text }
- *   { type: 'footer', text }
- */
 const buildPages = (commands) => {
     const pages = [];
     let ops = [];
@@ -169,7 +156,7 @@ const buildPages = (commands) => {
     return pages;
 };
 
-// ─── PDF binary assembly ──────────────────────────────────────────────────────
+// PDF binary assembly
 
 export const generatePdfFromCommands = (commands) => {
     const pages = buildPages(commands);
@@ -235,7 +222,7 @@ export const generatePdfFromCommands = (commands) => {
 export const generateSimplePdfBuffer = (lines) =>
     generatePdfFromCommands(lines.map((l) => ({ type: 'text', text: l })));
 
-// ─── Statement summary builder ────────────────────────────────────────────────
+// Statement summary builder 
 
 export const buildStatementSummary = ({ account, transactions, periodStart, periodEnd }) => {
     const totals = {
@@ -263,7 +250,7 @@ export const buildStatementSummary = ({ account, transactions, periodStart, peri
     return { periodStart, periodEnd, openingBalance: closingBalance - netChange, closingBalance, ...totals };
 };
 
-// ─── Statement PDF generator ──────────────────────────────────────────────────
+// Statement PDF generator 
 
 export const generateStatementPdf = ({ account, summary, transactions }) => {
     const fmt = (n) => `Q${Number(n).toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
