@@ -18,7 +18,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiMDAwOTc0MmMtZTBiYy00NzczLTljMDMtZjQyMjk2NWI0M2VmIiwiaWF0IjoxNzcxMjg1MDk4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Njg5OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.Ce05gkWZ-d5ddAQY_vbNqe3veTV9TURfabPA_95sczY",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiZWU4MjI4YTYtNjNmNS00Mzc4LWI1Y2YtYTlkNDI4ZDI2NzJkIiwiaWF0IjoxNzcxNzkyNjQ1LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTc5NDQ0NSwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.Mt9KzIforkZ7fyKF6gf3D3YBlcCmVF0FlCLVxTk-L6A",
                   "type": "string"
                 }
               ]
@@ -27,7 +27,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"code\": \"ros\",\r\n    \"name\": \"Cs\",\r\n    \"symbol\": \"CL\",\r\n    \"exchangeRate\": 1.0,\r\n    \"baseCurrency\": true,\r\n    \"status\": \"activa\"\r\n}",
+              "raw": "{\r\n    \"code\": \"GTQ\",\r\n    \"name\": \"Quetzal\",\r\n    \"symbol\": \"Q\",\r\n    \"exchangeRate\": 1.0,\r\n    \"baseCurrency\": true,\r\n    \"status\": \"activa\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -223,7 +223,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiMDAwOTc0MmMtZTBiYy00NzczLTljMDMtZjQyMjk2NWI0M2VmIiwiaWF0IjoxNzcxMjg1MDk4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Njg5OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.Ce05gkWZ-d5ddAQY_vbNqe3veTV9TURfabPA_95sczY",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiZmNmOTI3NjUtYjQxYy00ODU4LWI3Y2ItYTIzM2U1YzBiMTU5IiwiaWF0IjoxNzcxNzk4NDY3LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwMDI2NywiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.KXmLtcSa3mjfXE5VT-n6G1OMJuRapOshZEIAIJT0_MU",
                   "type": "string"
                 }
               ]
@@ -232,7 +232,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"accountNumber\": \"ACC-002-2038\",\r\n  \"accountType\": \"ahorro\",\r\n  \"balance\": 1000.00,\r\n  \"openingDate\": \"2025-02-10\",\r\n  \"status\": \"activa\",\r\n  \"dailyWithdrawalLimit\": 500.00,\r\n  \"annualInterestRate\": 2.5,\r\n  \"currencyId\": \"698ba94ea24b087d6ce469ca\",\r\n  \"userId\": \"698bc044894916f170625ecd\"\r\n}",
+              "raw": "{\r\n  \"accountType\": \"ahorro\",\r\n  \"balance\": 88888.00,\r\n  \"openingDate\": \"2025-02-10\",\r\n  \"status\": \"activa\",\r\n  \"dailyWithdrawalLimit\": 500.00,\r\n  \"annualInterestRate\": 2.5,\r\n  \"currencyCode\": \"GTQ\",\r\n  \"userId\": \"usr_iSSg8KmzCswx\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -279,14 +279,14 @@
           "response": []
         },
         {
-          "name": "New Request",
+          "name": "Actualizar cuenta",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiMDAwOTc0MmMtZTBiYy00NzczLTljMDMtZjQyMjk2NWI0M2VmIiwiaWF0IjoxNzcxMjg1MDk4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Njg5OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.Ce05gkWZ-d5ddAQY_vbNqe3veTV9TURfabPA_95sczY",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiOWNmOTQzZGEtZTkxZi00MTE2LTllYjctOTYxYWI5Y2I4NmYzIiwiaWF0IjoxNzcxNzk2MDIxLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTc5NzgyMSwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.pgnxv4qXcSyUG94nDGPkNlZzQJAkeCbI5tgF6Qz1CMg",
                   "type": "string"
                 }
               ]
@@ -295,7 +295,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"accountNumber\": \"ACC-002-2038\",\r\n  \"accountType\": \"ahorro\",\r\n  \"balance\": 1001.00,\r\n  \"openingDate\": \"2025-02-10\",\r\n  \"status\": \"activa\",\r\n  \"dailyWithdrawalLimit\": 500.00,\r\n  \"annualInterestRate\": 2.5,\r\n  \"currencyId\": \"698ba94ea24b087d6ce469ca\",\r\n  \"userId\": \"698bc044894916f170625ecd\"\r\n}",
+              "raw": "{\r\n  \"accountType\": \"ahorro\",\r\n  \"balance\": 999.99,\r\n  \"openingDate\": \"2025-02-10\",\r\n  \"status\": \"activa\",\r\n  \"dailyWithdrawalLimit\": 500.0,\r\n  \"annualInterestRate\": 2.5,\r\n  \"currencyCode\": \"GTQ\",\r\n  \"userId\": \"usr_iSSg8KmzCswx\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -303,7 +303,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3006/api/v1/accounts/6993ab79300453a4373ba3d9",
+              "raw": "http://localhost:3006/api/v1/accounts/ACC-270-7730",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -313,7 +313,7 @@
                 "api",
                 "v1",
                 "accounts",
-                "6993ab79300453a4373ba3d9"
+                "ACC-270-7730"
               ]
             }
           },
@@ -327,7 +327,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiMDAwOTc0MmMtZTBiYy00NzczLTljMDMtZjQyMjk2NWI0M2VmIiwiaWF0IjoxNzcxMjg1MDk4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Njg5OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.Ce05gkWZ-d5ddAQY_vbNqe3veTV9TURfabPA_95sczY",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiOWNmOTQzZGEtZTkxZi00MTE2LTllYjctOTYxYWI5Y2I4NmYzIiwiaWF0IjoxNzcxNzk2MDIxLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTc5NzgyMSwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.pgnxv4qXcSyUG94nDGPkNlZzQJAkeCbI5tgF6Qz1CMg",
                   "type": "string"
                 }
               ]
@@ -335,7 +335,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3006/api/v1/accounts/6993ab79300453a4373ba3d9",
+              "raw": "http://localhost:3006/api/v1/accounts/ACC-339-2943",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -345,7 +345,7 @@
                 "api",
                 "v1",
                 "accounts",
-                "6993ab79300453a4373ba3d9"
+                "ACC-339-2943"
               ]
             }
           },
@@ -359,7 +359,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiMDAwOTc0MmMtZTBiYy00NzczLTljMDMtZjQyMjk2NWI0M2VmIiwiaWF0IjoxNzcxMjg1MDk4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Njg5OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.Ce05gkWZ-d5ddAQY_vbNqe3veTV9TURfabPA_95sczY",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiZmNmOTI3NjUtYjQxYy00ODU4LWI3Y2ItYTIzM2U1YzBiMTU5IiwiaWF0IjoxNzcxNzk4NDY3LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwMDI2NywiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.KXmLtcSa3mjfXE5VT-n6G1OMJuRapOshZEIAIJT0_MU",
                   "type": "string"
                 }
               ]
@@ -367,7 +367,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3006/api/v1/accounts/6992824a1bdee4830aacaec4",
+              "raw": "http://localhost:3006/api/v1/accounts/ACC-845-4601",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -377,7 +377,7 @@
                 "api",
                 "v1",
                 "accounts",
-                "6992824a1bdee4830aacaec4"
+                "ACC-845-4601"
               ]
             }
           },
@@ -428,7 +428,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfajJiMUdmOVlISlJLIiwianRpIjoiOWU3OTQ3ZDEtYTQ0MS00NTUwLTkxZTYtN2FkNmQzNzI0NjM3IiwiaWF0IjoxNzcxMjgwNTU3LCJyb2xlIjoiVVNFUl9ST0xFIiwiZXhwIjoxNzcxMjgyMzU3LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0._CrlhyluGRIXHYngUtvBaEr-R_j7HD3ZEo1mUViNJw4",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiZmNmOTI3NjUtYjQxYy00ODU4LWI3Y2ItYTIzM2U1YzBiMTU5IiwiaWF0IjoxNzcxNzk4NDY3LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwMDI2NywiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.KXmLtcSa3mjfXE5VT-n6G1OMJuRapOshZEIAIJT0_MU",
                   "type": "string"
                 }
               ]
@@ -437,7 +437,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"sourceAccountId\": \"698bda41bac2e470057ab46e\",\r\n  \"destinationAccountId\": \"698bcdd9bac2e470057ab45a\",\r\n  \"transactionType\": \"transferencia\",\r\n  \"amount\": 250.00,\r\n  \"currencyId\": \"698ba94ea24b087d6ce469ca\",\r\n  \"description\": \"Transferencia a Juan\",\r\n  \"status\": \"exitosa\",\r\n  \"previousBalance\": 500.00,\r\n  \"newBalance\": 250.00,\r\n  \"executedByUserId\": \"698bcdeebac2e470057ab460\"\r\n}",
+              "raw": "{\r\n  \"sourceAccountId\": \"ACC-845-4601\",\r\n  \"destinationAccountId\": \"ACC-492-2264\",\r\n  \"transactionType\": \"transferencia\",\r\n  \"amount\": 250.00,\r\n  \"currencyId\": \"GTQ\",\r\n  \"description\": \"Transferencia a Juan\",\r\n  \"status\": \"exitosa\",\r\n  \"userId\": \"usr_iSSg8KmzCswx\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -622,7 +622,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiMzZjZjUzYjQtYjJlZi00OTVjLWJhZTItZjBmMWNkZjU5MjcwIiwiaWF0IjoxNzcxODA3MjU0LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwOTA1NCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.LZWwOVbwqvEgZ0CASR-nFMzyfEzW2-0AyF2kHoG10Ao",
                   "type": "string"
                 }
               ]
@@ -631,7 +631,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"accountId\": \"698bcdd9bac2e470057ab45a\",\r\n    \"cardNumber\": \"4111111111111223\",\r\n    \"cardType\": \"debito\",\r\n    \"cvv\": \"133\",\r\n    \"issueDate\": \"2026-02-10\",\r\n    \"expirationDate\": \"2029-02-10\",\r\n    \"creditLimit\": 0,\r\n    \"availableBalance\": 0,\r\n    \"status\": \"activa\",\r\n    \"pin\": \"1234\"\r\n}",
+              "raw": "{\r\n  \"userId\": \"usr_iSSg8KmzCswx\",\r\n  \"cardType\": \"debito\",\r\n  \"cvv\": \"123\",\r\n  \"availableBalance\": 150.00,\r\n  \"expirationDate\": \"2028-12-31\",\r\n  \"pin\": \"1234\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -697,7 +697,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiMzZjZjUzYjQtYjJlZi00OTVjLWJhZTItZjBmMWNkZjU5MjcwIiwiaWF0IjoxNzcxODA3MjU0LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwOTA1NCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.LZWwOVbwqvEgZ0CASR-nFMzyfEzW2-0AyF2kHoG10Ao",
                   "type": "string"
                 }
               ]
@@ -706,7 +706,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"accountId\": \"698bcdd9bac2e470057ab45a\",\r\n    \"cardNumber\": \"4111111111111323\",\r\n    \"cardType\": \"debito\",\r\n    \"cvv\": \"133\",\r\n    \"issueDate\": \"2026-02-10\",\r\n    \"expirationDate\": \"2029-02-10\",\r\n    \"creditLimit\": 0,\r\n    \"availableBalance\": 0,\r\n    \"status\": \"activa\",\r\n    \"pin\": \"1234\"\r\n}",
+              "raw": "{\r\n  \"userId\": \"usr_iSSg8KmzCswx\",\r\n  \"cardType\": \"debito\",\r\n  \"cvv\": \"123\",\r\n  \"availableBalance\": 200.00,\r\n  \"expirationDate\": \"2028-12-31\",\r\n  \"pin\": \"1234\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -714,7 +714,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3006/api/v1/cards/698fd2fdbc8b95bf2804d3cb",
+              "raw": "http://localhost:3006/api/v1/cards/699ba2f123afc65e80897aad",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -724,7 +724,7 @@
                 "api",
                 "v1",
                 "cards",
-                "698fd2fdbc8b95bf2804d3cb"
+                "699ba2f123afc65e80897aad"
               ]
             }
           },
@@ -770,7 +770,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiMzZjZjUzYjQtYjJlZi00OTVjLWJhZTItZjBmMWNkZjU5MjcwIiwiaWF0IjoxNzcxODA3MjU0LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwOTA1NCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.LZWwOVbwqvEgZ0CASR-nFMzyfEzW2-0AyF2kHoG10Ao",
                   "type": "string"
                 }
               ]
@@ -782,7 +782,7 @@
               "raw": "{\r\n  \"source_account_id\": \"ID_CUENTA_ORIGEN\",\r\n  \"destination_account_id\": \"ID_CUENTA_DESTINO\",\r\n  \"transaction_type\": \"transfer\",\r\n  \"amount\": 250.00,\r\n  \"currency_id\": \"ID_DE_MONEDA\",\r\n  \"description\": \"Transferencia a Juan\",\r\n  \"status\": \"exitosa\",\r\n  \"previous_balance\": 500.00,\r\n  \"new_balance\": 250.00,\r\n  \"executed_by_user_id\": \"ID_DE_USUARIO\"\r\n}"
             },
             "url": {
-              "raw": "http://localhost:3006/api/v1/cards/698fd2fdbc8b95bf2804d3cb",
+              "raw": "http://localhost:3006/api/v1/cards/699ba2f123afc65e80897aad",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -792,7 +792,7 @@
                 "api",
                 "v1",
                 "cards",
-                "698fd2fdbc8b95bf2804d3cb"
+                "699ba2f123afc65e80897aad"
               ]
             }
           },
@@ -806,7 +806,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiMzZjZjUzYjQtYjJlZi00OTVjLWJhZTItZjBmMWNkZjU5MjcwIiwiaWF0IjoxNzcxODA3MjU0LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwOTA1NCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.LZWwOVbwqvEgZ0CASR-nFMzyfEzW2-0AyF2kHoG10Ao",
                   "type": "string"
                 }
               ]
@@ -814,7 +814,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3006/api/v1/cards/698fd2fdbc8b95bf2804d3cb",
+              "raw": "http://localhost:3006/api/v1/cards/699ba2f123afc65e80897aad",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -824,7 +824,7 @@
                 "api",
                 "v1",
                 "cards",
-                "698fd2fdbc8b95bf2804d3cb"
+                "699ba2f123afc65e80897aad"
               ]
             }
           },
@@ -843,7 +843,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiNjgzZGI3MTgtYzcwYi00ZmVhLTkwNTgtMjFkYzcwYjc1MWRhIiwiaWF0IjoxNzcxODA0Mzc0LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwNjE3NCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.49UGqaICk_llA0xs8nTn1FWXecTkYnSlZGmjMYRVMfk",
                   "type": "string"
                 }
               ]
@@ -1199,47 +1199,6 @@
       "name": "AccountStatement",
       "item": [
         {
-          "name": "crear-Estado de cuenta",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiOTg3OWNkZWUtMmQwZC00NDE3LWIyOTEtNzcyNTkyNDViODYzIiwiaWF0IjoxNzcxMjg3MjcwLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4OTA3MCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.UnXdA82rBJXowShX4LG05o1Yc19FfckZiyPItOvUYTM",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"accountId\": \"698bcde4bac2e470057ab45e\",\r\n  \"periodStart\": \"2026-01-01T00:00:00.000Z\",\r\n  \"periodEnd\": \"2026-01-31T23:59:59.000Z\",\r\n  \"openingBalance\": 5000,\r\n  \"closingBalance\": 7200,\r\n  \"totalDeposits\": 3000,\r\n  \"totalWithdrawals\": 500,\r\n  \"totalTransfersSent\": 200,\r\n  \"totalTransfersReceived\": 900,\r\n  \"interestEarned\": 50,\r\n  \"feesCharged\": 50,\r\n  \"pdfFile\": \"/statements/january_2026.pdf\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3006/api/v1/accountStatements/create",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3006",
-              "path": [
-                "api",
-                "v1",
-                "accountStatements",
-                "create"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
           "name": "listar-estado de cuenta",
           "request": {
             "method": "GET",
@@ -1268,7 +1227,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiOTg3OWNkZWUtMmQwZC00NDE3LWIyOTEtNzcyNTkyNDViODYzIiwiaWF0IjoxNzcxMjg3MjcwLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4OTA3MCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.UnXdA82rBJXowShX4LG05o1Yc19FfckZiyPItOvUYTM",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiMzRkZDU2YjQtOWYxMS00N2E0LTliY2QtYzE4ZWRmNzUyZjkyIiwiaWF0IjoxNzcxODAyOTY5LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwNDc2OSwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.UbolAMat7tbKD3-70MMCAOz7P-WYoJMX1XPrzhHiiHQ",
                   "type": "string"
                 }
               ]
@@ -1276,7 +1235,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3006/api/v1/accountStatements/6993b3326fc7fee42790fcb1",
+              "raw": "http://localhost:3006/api/v1/accountStatements/account/ACC-845-4601/pdf",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1286,113 +1245,9 @@
                 "api",
                 "v1",
                 "accountStatements",
-                "6993b3326fc7fee42790fcb1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "New Request",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiOTg3OWNkZWUtMmQwZC00NDE3LWIyOTEtNzcyNTkyNDViODYzIiwiaWF0IjoxNzcxMjg3MjcwLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4OTA3MCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.UnXdA82rBJXowShX4LG05o1Yc19FfckZiyPItOvUYTM",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"accountId\": \"698bcde4bac2e470057ab45e\",\r\n  \"periodStart\": \"2026-01-01T00:00:00.000Z\",\r\n  \"periodEnd\": \"2026-01-31T23:59:59.000Z\",\r\n  \"openingBalance\": 5000,\r\n  \"closingBalance\": 7200,\r\n  \"totalDeposits\": 3000,\r\n  \"totalWithdrawals\": 500,\r\n  \"totalTransfersSent\": 200,\r\n  \"totalTransfersReceived\": 900,\r\n  \"interestEarned\": 50,\r\n  \"feesCharged\": 50,\r\n  \"pdfFile\": \"/statements/january_2026.pdf\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3006/api/v1/accountStatements/6993b3326fc7fee42790fcb1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3006",
-              "path": [
-                "api",
-                "v1",
-                "accountStatements",
-                "6993b3326fc7fee42790fcb1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "New Request",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiOTg3OWNkZWUtMmQwZC00NDE3LWIyOTEtNzcyNTkyNDViODYzIiwiaWF0IjoxNzcxMjg3MjcwLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4OTA3MCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.UnXdA82rBJXowShX4LG05o1Yc19FfckZiyPItOvUYTM",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "DELETE",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3006/api/v1/accountStatements/6993b3326fc7fee42790fcb1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3006",
-              "path": [
-                "api",
-                "v1",
-                "accountStatements",
-                "6993b3326fc7fee42790fcb1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "http://localhost:3006/api/v1/accountStatements",
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3006/api/v1/accountStatements",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3006",
-              "path": [
-                "api",
-                "v1",
-                "accountStatements"
+                "account",
+                "ACC-845-4601",
+                "pdf"
               ]
             }
           },
@@ -1586,31 +1441,31 @@
               "formdata": [
                 {
                   "key": "name",
-                  "value": "testdo",
+                  "value": "jefry",
                   "type": "text",
                   "uuid": "2a5a730c-61e0-4d3e-9637-abb05b3bcb2c"
                 },
                 {
                   "key": "surname",
-                  "value": "testdo",
+                  "value": "cruz",
                   "type": "text",
                   "uuid": "f48a7522-117c-42f1-abb3-e443ff530613"
                 },
                 {
                   "key": "username",
-                  "value": "testdo",
+                  "value": "jcruz",
                   "type": "text",
                   "uuid": "9f92c7b1-1deb-4b1b-8c10-036e57b89752"
                 },
                 {
                   "key": "email",
-                  "value": "jcruz-202164@kinal.edu.gt",
+                  "value": "jefryyu67@gmail.com",
                   "type": "text",
                   "uuid": "522ea40b-267f-4c90-b2ed-7775f569b33c"
                 },
                 {
                   "key": "password",
-                  "value": "testuno123",
+                  "value": "admin123",
                   "type": "text",
                   "uuid": "d9b9f1b6-acdb-4c24-af6f-c09c0dcdce87"
                 },
@@ -1646,7 +1501,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"token\": \"8Wl9nHkWpwfUiBkA9jajLCfaig-b7_lENnIUagtg_6U\"\r\n}",
+              "raw": "{\r\n    \"token\": \"PK2cE7JMMLF_zx-52Utt28i9JK-xvB8NO_44dQA-mDo\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1745,6 +1600,48 @@
                 "v1",
                 "auth",
                 "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Income-ingreso minio 100",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiOWNmOTQzZGEtZTkxZi00MTE2LTllYjctOTYxYWI5Y2I4NmYzIiwiaWF0IjoxNzcxNzk2MDIxLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTc5NzgyMSwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.pgnxv4qXcSyUG94nDGPkNlZzQJAkeCbI5tgF6Qz1CMg",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"income\": 9101.00\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3005/api/v1/users/usr_iSSg8KmzCswx/income",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3005",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "usr_iSSg8KmzCswx",
+                "income"
               ]
             }
           },
