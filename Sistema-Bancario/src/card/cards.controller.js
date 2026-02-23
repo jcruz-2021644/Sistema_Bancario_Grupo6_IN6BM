@@ -1,67 +1,96 @@
 import Card from './cards.model.js';
+import { User } from '../../../Auth-Service/src/users/user.model.js';
+import { getUniqueCardNumber } from '../../helpers/card.helper.js';
 
-//agregar
+// agregar
 export const createCard = async (req, res) => {
     try {
-
         const cardData = req.body;
+        cardData.userId = String(cardData.userId || '').trim();
+
+        const user = await User.findOne({
+            where: { Id: cardData.userId }
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'Usuario no encontrado'
+            });
+        }
+
+        cardData.cardNumber = await getUniqueCardNumber();
+
         const card = new Card(cardData);
         await card.save();
 
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message: 'Tarjeta creada exitosamente',
             data: card
-        })
-
+        });
     } catch (error) {
-        res.status(400).json({
+        return res.status(400).json({
             success: false,
             message: 'Error al crear la tarjeta',
             error: error.message
-        })
+        });
     }
-}
+};
 
 export const getCards = async (req, res) => {
     try {
         const { page = 1, limit = 10, status = 'activa' } = req.query;
-        const filter = { status };
-        const options = {
-            page: parseInt(page),
-            limit: parseInt(limit),
-            sort: { createdAt: -1 }
-        }
+        const filter = status ? { status } : {};
+        const numericPage = parseInt(page, 10);
+        const numericLimit = parseInt(limit, 10);
 
         const cards = await Card.find(filter)
-            .limit(limit * 1)
-            .skip((page - 1) * limit)
-            .sort(options.sort);
+            .limit(numericLimit)
+            .skip((numericPage - 1) * numericLimit)
+            .sort({ createdAt: -1 });
+
         const total = await Card.countDocuments(filter);
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             data: cards,
             pagination: {
-                currentPage: page,
-                totalPages: Math.ceil(total / limit),
+                currentPage: numericPage,
+                totalPages: Math.ceil(total / numericLimit),
                 totalRecords: total,
-                limit
+                limit: numericLimit
             }
-        })
+        });
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: 'Error al obtener las tarjetas',
             error: error.message
-        })
+        });
     }
+};
 
-}
 export const updateCard = async (req, res) => {
     try {
         const { id } = req.params;
-        const cardData = req.body;
+        const cardData = { ...req.body };
+
+        // Evitar que cambien el numero autogenerado por update
+        delete cardData.cardNumber;
+
+        if (cardData.userId) {
+            cardData.userId = String(cardData.userId).trim();
+            const user = await User.findOne({ where: { Id: cardData.userId } });
+
+            if (!user) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Usuario no encontrado'
+                });
+            }
+        }
+
         const card = await Card.findByIdAndUpdate(
             id,
             cardData,
@@ -75,20 +104,20 @@ export const updateCard = async (req, res) => {
             });
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: 'Tarjeta actualizada exitosamente',
             data: card
         });
-
     } catch (error) {
-        res.status(400).json({
+        return res.status(400).json({
             success: false,
             message: 'Error al actualizar la tarjeta',
             error: error.message
         });
     }
-}
+};
+
 
 export const deleteCard = async (req, res) => {
     try {
@@ -102,23 +131,22 @@ export const deleteCard = async (req, res) => {
             });
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: 'Tarjeta eliminada exitosamente'
         });
     } catch (error) {
-        res.status(400).json({
+        return res.status(400).json({
             success: false,
             message: 'Error al eliminar la tarjeta',
             error: error.message
         });
     }
-}
+};
 
 export const getCardById = async (req, res) => {
     try {
         const { id } = req.params;
-
         const card = await Card.findById(id);
 
         if (!card) {
@@ -128,28 +156,23 @@ export const getCardById = async (req, res) => {
             });
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             data: card
         });
-
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: 'Error al buscar la tarjeta',
             error: error.message
         });
     }
 };
-
-
 export const changeCardStatus = async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
-
-        // Validar estados permitidos
-        const allowedStatus = ['activa', 'bloqueada', 'cancelada'];
+        const allowedStatus = ['activa', 'bloqueada', 'cancelada', 'vencida'];
 
         if (!allowedStatus.includes(status)) {
             return res.status(400).json({
@@ -171,14 +194,13 @@ export const changeCardStatus = async (req, res) => {
             });
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: `Tarjeta ${status} correctamente`,
             data: card
         });
-
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: 'Error al cambiar estado',
             error: error.message
