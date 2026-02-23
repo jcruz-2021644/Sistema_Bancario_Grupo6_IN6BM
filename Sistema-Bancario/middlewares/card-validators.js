@@ -7,28 +7,40 @@ import { requireRole } from './validate-role.js';
 export const validateCreateCard = [
     validateJWT,
     requireRole('ADMIN_ROLE', 'MANAGER_ROLE'),
-    body('cardNumber')
-        .trim()
+    body('userId')
         .notEmpty()
-        .withMessage('El número de tarjeta es requerido')
-        .isLength({ min: 13, max: 19 })
-        .withMessage('El número de tarjeta debe tener entre 13 y 19 dígitos'),
-    body('accountId')
-        .notEmpty()
-        .withMessage('El ID de la cuenta es requerido'),
+        .withMessage('El userId es requerido')
+        .matches(/^usr_[A-Za-z0-9]+$/)
+        .withMessage('Formato de userId invalido'),
     body('cardType')
         .notEmpty()
         .withMessage('El tipo de tarjeta es requerido')
         .isIn(['debito', 'credito'])
-        .withMessage('Tipo de tarjeta no válida'),
+        .withMessage('Tipo de tarjeta no valida'),
+    body('cvv')
+        .notEmpty()
+        .withMessage('El CVV es requerido')
+        .matches(/^\d{3,4}$/)
+        .withMessage('El CVV debe tener 3 o 4 digitos'),
     body('expirationDate')
         .notEmpty()
         .withMessage('La fecha de vencimiento es requerida')
-        .withMessage('La fecha debe estar en formato MM/YY'),
+        .isISO8601()
+        .withMessage('La fecha debe estar en formato ISO8601'),
+    body('pin')
+        .notEmpty()
+        .withMessage('El PIN es requerido')
+        .matches(/^\d{4}$/)
+        .withMessage('El PIN debe tener 4 digitos'),
     body('status')
         .optional()
         .isIn(['activa', 'bloqueada', 'vencida', 'cancelada'])
-        .withMessage('Estado de tarjeta no válido'),
+        .withMessage('Estado de tarjeta no valido'),
+    body('cardNumber')
+        .optional()
+        .custom(() => {
+            throw new Error('No se permite enviar cardNumber, se genera automaticamente');
+        }),
     checkValidators,
 ];
 
@@ -39,18 +51,39 @@ export const validateUpdateCard = [
     param('id')
         .notEmpty()
         .withMessage('El ID de la tarjeta es requerido'),
+    body('userId')
+        .optional()
+        .matches(/^usr_[A-Za-z0-9]+$/)
+        .withMessage('Formato de userId invalido'),
     body('cardType')
         .optional()
         .isIn(['debito', 'credito'])
-        .withMessage('Tipo de tarjeta no válida'),
+        .withMessage('Tipo de tarjeta no valida'),
+    body('cvv')
+        .optional()
+        .matches(/^\d{3,4}$/)
+        .withMessage('El CVV debe tener 3 o 4 digitos'),
+    body('expirationDate')
+        .optional()
+        .isISO8601()
+        .withMessage('La fecha debe estar en formato ISO8601'),
+    body('pin')
+        .optional()
+        .matches(/^\d{4}$/)
+        .withMessage('El PIN debe tener 4 digitos'),
     body('status')
         .optional()
         .isIn(['activa', 'bloqueada', 'vencida', 'cancelada'])
-        .withMessage('Estado de tarjeta no válido'),
+        .withMessage('Estado de tarjeta no valido'),
+    body('cardNumber')
+        .optional()
+        .custom(() => {
+            throw new Error('No se permite actualizar cardNumber');
+        }),
     checkValidators,
 ];
 
-// Validaciones para obtener/eliminar tarjeta específica
+// Validaciones para obtener/eliminar tarjeta especifica
 export const validateCardById = [
     validateJWT,
     requireRole('ADMIN_ROLE', 'MANAGER_ROLE'),

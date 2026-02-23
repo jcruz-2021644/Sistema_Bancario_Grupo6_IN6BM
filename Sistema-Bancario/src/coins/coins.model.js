@@ -3,11 +3,6 @@
 import mongoose from "mongoose";
 
 const currencySchema = mongoose.Schema({
-    currencyId: {
-        type: String,
-        unique: true,
-        required: true
-    },
     code: {
         type: String,
         required: [true, 'El código de moneda es requerido'],

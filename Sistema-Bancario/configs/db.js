@@ -26,7 +26,13 @@ export const dbConnection = async () => {
         mongoose.connection.on('disconnected', () => {
             console.log('MongoDB | desconectando0 a mongoDB');
         });
-        await mongoose.connect(process.env.URI_MONGO, {
+        const mongoUri = process.env.MONGO_URI || process.env.URI_MONGO;
+        if (!mongoUri) {
+            console.log('MongoDB | URI de conexión no definida. Por favor establece MONGO_URI en el archivo .env');
+            return;
+        }
+
+        await mongoose.connect(mongoUri, {
             serverSelectionTimeoutMS: 5000,
             maxPoolSize: 10
         })
