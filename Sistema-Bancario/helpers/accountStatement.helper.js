@@ -1,168 +1,195 @@
-const escapePdfText = (text) => String(text)
-    .replace(/\\/g, '\\\\')
-    .replace(/\(/g, '\\(')
-    .replace(/\)/g, '\\)');
+const escapePdfText = (text) =>
+    String(text)
+        .replace(/\\/g, '\\\\')
+        .replace(/\(/g, '\\(')
+        .replace(/\)/g, '\\)');
 
-// ─── Constants ───────────────────────────────────────────────────────────────
-const PAGE_W = 612;
-const PAGE_H = 792;
-const MARGIN_X = 50;
-const MARGIN_Y = 60;
-const CONTENT_W = PAGE_W - MARGIN_X * 2; // 512 pt
-const RIGHT_X = MARGIN_X + CONTENT_W;    // 562 pt
+const PAGE_W    = 612;
+const PAGE_H    = 792;
+const MARGIN_X  = 48;
+const MARGIN_Y  = 52;
+const CONTENT_W = PAGE_W - MARGIN_X * 2;
+const RIGHT_X   = MARGIN_X + CONTENT_W;
+const CHAR_W    = 0.52;
 
-// Approximate glyph width multiplier for Helvetica at 1pt
-const CHAR_W = 0.52;
-const approxWidth = (text, fontSize) => String(text).length * fontSize * CHAR_W;
-const centerX = (text, fontSize) =>
-    MARGIN_X + (CONTENT_W - approxWidth(text, fontSize)) / 2;
-const rightX = (text, fontSize) =>
-    RIGHT_X - approxWidth(text, fontSize);
+const approxWidth = (text, fs) => String(text).length * fs * CHAR_W;
+const centerX     = (text, fs) => MARGIN_X + (CONTENT_W - approxWidth(text, fs)) / 2;
+const rightX      = (text, fs) => RIGHT_X - approxWidth(text, fs);
 
-// ─── Content Stream Helpers ──────────────────────────────────────────────────
-// Each helper returns an array of PDF content stream operator strings.
+// ─── PDF primitive operators ──────────────────────────────────────────────────
 
 const opText = (x, y, font, size, text) =>
     `BT /${font} ${size} Tf ${x.toFixed(1)} ${y.toFixed(1)} Td (${escapePdfText(text)}) Tj ET`;
 
-const opLine = (x1, y1, x2, y2, width = 0.5, gray = 0.6) => [
-    `${gray} G`,
-    `${width} w`,
-    `${x1.toFixed(1)} ${y1.toFixed(1)} m ${x2.toFixed(1)} ${y2.toFixed(1)} l S`,
-    `0 G`,
+const opColorText = (x, y, font, size, text, r, g, b) => [
+    `${r.toFixed(3)} ${g.toFixed(3)} ${b.toFixed(3)} rg`,
+    opText(x, y, font, size, text),
+    `0 0 0 rg`,
 ];
 
-// ─── Page Layout Engine ──────────────────────────────────────────────────────
+const opRect = (x, y, w, h, r, g, b) => [
+    `${r.toFixed(3)} ${g.toFixed(3)} ${b.toFixed(3)} rg`,
+    `${x.toFixed(1)} ${y.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)} re f`,
+    `0 0 0 rg`,
+];
+
+const opLine = (x1, y1, x2, y2, width = 0.5, r = 0.78, g = 0.78, b = 0.78) => [
+    `${r.toFixed(3)} ${g.toFixed(3)} ${b.toFixed(3)} RG`,
+    `${width} w`,
+    `${x1.toFixed(1)} ${y1.toFixed(1)} m ${x2.toFixed(1)} ${y2.toFixed(1)} l S`,
+    `0 0 0 RG`,
+];
+
+// ─── Brand palette ────────────────────────────────────────────────────────────
+
+const BLUE_D = [0.094, 0.196, 0.384];
+const BLUE_M = [0.157, 0.337, 0.627];
+const BLUE_L = [0.918, 0.937, 0.976];
+const GOLD   = [0.824, 0.647, 0.173];
+const GREY_L = [0.965, 0.965, 0.965];
+const WHITE  = [1, 1, 1];
+
+// ─── Layout engine ────────────────────────────────────────────────────────────
 /**
- * Accepts a list of drawing commands and returns an array of pages,
- * each with a `lines` array of PDF content stream strings.
- *
  * Command types:
- *   { type: 'title',    text }
- *   { type: 'subtitle', text }
- *   { type: 'heading',  text }
- *   { type: 'text',     text }
- *   { type: 'keyvalue', key, value }
+ *   { type: 'coverHeader', bankName, accountOwner }
+ *   { type: 'sectionHeader', text }
+ *   { type: 'keyvalue', key, value, zebra? }
+ *   { type: 'txRow', date, label, amount, isDebit, index }
+ *   { type: 'totalRow', key, value }
  *   { type: 'divider' }
- *   { type: 'spacer',   h? }   (h = pt, default 10)
+ *   { type: 'spacer', h? }
+ *   { type: 'text', text }
+ *   { type: 'footer', text }
  */
 const buildPages = (commands) => {
     const pages = [];
-    let lines = [];
-    let y = PAGE_H - MARGIN_Y;
+    let ops = [];
+    let y   = PAGE_H - MARGIN_Y;
 
-    const flush = () => { pages.push({ lines }); lines = []; y = PAGE_H - MARGIN_Y; };
+    const flush = () => { pages.push({ ops }); ops = []; y = PAGE_H - MARGIN_Y; };
     const need  = (h) => { if (y - h < MARGIN_Y) flush(); };
     const drop  = (h) => { y -= h; };
 
     for (const cmd of commands) {
         switch (cmd.type) {
 
-            case 'title': {
-                const fs = 16, h = 28;
-                need(h);
-                lines.push(opText(centerX(cmd.text, fs), y, 'F2', fs, cmd.text));
-                drop(h);
+            case 'coverHeader': {
+                const blockH = 90;
+                need(blockH + 20);
+
+                ops.push(...opRect(0, PAGE_H - MARGIN_Y - blockH, PAGE_W, blockH + MARGIN_Y, ...BLUE_D));
+                ops.push(...opRect(0, PAGE_H - MARGIN_Y - blockH - 3, PAGE_W, 3, ...GOLD));
+
+                const titleFs = 22;
+                const titleTxt = 'Estado de Cuenta';
+                ops.push(...opColorText(centerX(titleTxt, titleFs), PAGE_H - MARGIN_Y - 38, 'F2', titleFs, titleTxt, ...WHITE));
+                ops.push(...opColorText(centerX(cmd.bankName, 11), PAGE_H - MARGIN_Y - 62, 'F1', 11, cmd.bankName, ...GOLD));
+
+                y -= blockH + 4;
+                drop(10);
                 break;
             }
 
-            case 'subtitle': {
-                const fs = 11, h = 20;
-                need(h);
-                lines.push(opText(centerX(cmd.text, fs), y, 'F1', fs, cmd.text));
-                drop(h);
-                break;
-            }
-
-            case 'heading': {
-                const fs = 10, h = 18;
-                need(h);
-                lines.push(opText(MARGIN_X, y, 'F2', fs, cmd.text.toUpperCase()));
-                drop(h);
-                break;
-            }
-
-            case 'text': {
-                const fs = 9, h = 14;
-                need(h);
-                lines.push(opText(MARGIN_X, y, 'F1', fs, cmd.text));
-                drop(h);
+            case 'sectionHeader': {
+                const h = 22;
+                need(h + 6);
+                drop(6);
+                ops.push(...opRect(MARGIN_X - 4, y - h + 5, CONTENT_W + 8, h, ...BLUE_L));
+                ops.push(...opRect(MARGIN_X - 4, y - h + 5, 3, h, ...BLUE_M));
+                ops.push(...opColorText(MARGIN_X + 6, y - 10, 'F2', 8.5, cmd.text.toUpperCase(), ...BLUE_D));
+                drop(h + 2);
                 break;
             }
 
             case 'keyvalue': {
-                const fs = 9, h = 14;
+                const h = 16;
                 need(h);
-                lines.push(opText(MARGIN_X,             y, 'F1', fs, cmd.key));
-                lines.push(opText(rightX(cmd.value, fs), y, 'F1', fs, cmd.value));
+                if (cmd.zebra) ops.push(...opRect(MARGIN_X - 4, y - h + 4, CONTENT_W + 8, h, ...GREY_L));
+                ops.push(opText(MARGIN_X + 4,           y - 2, 'F1', 8.5, cmd.key));
+                ops.push(opText(rightX(cmd.value, 8.5), y - 2, 'F1', 8.5, cmd.value));
                 drop(h);
+                break;
+            }
+
+            case 'txRow': {
+                const h = 16;
+                need(h);
+                if (cmd.index % 2 === 0) ops.push(...opRect(MARGIN_X - 4, y - h + 4, CONTENT_W + 8, h, ...GREY_L));
+                ops.push(...opColorText(MARGIN_X + 4, y - 2, 'F1', 7.5, cmd.date, 0.45, 0.45, 0.45));
+                ops.push(opText(MARGIN_X + 56, y - 2, 'F1', 8.5, cmd.label));
+                const [ar, ag, ab] = cmd.isDebit ? [0.75, 0.1, 0.1] : [0.1, 0.5, 0.22];
+                ops.push(...opColorText(rightX(cmd.amount, 8.5), y - 2, 'F1', 8.5, cmd.amount, ar, ag, ab));
+                drop(h);
+                break;
+            }
+
+            case 'totalRow': {
+                const h = 20;
+                need(h + 4);
+                drop(4);
+                ops.push(...opLine(MARGIN_X, y + 2, RIGHT_X, y + 2, 0.75, ...BLUE_M));
+                ops.push(...opRect(MARGIN_X - 4, y - h + 6, CONTENT_W + 8, h, ...BLUE_L));
+                ops.push(...opColorText(MARGIN_X + 4,         y - 3, 'F2', 9, cmd.key,   ...BLUE_D));
+                ops.push(...opColorText(rightX(cmd.value, 9), y - 3, 'F2', 9, cmd.value, ...BLUE_D));
+                drop(h + 2);
                 break;
             }
 
             case 'divider': {
-                const h = 12;
-                need(h);
-                const ly = y - 4;
-                lines.push(...opLine(MARGIN_X, ly, RIGHT_X, ly));
-                drop(h);
+                need(10);
+                ops.push(...opLine(MARGIN_X, y - 4, RIGHT_X, y - 4));
+                drop(10);
                 break;
             }
 
-            case 'spacer': {
+            case 'text': {
+                need(14);
+                ops.push(...opColorText(MARGIN_X + 4, y - 2, 'F1', 7.5, cmd.text, 0.35, 0.35, 0.35));
+                drop(14);
+                break;
+            }
+
+            case 'footer': {
+                need(20);
+                drop(6);
+                ops.push(...opRect(MARGIN_X - 4, y - 12, CONTENT_W + 8, 16, ...BLUE_D));
+                ops.push(...opColorText(centerX(cmd.text, 7.5), y - 3, 'F1', 7.5, cmd.text, ...GOLD));
+                drop(16);
+                break;
+            }
+
+            case 'spacer':
                 drop(cmd.h ?? 10);
                 break;
-            }
-
-            default: break;
         }
     }
 
-    if (lines.length) flush();
+    if (ops.length) flush();
     return pages;
 };
 
-// ─── PDF Assembly ────────────────────────────────────────────────────────────
-export const generateSimplePdfBuffer = (lines) => {
-    // Accept plain string[] for backwards-compatibility:
-    // each string becomes a { type: 'text', text } command.
-    const commands = lines.map((l) => ({ type: 'text', text: l }));
-    return generatePdfFromCommands(commands);
-};
+// ─── PDF binary assembly ──────────────────────────────────────────────────────
 
-/**
- * Core PDF builder — call this directly when you want rich formatting.
- * Embeds Helvetica (F1) and Helvetica-Bold (F2).
- */
 export const generatePdfFromCommands = (commands) => {
     const pages = buildPages(commands);
-    const N = pages.length;
+    const N     = pages.length;
 
-    // Object id plan:
-    //   1          → Catalog
-    //   2          → Pages (root)
-    //   3…(2+N)    → Page dicts
-    //   (3+N)…(2+2N) → Content streams
-    //   3+2N       → F1 (Helvetica)
-    //   4+2N       → F2 (Helvetica-Bold)
     const pageBase    = 3;
     const contentBase = pageBase + N;
     const fontF1Id    = contentBase + N;
     const fontF2Id    = fontF1Id + 1;
     const totalObjs   = fontF2Id;
 
-    const pageIds    = Array.from({ length: N }, (_, i) => pageBase + i);
-    const kidsRef    = pageIds.map((id) => `${id} 0 R`).join(' ');
-    const fontRes    = `/Font << /F1 ${fontF1Id} 0 R /F2 ${fontF2Id} 0 R >>`;
+    const pageIds = Array.from({ length: N }, (_, i) => pageBase + i);
+    const kidsRef = pageIds.map((id) => `${id} 0 R`).join(' ');
+    const fontRes = `/Font << /F1 ${fontF1Id} 0 R /F2 ${fontF2Id} 0 R >>`;
 
-    const objStrings = [];
+    const objStrings = [
+        `1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n`,
+        `2 0 obj\n<< /Type /Pages /Kids [${kidsRef}] /Count ${N} >>\nendobj\n`,
+    ];
 
-    // 1: Catalog
-    objStrings.push(`1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n`);
-
-    // 2: Pages root
-    objStrings.push(`2 0 obj\n<< /Type /Pages /Kids [${kidsRef}] /Count ${N} >>\nendobj\n`);
-
-    // Page dicts (ids 3…2+N)
     for (let i = 0; i < N; i++) {
         const pid = pageBase + i;
         const cid = contentBase + i;
@@ -173,28 +200,21 @@ export const generatePdfFromCommands = (commands) => {
         );
     }
 
-    // Content streams (ids 3+N…2+2N)
     for (let i = 0; i < N; i++) {
-        const cid    = contentBase + i;
-        const body   = pages[i].lines.join('\n');
-        const length = Buffer.byteLength(body, 'utf8');
+        const cid  = contentBase + i;
+        const body = pages[i].ops.flat().join('\n');
         objStrings.push(
-            `${cid} 0 obj\n<< /Length ${length} >>\nstream\n${body}\nendstream\nendobj\n`
+            `${cid} 0 obj\n<< /Length ${Buffer.byteLength(body, 'utf8')} >>\nstream\n${body}\nendstream\nendobj\n`
         );
     }
 
-    // Font objects
     objStrings.push(
-        `${fontF1Id} 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>\nendobj\n`
-    );
-    objStrings.push(
-        `${fontF2Id} 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>\nendobj\n`
+        `${fontF1Id} 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>\nendobj\n`,
+        `${fontF2Id} 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>\nendobj\n`,
     );
 
-    // Assemble byte stream + xref table
     let pdf = '%PDF-1.4\n';
     const offsets = [];
-
     for (const obj of objStrings) {
         offsets.push(Buffer.byteLength(pdf, 'utf8'));
         pdf += obj;
@@ -212,135 +232,98 @@ export const generatePdfFromCommands = (commands) => {
     return Buffer.from(pdf, 'utf8');
 };
 
-// ─── Statement Summary ───────────────────────────────────────────────────────
+export const generateSimplePdfBuffer = (lines) =>
+    generatePdfFromCommands(lines.map((l) => ({ type: 'text', text: l })));
+
+// ─── Statement summary builder ────────────────────────────────────────────────
+
 export const buildStatementSummary = ({ account, transactions, periodStart, periodEnd }) => {
     const totals = {
-        totalDeposits: 0,
-        totalWithdrawals: 0,
-        totalTransfersSent: 0,
-        totalTransfersReceived: 0,
-        interestEarned: 0,
-        feesCharged: 0
+        totalDeposits: 0, totalWithdrawals: 0,
+        totalTransfersSent: 0, totalTransfersReceived: 0,
+        interestEarned: 0, feesCharged: 0,
     };
-
     let netChange = 0;
 
     for (const tx of transactions) {
-        const amount = Number(tx.amount) || 0;
+        const amount        = Number(tx.amount) || 0;
         const isSource      = tx.sourceAccountNumber      === account.accountNumber;
         const isDestination = tx.destinationAccountNumber === account.accountNumber;
 
-        if (tx.transactionType === 'deposito' && isDestination) {
-            totals.totalDeposits += amount;
-            netChange += amount;
-        }
-        if (tx.transactionType === 'retiro' && isSource) {
-            totals.totalWithdrawals += amount;
-            netChange -= amount;
-        }
-        if (tx.transactionType === 'transferencia' && isSource) {
-            totals.totalTransfersSent += amount;
-            netChange -= amount;
-        }
-        if (tx.transactionType === 'transferencia' && isDestination) {
-            totals.totalTransfersReceived += amount;
-            netChange += amount;
-        }
+        if (tx.transactionType === 'deposito'     && isDestination) { totals.totalDeposits         += amount; netChange += amount; }
+        if (tx.transactionType === 'retiro'        && isSource)      { totals.totalWithdrawals       += amount; netChange -= amount; }
+        if (tx.transactionType === 'transferencia' && isSource)      { totals.totalTransfersSent     += amount; netChange -= amount; }
+        if (tx.transactionType === 'transferencia' && isDestination) { totals.totalTransfersReceived += amount; netChange += amount; }
         if (['pago_servicio', 'pago_prestamo'].includes(tx.transactionType) && isSource) {
-            totals.feesCharged += amount;
-            netChange -= amount;
+            totals.feesCharged += amount; netChange -= amount;
         }
     }
 
     const closingBalance = Number(account.balance) || 0;
-    const openingBalance = closingBalance - netChange;
-
-    return { periodStart, periodEnd, openingBalance, closingBalance, ...totals };
+    return { periodStart, periodEnd, openingBalance: closingBalance - netChange, closingBalance, ...totals };
 };
 
-// ─── Convenience: Statement PDF ──────────────────────────────────────────────
-/**
- * Generates a fully formatted bank-statement PDF.
- *
- * Usage:
- *   const summary = buildStatementSummary({ account, transactions, periodStart, periodEnd });
- *   const buffer  = generateStatementPdf({ account, summary, transactions });
- */
+// ─── Statement PDF generator ──────────────────────────────────────────────────
+
 export const generateStatementPdf = ({ account, summary, transactions }) => {
-    const fmt     = (n)  => Number(n).toLocaleString('es-GT', { style: 'currency', currency: 'GTQ' });
+    const fmt = (n) => `Q${Number(n).toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     const fmtDate = (d)  => d ? new Date(d).toLocaleDateString('es-GT') : '—';
-    const txLabel = (tx) => {
-        const labels = {
-            deposito:      'Depósito',
-            retiro:        'Retiro',
-            transferencia: 'Transferencia',
-            pago_servicio: 'Pago de Servicio',
-            pago_prestamo: 'Pago de Préstamo',
-        };
-        return labels[tx.transactionType] ?? tx.transactionType;
-    };
+    const txLabel = (tx) => ({
+        deposito:      'Deposito',
+        retiro:        'Retiro',
+        transferencia: 'Transferencia',
+        pago_servicio: 'Pago de Servicio',
+        pago_prestamo: 'Pago de Prestamo',
+    }[tx.transactionType] ?? tx.transactionType);
+
+    const isDebit = (tx) =>
+        ['retiro', 'transferencia', 'pago_servicio', 'pago_prestamo'].includes(tx.transactionType)
+        && tx.sourceAccountNumber === account.accountNumber;
 
     const commands = [
-        // ── Cover / Header ───────────────────────────────────────────────────
-        { type: 'spacer', h: 20 },
-        { type: 'title',    text: 'Estado de Cuenta' },
-        { type: 'subtitle', text: account.bankName ?? 'Banco Nacional' },
-        { type: 'spacer', h: 6 },
-        { type: 'divider' },
+        { type: 'coverHeader', bankName: account.bankName ?? 'Kinal Banks'},
+        { type: 'spacer', h: 14 },
 
-        // ── Account Info ─────────────────────────────────────────────────────
-        { type: 'spacer', h: 6 },
-        { type: 'heading',  text: 'Información de la cuenta' },
-        { type: 'spacer', h: 4 },
-        { type: 'keyvalue', key: 'Titular',        value: account.ownerName     ?? '—' },
-        { type: 'keyvalue', key: 'No. de cuenta',  value: account.accountNumber ?? '—' },
-        { type: 'keyvalue', key: 'Tipo de cuenta', value: account.accountType   ?? '—' },
-        { type: 'keyvalue', key: 'Moneda',         value: account.currency      ?? 'GTQ' },
-        { type: 'spacer', h: 6 },
-        { type: 'divider' },
+        { type: 'sectionHeader', text: 'Informacion de la cuenta' },
+        { type: 'keyvalue', key: 'Titular',        value: account.ownerName     ?? '—', zebra: false },
+        { type: 'keyvalue', key: 'No. de cuenta',  value: account.accountNumber ?? '—', zebra: true  },
+        { type: 'keyvalue', key: 'Tipo de cuenta', value: account.accountType   ?? '—', zebra: false },
+        { type: 'keyvalue', key: 'Moneda',         value: account.currency      ?? 'GTQ', zebra: true },
+        { type: 'spacer', h: 10 },
 
-        // ── Period ───────────────────────────────────────────────────────────
-        { type: 'spacer', h: 6 },
-        { type: 'heading',  text: 'Período del estado' },
-        { type: 'spacer', h: 4 },
-        { type: 'keyvalue', key: 'Fecha de inicio', value: fmtDate(summary.periodStart) },
-        { type: 'keyvalue', key: 'Fecha de corte',  value: fmtDate(summary.periodEnd) },
-        { type: 'spacer', h: 6 },
-        { type: 'divider' },
+        { type: 'sectionHeader', text: 'Periodo del estado' },
+        { type: 'keyvalue', key: 'Fecha de inicio', value: fmtDate(summary.periodStart), zebra: false },
+        { type: 'keyvalue', key: 'Fecha de corte',  value: fmtDate(summary.periodEnd),   zebra: true  },
+        { type: 'spacer', h: 10 },
 
-        // ── Summary ──────────────────────────────────────────────────────────
-        { type: 'spacer', h: 6 },
-        { type: 'heading',  text: 'Resumen de movimientos' },
-        { type: 'spacer', h: 4 },
-        { type: 'keyvalue', key: 'Saldo inicial',             value: fmt(summary.openingBalance) },
-        { type: 'keyvalue', key: 'Total depósitos',           value: fmt(summary.totalDeposits) },
-        { type: 'keyvalue', key: 'Total retiros',             value: fmt(summary.totalWithdrawals) },
-        { type: 'keyvalue', key: 'Transferencias enviadas',   value: fmt(summary.totalTransfersSent) },
-        { type: 'keyvalue', key: 'Transferencias recibidas',  value: fmt(summary.totalTransfersReceived) },
-        { type: 'keyvalue', key: 'Pagos de servicios/préstamos', value: fmt(summary.feesCharged) },
-        { type: 'spacer', h: 4 },
-        { type: 'divider' },
-        { type: 'keyvalue', key: 'SALDO FINAL',               value: fmt(summary.closingBalance) },
-        { type: 'divider' },
+        { type: 'sectionHeader', text: 'Resumen de movimientos' },
+        { type: 'keyvalue', key: 'Saldo inicial',                value: fmt(summary.openingBalance),         zebra: false },
+        //{ type: 'keyvalue', key: 'Total depositos',              value: fmt(summary.totalDeposits),          zebra: true  },
+        { type: 'keyvalue', key: 'Total retiros',                value: fmt(summary.totalWithdrawals),       zebra: false },
+        { type: 'keyvalue', key: 'Total de transferencias enviadas',      value: fmt(summary.totalTransfersSent),     zebra: true  },
+        { type: 'keyvalue', key: 'Total de transferencias recibidas',     value: fmt(summary.totalTransfersReceived), zebra: false },
+        //{ type: 'keyvalue', key: 'Pagos de servicios/prestamos', value: fmt(summary.feesCharged),            zebra: true  },
+        { type: 'totalRow', key: 'SALDO FINAL', value: fmt(summary.closingBalance) },
+        { type: 'spacer', h: 14 },
 
-        // ── Transactions ─────────────────────────────────────────────────────
-        { type: 'spacer', h: 6 },
-        { type: 'heading', text: 'Detalle de transacciones' },
-        { type: 'spacer', h: 4 },
+        { type: 'sectionHeader', text: 'Detalle de transacciones' },
+        { type: 'spacer', h: 2 },
     ];
 
-    for (const tx of transactions) {
-        const label = `${fmtDate(tx.date)}   ${txLabel(tx)}`;
-        commands.push({ type: 'keyvalue', key: label, value: fmt(tx.amount) });
-        if (tx.description) {
-            commands.push({ type: 'text', text: `  ${tx.description}` });
-        }
-    }
+    transactions.forEach((tx, i) => {
+        commands.push({
+            type:    'txRow',
+            date:    fmtDate(tx.date),
+            label:   txLabel(tx) + (tx.description ? `  -  ${tx.description}` : ''),
+            amount:  fmt(tx.amount),
+            isDebit: isDebit(tx),
+            index:   i,
+        });
+    });
 
     commands.push(
-        { type: 'spacer', h: 14 },
-        { type: 'divider' },
-        { type: 'text', text: 'Documento generado electrónicamente. No requiere firma.' },
+        { type: 'spacer', h: 20 },
+        { type: 'footer', text: 'Documento generado electronicamente. No requiere firma ni sello.' },
     );
 
     return generatePdfFromCommands(commands);

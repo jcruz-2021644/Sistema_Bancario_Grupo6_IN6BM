@@ -1,0 +1,169 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792]
+   /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> /Contents 4 0 R >>
+endobj
+4 0 obj
+<< /Length 3786 >>
+stream
+0.094 0.196 0.384 rg
+0.0 650.0 612.0 142.0 re f
+0 0 0 rg
+0.824 0.647 0.173 rg
+0.0 647.0 612.0 3.0 re f
+0 0 0 rg
+1.000 1.000 1.000 rg
+BT /F2 22 Tf 214.5 702.0 Td (Estado de Cuenta) Tj ET
+0 0 0 rg
+0.824 0.647 0.173 rg
+BT /F1 11 Tf 266.0 678.0 Td (Banco Nacional) Tj ET
+0 0 0 rg
+0.918 0.937 0.976 rg
+44.0 599.0 524.0 22.0 re f
+0 0 0 rg
+0.157 0.337 0.627 rg
+44.0 599.0 3.0 22.0 re f
+0 0 0 rg
+0.094 0.196 0.384 rg
+BT /F2 8.5 Tf 54.0 606.0 Td (INFORMACION DE LA CUENTA) Tj ET
+0 0 0 rg
+BT /F1 8.5 Tf 52.0 590.0 Td (Titular) Tj ET
+BT /F1 8.5 Tf 493.3 590.0 Td (usr_F2Z26bFR9w3J) Tj ET
+0.965 0.965 0.965 rg
+44.0 564.0 524.0 16.0 re f
+0 0 0 rg
+BT /F1 8.5 Tf 52.0 574.0 Td (No. de cuenta) Tj ET
+BT /F1 8.5 Tf 511.0 574.0 Td (ACC-053-1081) Tj ET
+BT /F1 8.5 Tf 52.0 558.0 Td (Tipo de cuenta) Tj ET
+BT /F1 8.5 Tf 537.5 558.0 Td (ahorro) Tj ET
+0.965 0.965 0.965 rg
+44.0 532.0 524.0 16.0 re f
+0 0 0 rg
+BT /F1 8.5 Tf 52.0 542.0 Td (Moneda) Tj ET
+BT /F1 8.5 Tf 550.7 542.0 Td (GTQ) Tj ET
+0.918 0.937 0.976 rg
+44.0 495.0 524.0 22.0 re f
+0 0 0 rg
+0.157 0.337 0.627 rg
+44.0 495.0 3.0 22.0 re f
+0 0 0 rg
+0.094 0.196 0.384 rg
+BT /F2 8.5 Tf 54.0 502.0 Td (PERIODO DEL ESTADO) Tj ET
+0 0 0 rg
+BT /F1 8.5 Tf 52.0 486.0 Td (Fecha de inicio) Tj ET
+BT /F1 8.5 Tf 528.6 486.0 Td (1/2/2026) Tj ET
+0.965 0.965 0.965 rg
+44.0 460.0 524.0 16.0 re f
+0 0 0 rg
+BT /F1 8.5 Tf 52.0 470.0 Td (Fecha de corte) Tj ET
+BT /F1 8.5 Tf 524.2 470.0 Td (23/2/2026) Tj ET
+0.918 0.937 0.976 rg
+44.0 423.0 524.0 22.0 re f
+0 0 0 rg
+0.157 0.337 0.627 rg
+44.0 423.0 3.0 22.0 re f
+0 0 0 rg
+0.094 0.196 0.384 rg
+BT /F2 8.5 Tf 54.0 430.0 Td (RESUMEN DE MOVIMIENTOS) Tj ET
+0 0 0 rg
+BT /F1 8.5 Tf 52.0 414.0 Td (Saldo inicial) Tj ET
+BT /F1 8.5 Tf 519.8 414.0 Td (Q88,888.00) Tj ET
+BT /F1 8.5 Tf 52.0 398.0 Td (Total retiros) Tj ET
+BT /F1 8.5 Tf 541.9 398.0 Td (Q0.00) Tj ET
+0.965 0.965 0.965 rg
+44.0 372.0 524.0 16.0 re f
+0 0 0 rg
+BT /F1 8.5 Tf 52.0 382.0 Td (Total de transferencias enviadas) Tj ET
+BT /F1 8.5 Tf 533.1 382.0 Td (Q500.00) Tj ET
+BT /F1 8.5 Tf 52.0 366.0 Td (Total de transferencias recibidas) Tj ET
+BT /F1 8.5 Tf 533.1 366.0 Td (Q200.00) Tj ET
+0.157 0.337 0.627 RG
+0.75 w
+48.0 350.0 m 564.0 350.0 l S
+0 0 0 RG
+0.918 0.937 0.976 rg
+44.0 334.0 524.0 20.0 re f
+0 0 0 rg
+0.094 0.196 0.384 rg
+BT /F2 9 Tf 52.0 345.0 Td (SALDO FINAL) Tj ET
+0 0 0 rg
+0.094 0.196 0.384 rg
+BT /F2 9 Tf 517.2 345.0 Td (Q88,588.00) Tj ET
+0 0 0 rg
+0.918 0.937 0.976 rg
+44.0 289.0 524.0 22.0 re f
+0 0 0 rg
+0.157 0.337 0.627 rg
+44.0 289.0 3.0 22.0 re f
+0 0 0 rg
+0.094 0.196 0.384 rg
+BT /F2 8.5 Tf 54.0 296.0 Td (DETALLE DE TRANSACCIONES) Tj ET
+0 0 0 rg
+0.965 0.965 0.965 rg
+44.0 268.0 524.0 16.0 re f
+0 0 0 rg
+0.450 0.450 0.450 rg
+BT /F1 7.5 Tf 52.0 278.0 Td (23/2/2026) Tj ET
+0 0 0 rg
+BT /F1 8.5 Tf 104.0 278.0 Td (Transferencia  -  Transferencia a Juan) Tj ET
+0.750 0.100 0.100 rg
+BT /F1 8.5 Tf 533.1 278.0 Td (Q250.00) Tj ET
+0 0 0 rg
+0.450 0.450 0.450 rg
+BT /F1 7.5 Tf 52.0 262.0 Td (23/2/2026) Tj ET
+0 0 0 rg
+BT /F1 8.5 Tf 104.0 262.0 Td (Transferencia  -  Transferencia a Juan) Tj ET
+0.750 0.100 0.100 rg
+BT /F1 8.5 Tf 533.1 262.0 Td (Q250.00) Tj ET
+0 0 0 rg
+0.965 0.965 0.965 rg
+44.0 236.0 524.0 16.0 re f
+0 0 0 rg
+0.450 0.450 0.450 rg
+BT /F1 7.5 Tf 52.0 246.0 Td (23/2/2026) Tj ET
+0 0 0 rg
+BT /F1 8.5 Tf 104.0 246.0 Td (Transferencia  -  Transferencia a Juan) Tj ET
+0.100 0.500 0.220 rg
+BT /F1 8.5 Tf 533.1 246.0 Td (Q100.00) Tj ET
+0 0 0 rg
+0.450 0.450 0.450 rg
+BT /F1 7.5 Tf 52.0 230.0 Td (23/2/2026) Tj ET
+0 0 0 rg
+BT /F1 8.5 Tf 104.0 230.0 Td (Transferencia  -  Transferencia a Juan) Tj ET
+0.100 0.500 0.220 rg
+BT /F1 8.5 Tf 533.1 230.0 Td (Q100.00) Tj ET
+0 0 0 rg
+0.094 0.196 0.384 rg
+44.0 178.0 524.0 16.0 re f
+0 0 0 rg
+0.824 0.647 0.173 rg
+BT /F1 7.5 Tf 181.2 187.0 Td (Documento generado electronicamente. No requiere firma ni sello.) Tj ET
+0 0 0 rg
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000254 00000 n 
+0000004092 00000 n 
+0000004189 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+4291
+%%EOF

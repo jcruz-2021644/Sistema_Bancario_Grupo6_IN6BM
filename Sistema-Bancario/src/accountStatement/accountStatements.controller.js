@@ -7,7 +7,7 @@ import Account from '../accounts/accounts.model.js';
 import Transaction from '../transaction/transaction.model.js';
 import {
     buildStatementSummary,
-    generateSimplePdfBuffer
+    generateStatementPdf          
 } from '../../helpers/accountStatement.helper.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -29,12 +29,11 @@ const parseDateRange = (query) => {
     const now = new Date();
     const defaultStart = new Date(now.getFullYear(), now.getMonth(), 1);
     const periodStart = query.periodStart ? new Date(query.periodStart) : defaultStart;
-    const periodEnd = query.periodEnd ? new Date(query.periodEnd) : now;
+    const periodEnd   = query.periodEnd   ? new Date(query.periodEnd)   : now;
 
     if (Number.isNaN(periodStart.getTime()) || Number.isNaN(periodEnd.getTime())) {
         throw new Error('periodStart y periodEnd deben ser fechas validas');
     }
-
     if (periodStart > periodEnd) {
         throw new Error('periodStart no puede ser mayor que periodEnd');
     }
@@ -42,36 +41,15 @@ const parseDateRange = (query) => {
     return { periodStart, periodEnd };
 };
 
-const buildPdfLines = ({ account, summary }) => ([
-    'Estado de Cuenta',
-    `Cuenta: ${account.accountNumber}`,
-    `Usuario: ${account.userId}`,
-    `Moneda: ${account.currencyCode}`,
-    `Periodo: ${summary.periodStart.toISOString()} - ${summary.periodEnd.toISOString()}`,
-    `Saldo inicial: ${summary.openingBalance.toFixed(2)}`,
-    `Saldo final: ${summary.closingBalance.toFixed(2)}`,
-    `Depositos: ${summary.totalDeposits.toFixed(2)}`,
-    `Retiros: ${summary.totalWithdrawals.toFixed(2)}`,
-    `Transferencias enviadas: ${summary.totalTransfersSent.toFixed(2)}`,
-    `Transferencias recibidas: ${summary.totalTransfersReceived.toFixed(2)}`,
-    `Cargos: ${summary.feesCharged.toFixed(2)}`
-]);
-
-//agregar
 export const createAccountStatement = async (req, res) => {
     try {
         const accountStatementData = req.body;
 
         if (accountStatementData.accountNumber && !accountStatementData.accountId) {
             const account = await resolveAccountByCode(accountStatementData.accountNumber);
-
             if (!account) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Cuenta no encontrada'
-                });
+                return res.status(404).json({ success: false, message: 'Cuenta no encontrada' });
             }
-
             accountStatementData.accountId = account._id;
         }
 
@@ -84,11 +62,7 @@ export const createAccountStatement = async (req, res) => {
             data: accountStatement
         });
     } catch (error) {
-        res.status(400).json({
-            success: false,
-            message: 'Error al crear el estado de cuenta',
-            error: error.message
-        });
+        res.status(400).json({ success: false, message: 'Error al crear el estado de cuenta', error: error.message });
     }
 };
 
@@ -99,29 +73,20 @@ export const getAccountStatements = async (req, res) => {
 
         if (accountId) {
             if (!mongoose.Types.ObjectId.isValid(accountId)) {
-                return res.status(400).json({
-                    success: false,
-                    message: 'accountId invalido'
-                });
+                return res.status(400).json({ success: false, message: 'accountId invalido' });
             }
-
             filter.accountId = new mongoose.Types.ObjectId(accountId);
         }
 
         if (accountNumber) {
             const account = await resolveAccountByCode(accountNumber);
-
             if (!account) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Cuenta no encontrada'
-                });
+                return res.status(404).json({ success: false, message: 'Cuenta no encontrada' });
             }
-
             filter.accountId = account._id;
         }
 
-        const numericPage = parseInt(page, 10);
+        const numericPage  = parseInt(page, 10);
         const numericLimit = parseInt(limit, 10);
 
         const accountStatements = await AccountStatement.find(filter)
@@ -142,42 +107,26 @@ export const getAccountStatements = async (req, res) => {
             }
         });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Error al mandar los estados de cuenta',
-            error: error.message
-        });
+        res.status(500).json({ success: false, message: 'Error al mandar los estados de cuenta', error: error.message });
     }
 };
 
 export const updateAccountStatement = async (req, res) => {
     try {
         const { id } = req.params;
-        const accountStatementData = req.body;
         const accountStatement = await AccountStatement.findByIdAndUpdate(
             id,
-            accountStatementData,
+            req.body,
             { new: true, runValidators: true }
         );
 
         if (!accountStatement) {
-            return res.status(404).json({
-                success: false,
-                message: 'Estado de cuenta no encontrado'
-            });
+            return res.status(404).json({ success: false, message: 'Estado de cuenta no encontrado' });
         }
 
-        res.status(200).json({
-            success: true,
-            message: 'Estado de cuenta actualizado exitosamente',
-            data: accountStatement
-        });
+        res.status(200).json({ success: true, message: 'Estado de cuenta actualizado exitosamente', data: accountStatement });
     } catch (error) {
-        res.status(400).json({
-            success: false,
-            message: 'Error al actualizar el estado de cuenta',
-            error: error.message
-        });
+        res.status(400).json({ success: false, message: 'Error al actualizar el estado de cuenta', error: error.message });
     }
 };
 
@@ -187,22 +136,12 @@ export const deleteAccountStatement = async (req, res) => {
         const accountStatement = await AccountStatement.findByIdAndDelete(id);
 
         if (!accountStatement) {
-            return res.status(404).json({
-                success: false,
-                message: 'Estado de cuenta no encontrado'
-            });
+            return res.status(404).json({ success: false, message: 'Estado de cuenta no encontrado' });
         }
 
-        res.status(200).json({
-            success: true,
-            message: 'Estado de cuenta eliminado exitosamente'
-        });
+        res.status(200).json({ success: true, message: 'Estado de cuenta eliminado exitosamente' });
     } catch (error) {
-        res.status(400).json({
-            success: false,
-            message: 'Error al eliminar el estado de cuenta',
-            error: error.message
-        });
+        res.status(400).json({ success: false, message: 'Error al eliminar el estado de cuenta', error: error.message });
     }
 };
 
@@ -212,22 +151,12 @@ export const getAccountStatementById = async (req, res) => {
         const accountStatement = await AccountStatement.findById(id);
 
         if (!accountStatement) {
-            return res.status(404).json({
-                success: false,
-                message: 'Estado de cuenta no encontrado'
-            });
+            return res.status(404).json({ success: false, message: 'Estado de cuenta no encontrado' });
         }
 
-        res.status(200).json({
-            success: true,
-            data: accountStatement
-        });
+        res.status(200).json({ success: true, data: accountStatement });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Error al buscar el estado de cuenta',
-            error: error.message
-        });
+        res.status(500).json({ success: false, message: 'Error al buscar el estado de cuenta', error: error.message });
     }
 };
 
@@ -237,10 +166,7 @@ export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
         const account = await resolveAccountByCode(accountNumber);
 
         if (!account) {
-            return res.status(404).json({
-                success: false,
-                message: 'Cuenta no encontrada'
-            });
+            return res.status(404).json({ success: false, message: 'Cuenta no encontrada' });
         }
 
         const { periodStart, periodEnd } = parseDateRange(req.query);
@@ -254,31 +180,43 @@ export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
             ]
         }).sort({ transactionDate: 1 });
 
-        const summary = buildStatementSummary({
-            account,
-            transactions,
-            periodStart,
-            periodEnd
-        });
+        const summary = buildStatementSummary({ account, transactions, periodStart, periodEnd });
 
         const statement = await AccountStatement.create({
-            accountId: account._id,
-            periodStart: summary.periodStart,
-            periodEnd: summary.periodEnd,
-            openingBalance: summary.openingBalance,
-            closingBalance: summary.closingBalance,
-            totalDeposits: summary.totalDeposits,
-            totalWithdrawals: summary.totalWithdrawals,
-            totalTransfersSent: summary.totalTransfersSent,
+            accountId:             account._id,
+            periodStart:           summary.periodStart,
+            periodEnd:             summary.periodEnd,
+            openingBalance:        summary.openingBalance,
+            closingBalance:        summary.closingBalance,
+            totalDeposits:         summary.totalDeposits,
+            totalWithdrawals:      summary.totalWithdrawals,
+            totalTransfersSent:    summary.totalTransfersSent,
             totalTransfersReceived: summary.totalTransfersReceived,
-            interestEarned: summary.interestEarned,
-            feesCharged: summary.feesCharged
+            interestEarned:        summary.interestEarned,
+            feesCharged:           summary.feesCharged
         });
 
-        const pdfBuffer = generateSimplePdfBuffer(buildPdfLines({ account, summary }));
-        ensureStatementsDir();
+        const pdfBuffer = generateStatementPdf({
+            account: {
+                bankName:      account.bankName      ?? 'Banco Nacional',
+                ownerName:     account.ownerName     ?? account.userId,
+                accountNumber: account.accountNumber,
+                accountType:   account.accountType   ?? account.type,
+                currency:      account.currencyCode  ?? 'GTQ',
+            },
+            summary,
+            transactions: transactions.map((tx) => ({
+                date:                   tx.transactionDate,
+                transactionType:        tx.transactionType,
+                amount:                 tx.amount,
+                description:            tx.description,
+                sourceAccountNumber:    tx.sourceAccountNumber,
+                destinationAccountNumber: tx.destinationAccountNumber,
+            })),
+        });
 
-        const filename = `statement-${account.accountNumber}-${statement._id}.pdf`;
+        ensureStatementsDir();
+        const filename   = `statement-${account.accountNumber}-${statement._id}.pdf`;
         const outputPath = path.join(STATEMENTS_DIR, filename);
         fs.writeFileSync(outputPath, pdfBuffer);
 
@@ -296,4 +234,3 @@ export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
         });
     }
 };
-
