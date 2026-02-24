@@ -34,8 +34,8 @@ export const validateCreateAccountLock = [
         .withMessage('La fecha de desbloqueo debe ser válida'),
     body('lockedBy')
         .optional()
-        .isMongoId()
-        .withMessage('El ID del bloqueador no es válido'),
+        .matches(/^usr_/)
+        .withMessage('El ID del bloqueador debe empezar con usr_'),
     body('automatic')
         .optional()
         .isBoolean()
@@ -72,8 +72,8 @@ export const validateUpdateAccountLock = [
         .withMessage('La fecha de desbloqueo debe ser válida'),
     body('unlockedBy')
         .optional()
-        .isMongoId()
-        .withMessage('El ID del desbloqueador no es válido'),
+        .matches(/^usr_/)
+        .withMessage('El ID del desbloqueador debe empezar con usr_'),
     body('status')
         .optional()
         .isIn(['bloqueado', 'desbloqueado'])
