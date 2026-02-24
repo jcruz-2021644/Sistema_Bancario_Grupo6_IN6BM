@@ -126,3 +126,70 @@ export const deleteCurrency = async (req, res) => {
         });
     }
 }
+
+export const getCurrencyById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const currency = await Currency.findById(id);
+        if (!currency) {
+            return res.status(404).json({
+                success: false,
+                message: 'Moneda no encontrada'
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: currency
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al buscar la moneda',
+            error: error.message
+        });
+    }
+};
+
+
+export const changeCurrencyStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        // Validar estados permitidos
+        const allowedStatus = ['activa', 'inactiva'];
+
+        if (!allowedStatus.includes(status)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Estado no permitido'
+            });
+        }
+
+        const currency = await Currency.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true }
+        );
+
+        if (!currency) {
+            return res.status(404).json({
+                success: false,
+                message: 'Moneda no encontrada'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: `Moneda ${status} correctamente`,
+            data: currency
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al cambiar estado',
+            error: error.message
+        });
+    }
+};

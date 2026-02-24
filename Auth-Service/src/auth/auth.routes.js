@@ -60,4 +60,8 @@ router.get('/profile', validateJWT, authController.getProfile);
 
 router.post('/profile/by-id', requestLimit, authController.getProfileById);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> dd6f82ae1626f4387311362a8587b9fabcd054fa
 export default router;

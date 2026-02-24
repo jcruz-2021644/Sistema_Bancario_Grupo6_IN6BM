@@ -3,6 +3,10 @@ import {
     updateUserRole,
     getUserRoles,
     getUsersByRole,
+<<<<<<< HEAD
+=======
+    updateUserIncome,
+>>>>>>> dd6f82ae1626f4387311362a8587b9fabcd054fa
 } from './user.controller.js';
 
 const router = Router();
@@ -16,4 +20,9 @@ router.get('/:userId/roles', ...getUserRoles);
 // GET /api/v1/users/by-role/:roleName
 router.get('/by-role/:roleName', ...getUsersByRole);
 
+<<<<<<< HEAD
+=======
+// PUT /api/v1/users/:userId/income
+router.put('/:userId/income', ...updateUserIncome);
+>>>>>>> dd6f82ae1626f4387311362a8587b9fabcd054fa
 export default router;

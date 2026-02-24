@@ -2,18 +2,18 @@
 
 import mongoose from "mongoose";
 
-const cardSchema  = mongoose.Schema({
-    accountId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Account',
-        required: [true, 'La cuenta es requerida']
+const cardSchema = mongoose.Schema({
+    userId: {
+        type: String,
+        required: [true, 'El usuario es requerido'],
+        match: [/^usr_[A-Za-z0-9]+$/, 'Formato de userId invalido']
     },
     cardNumber: {
         type: String,
-        required: [true, 'El número de tarjeta es requerido'],
+        required: [true, 'El numero de tarjeta es requerido'],
         unique: true,
         trim: true,
-        maxLength: [16, 'El número de tarjeta debe tener 16 dígitos']
+        match: [/^\d{16}$/, 'El numero de tarjeta debe tener 16 digitos']
     },
     cardType: {
         type: String,
@@ -26,7 +26,8 @@ const cardSchema  = mongoose.Schema({
     cvv: {
         type: String,
         required: [true, 'El CVV es requerido'],
-        maxLength: [4, 'El CVV debe tener máximo 4 dígitos']
+        trim: true,
+        match: [/^\d{3,4}$/, 'El CVV debe tener 3 o 4 digitos']
     },
     //fecha de emision
     issueDate: {
@@ -46,7 +47,9 @@ const cardSchema  = mongoose.Schema({
     //saldo disponible (solo para tarjetas de credito)
     availableBalance: {
         type: Number,
-        default: 0
+        default: 0,
+        required: [true, 'El saldo disponible es requerido'],
+        min: [100, 'El saldo disponible debe ser al menos 100']
     },
     status: {
         type: String,
@@ -58,14 +61,16 @@ const cardSchema  = mongoose.Schema({
     },
     pin: {
         type: String,
-        required: [true, 'El PIN es requerido']
+        required: [true, 'El PIN es requerido'],
+        trim: true,
+        match: [/^\d{4}$/, 'El PIN debe tener 4 digitos']
     }
 }, {
     timestamps: true,
     versionKey: false
 });
 
-cardSchema.index({ accountId: 1 });
+cardSchema.index({ userId: 1 });
 cardSchema.index({ status: 1 });
 
 export default mongoose.model('Card', cardSchema);

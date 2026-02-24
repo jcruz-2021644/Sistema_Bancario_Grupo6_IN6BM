@@ -1,6 +1,10 @@
 import { asyncHandler } from '../../middlewares/server-genericError-handler.js';
 import { validateJWT } from '../../middlewares/validate-JWT.js';
 import { findUserById } from '../../helpers/user-db.js';
+<<<<<<< HEAD
+=======
+import { User } from './user.model.js';
+>>>>>>> dd6f82ae1626f4387311362a8587b9fabcd054fa
 import {
     getUserRoleNames,
     getUsersByRole as repoGetUsersByRole,
@@ -84,3 +88,52 @@ export const getUsersByRole = [
         return res.status(200).json(payload);
     }),
 ];
+<<<<<<< HEAD
+=======
+
+export const updateUserIncome = [
+    validateJWT,
+    asyncHandler(async (req, res) => {
+        const { userId } = req.params;
+        const { income } = req.body;
+
+        // Validar que venga income
+        if (income === undefined) {
+            return res.status(400).json({
+                success: false,
+                message: 'Income is required',
+            });
+        }
+
+        // Validar que no sea negativo
+        if (income < 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'Income cannot be negative',
+            });
+        }
+
+        const user = await User.findByPk(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'User not found',
+            });
+        }
+
+        // Actualizar income
+        user.Income = income;
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: 'Income updated successfully',
+            data: {
+                id: user.Id,
+                income: user.Income,
+            },
+        });
+    }),
+];
+>>>>>>> dd6f82ae1626f4387311362a8587b9fabcd054fa

@@ -34,6 +34,7 @@ const routes = (app) => {
     app.use(`${BASE_PATH}/users`, userRoutes);
 
     app.get(`${BASE_PATH}/health`, (req, res) => {
+<<<<<<< HEAD
     res.status(200).json({
         status: 'Healthy',
         timestamp: new Date().toISOString(),
@@ -41,12 +42,22 @@ const routes = (app) => {
     });
     });
   // 404 handler (standardized)
+=======
+        res.status(200).json({
+            status: 'Healthy',
+            timestamp: new Date().toISOString(),
+            service: 'SistemaBancario Authentication Service',
+        });
+    });
+    // 404 handler (standardized)
+>>>>>>> dd6f82ae1626f4387311362a8587b9fabcd054fa
     app.use(notFound);
 };
 
 export const initServer = async () => {
     const app = express();
     const PORT = process.env.PORT;
+<<<<<<< HEAD
     app.set('trust proxy', 1);
 
     try {
@@ -68,3 +79,30 @@ export const initServer = async () => {
         process.exit(1);
     }
 };
+=======
+    app.set('trust proxy', 1); // Corregido el typo 'trus'
+
+    try {
+        await dbConnection();
+
+        // Seed de roles y admin
+        const { seedRoles } = await import('../helpers/role-seed.js');
+        await seedRoles();
+
+        const { seedDefaultAdmin } = await import('../helpers/admin-seed.js');
+        await seedDefaultAdmin();
+
+        middlewares(app);
+        routes(app);
+
+        app.listen(PORT, () => {
+            console.log(`Sistema Bancario Admin Server running on port ${PORT}`);
+            console.log(`Health check: http://localhost:${PORT}${BASE_PATH}/health`);
+        })
+    } catch (error) {
+        console.error(`Error starting Admin Server: ${error.message}`);
+        process.exit(1);
+    }
+}
+
+>>>>>>> dd6f82ae1626f4387311362a8587b9fabcd054fa

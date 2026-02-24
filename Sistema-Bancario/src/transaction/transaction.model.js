@@ -3,15 +3,15 @@
 import mongoose from "mongoose";
 const transactionSchema = mongoose.Schema({
     //cuenta de origen
-    sourceAccountId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Account'
+    sourceAccountNumber: {
+        type: String,
+        trim: true
     },
 
     //cuenta de destino
-    destinationAccountId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Account'
+    destinationAccountNumber: {
+        type: String,
+        trim: true
     },
     //tipo de transaccion
     transactionType: {
@@ -28,11 +28,13 @@ const transactionSchema = mongoose.Schema({
         required: [true, 'El monto es requerido'],
         min: [0.01, 'El monto debe ser mayor a 0']
     },
-    //id de moneda
-    currencyId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Currency',
-        required: [true, 'Currency is required']
+    //codigo de moneda
+    currencyCode: {
+        type: String,
+        required: [true, 'Currency code is required'],
+        uppercase: true,
+        trim: true,
+        match: [/^[A-Z]{3}$/, 'Currency code must have format ABC']
     },
     //fecha de transaccion
     transactionDate: {
@@ -65,8 +67,7 @@ const transactionSchema = mongoose.Schema({
     },
     //usuario que ejecuta la transaccion
     executedByUserId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        type: String,
         required: [true, 'Executing user is required']
     }
 }, {
@@ -74,8 +75,8 @@ const transactionSchema = mongoose.Schema({
     versionKey: false
 });
 
-transactionSchema.index({ sourceAccountId: 1 });
-transactionSchema.index({ destinationAccountId: 1 });
+transactionSchema.index({ sourceAccountNumber: 1 });
+transactionSchema.index({ destinationAccountNumber: 1 });
 transactionSchema.index({ transactionType: 1 });
 transactionSchema.index({ status: 1 });
 transactionSchema.index({ transactionDate: -1 });

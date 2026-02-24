@@ -1,0 +1,1787 @@
+{
+  "info": {
+    "_postman_id": "97ca161f-fd5d-411d-a758-a3743e97b94c",
+    "name": "Sistema-Bancario-IN6BM",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48329726",
+    "_collection_link": "https://go.postman.co/collection/48329726-97ca161f-fd5d-411d-a758-a3743e97b94c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Coins/Monedas",
+      "item": [
+        {
+          "name": "Crear-Moneda",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"code\": \"GTQ\",\r\n    \"name\": \"Quetzal\",\r\n    \"symbol\": \"Q\",\r\n    \"exchangeRate\": 1.0,\r\n    \"baseCurrency\": true,\r\n    \"status\": \"activa\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/coins/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "coins",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar-Monedas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/coins/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "coins",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar-Monedas",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"code\": \"E\",\r\n    \"name\": \"E\",\r\n    \"symbol\": \"€t\",\r\n    \"exchangeRate\": 1.15,\r\n    \"baseCurrency\": false,\r\n    \"status\": \"activa\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/coins/6993aaa5a88d758e83cc17ea",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "coins",
+                "6993aaa5a88d758e83cc17ea"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar-Monedas",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/coins/699398ed967a07269d837ba5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "coins",
+                "699398ed967a07269d837ba5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "buscar-Monedas",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/coins/698fc2d105ab8a5daf5668cf",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "coins",
+                "698fc2d105ab8a5daf5668cf"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Status-Moneda",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"activa\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/coins/698fc2d105ab8a5daf5668cf/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "coins",
+                "698fc2d105ab8a5daf5668cf",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Accounts/Cuentas",
+      "item": [
+        {
+          "name": "Crear-Cuenta",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"accountType\": \"ahorro\",\r\n  \"balance\": 88888.00,\r\n  \"openingDate\": \"2025-02-10\",\r\n  \"status\": \"activa\",\r\n  \"dailyWithdrawalLimit\": 500.00,\r\n  \"annualInterestRate\": 2.5,\r\n  \"currencyCode\": \"GTQ\",\r\n  \"userId\": \"usr_iSSg8KmzCswx\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accounts/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar-Cuentas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accounts/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar cuenta",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"accountType\": \"ahorro\",\r\n  \"balance\": 999.99,\r\n  \"openingDate\": \"2025-02-10\",\r\n  \"status\": \"activa\",\r\n  \"dailyWithdrawalLimit\": 500.0,\r\n  \"annualInterestRate\": 2.5,\r\n  \"currencyCode\": \"GTQ\",\r\n  \"userId\": \"usr_iSSg8KmzCswx\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accounts/ACC-270-7730",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "ACC-270-7730"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "eliminar",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accounts/ACC-339-2943",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "ACC-339-2943"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar-Cuenta",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accounts/ACC-845-4601",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "ACC-845-4601"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"activa\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accounts/698bcdd9bac2e470057ab45a/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "698bcdd9bac2e470057ab45a",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Transaction/Transacciones",
+      "item": [
+        {
+          "name": "Crear-Transferencia",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"sourceAccountId\": \"ACC-845-4601\",\r\n  \"destinationAccountId\": \"ACC-492-2264\",\r\n  \"transactionType\": \"transferencia\",\r\n  \"amount\": 250.00,\r\n  \"currencyId\": \"GTQ\",\r\n  \"description\": \"Transferencia a Juan\",\r\n  \"status\": \"exitosa\",\r\n  \"userId\": \"usr_iSSg8KmzCswx\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/transaction/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "transaction",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar-Transferencia",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"source_account_id\": \"ID_CUENTA_ORIGEN\",\r\n  \"destination_account_id\": \"ID_CUENTA_DESTINO\",\r\n  \"transaction_type\": \"transfer\",\r\n  \"amount\": 250.00,\r\n  \"currency_id\": \"ID_DE_MONEDA\",\r\n  \"description\": \"Transferencia a Juan\",\r\n  \"status\": \"exitosa\",\r\n  \"previous_balance\": 500.00,\r\n  \"new_balance\": 250.00,\r\n  \"executed_by_user_id\": \"ID_DE_USUARIO\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/transaction/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "transaction",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar-Transaccion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"source_account_id\": \"698bda41bac2e470057ab46e\",\r\n    \"destination_account_id\": \"698bcdd9bac2e470057ab45a\",\r\n    \"transaction_type\": \"transfer\",\r\n    \"amount\": 255.00,\r\n    \"currency_id\": \"698ba94ea24b087d6ce469ca\",\r\n    \"description\": \"Transferencia a Juan\",\r\n    \"status\": \"exitosa\",\r\n    \"previous_balance\": 500.00,\r\n    \"new_balance\": 250.00,\r\n    \"executed_by_user_id\": \"698bcdeebac2e470057ab460\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/transaction/69939dff538b01d83b697008",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "transaction",
+                "69939dff538b01d83b697008"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar-Transaccion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"source_account_id\": \"698bda41bac2e470057ab46e\",\r\n    \"destination_account_id\": \"698bcdd9bac2e470057ab45a\",\r\n    \"transaction_type\": \"transfer\",\r\n    \"amount\": 250.00,\r\n    \"currency_id\": \"698ba94ea24b087d6ce469ca\",\r\n    \"description\": \"Transferencia a Juan\",\r\n    \"status\": \"exitosa\",\r\n    \"previous_balance\": 500.00,\r\n    \"new_balance\": 250.00,\r\n    \"executed_by_user_id\": \"698bcdeebac2e470057ab460\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/transaction/69939dff538b01d83b697008",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "transaction",
+                "69939dff538b01d83b697008"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar-Transaccion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/transaction/69939dff538b01d83b697008",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "transaction",
+                "69939dff538b01d83b697008"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cards/Tarjetas",
+      "item": [
+        {
+          "name": "Crear-Tarjeta",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": \"usr_iSSg8KmzCswx\",\r\n  \"cardType\": \"debito\",\r\n  \"cvv\": \"123\",\r\n  \"availableBalance\": 150.00,\r\n  \"expirationDate\": \"2028-12-31\",\r\n  \"pin\": \"1234\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/cards/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "cards",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Listar-Tarjeta",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/cards/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "cards",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "actualizar-tarjetas",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": \"usr_iSSg8KmzCswx\",\r\n  \"cardType\": \"debito\",\r\n  \"cvv\": \"123\",\r\n  \"availableBalance\": 200.00,\r\n  \"expirationDate\": \"2028-12-31\",\r\n  \"pin\": \"1234\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/cards/699ba2f123afc65e80897aad",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "cards",
+                "699ba2f123afc65e80897aad"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\r\n\"status\": \"bloqueada\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/cards/698fad4f03efce6c768fa45a/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "cards",
+                "698fad4f03efce6c768fa45a",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "eliminar-tarjeta",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"source_account_id\": \"ID_CUENTA_ORIGEN\",\r\n  \"destination_account_id\": \"ID_CUENTA_DESTINO\",\r\n  \"transaction_type\": \"transfer\",\r\n  \"amount\": 250.00,\r\n  \"currency_id\": \"ID_DE_MONEDA\",\r\n  \"description\": \"Transferencia a Juan\",\r\n  \"status\": \"exitosa\",\r\n  \"previous_balance\": 500.00,\r\n  \"new_balance\": 250.00,\r\n  \"executed_by_user_id\": \"ID_DE_USUARIO\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/cards/699ba2f123afc65e80897aad",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "cards",
+                "699ba2f123afc65e80897aad"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar-Tarjeta",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/cards/699ba2f123afc65e80897aad",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "cards",
+                "699ba2f123afc65e80897aad"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Loans/Prestamos",
+      "item": [
+        {
+          "name": "crear-prestamo",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": \"698bcde4bac2e470057ab45e\",\r\n  \"disbursementAccountId\": \"698bda41bac2e470057ab46e\",\r\n  \"requestedAmount\": 20000,\r\n  \"approvedAmount\": 18000,\r\n  \"interestRate\": 12,\r\n  \"termMonths\": 24,\r\n  \"monthlyPayment\": 850,\r\n  \"outstandingBalance\": 18000,\r\n  \"requestDate\": \"2026-02-10T12:00:00.000Z\",\r\n  \"approvalDate\": \"2026-02-11T10:00:00.000Z\",\r\n  \"disbursementDate\": \"2026-02-12T09:00:00.000Z\",\r\n  \"status\": \"solicitado\",\r\n  \"loanPurpose\": \"Because I need it urgently\",\r\n  \"approvedByUserId\": \"698bcdeebac2e470057ab460\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/loan/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "loan",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "listar-prestamos",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"user_id\": \"698bcde4bac2e470057ab45e\",\r\n  \"disbursement_account_id\": \"698bda41bac2e470057ab46e\",\r\n  \"requested_amount\": \"20000\",\r\n  \"approved_amount\": \"18000\",\r\n  \"interest_rate\": \"12\",\r\n  \"term_months\": \"24\",\r\n  \"monthly_payment\": \"850\",\r\n  \"outstanding_balance\": \"18000\",\r\n  \"request_date\": \"2026-02-10T12:00:00.000Z\",\r\n  \"approval_date\": \"2026-02-11T10:00:00.000Z\",\r\n  \"disbursement_date\": \"2026-02-12T09:00:00.000Z\",\r\n  \"status\": \"solicitado\",\r\n  \"loan_purpose\": \"Porque lo necesito pero ya\",\r\n  \"approved_by_user_id\": \"698bcdeebac2e470057ab460\"\r\n}\r\n"
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/loan",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "loan"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar-Prestamo",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": \"698bcde4bac2e470057ab45e\",\r\n  \"disbursementAccountId\": \"698bda41bac2e470057ab46e\",\r\n  \"requestedAmount\": 20000,\r\n  \"approvedAmount\": 1800,\r\n  \"interestRate\": 12,\r\n  \"termMonths\": 24,\r\n  \"monthlyPayment\": 850,\r\n  \"outstandingBalance\": 18000,\r\n  \"requestDate\": \"2026-02-10T12:00:00.000Z\",\r\n  \"approvalDate\": \"2026-02-11T10:00:00.000Z\",\r\n  \"disbursementDate\": \"2026-02-12T09:00:00.000Z\",\r\n  \"status\": \"solicitado\",\r\n  \"loanPurpose\": \"Because I need it urgently\",\r\n  \"approvedByUserId\": \"698bcdeebac2e470057ab460\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/loan/6993b0e0067cc5cc36781273",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "loan",
+                "6993b0e0067cc5cc36781273"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/loan/6993b0e0067cc5cc36781273",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "loan",
+                "6993b0e0067cc5cc36781273"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "buscar",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/loan/6993b0e0067cc5cc36781273",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "loan",
+                "6993b0e0067cc5cc36781273"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notifications/notificaciones",
+      "item": [
+        {
+          "name": "Crear-notificacion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": \"698bcde4bac2e470057ab45e\",\r\n  \"notificationType\": \"seguridad\",\r\n  \"title\": \"Inicio de sesión nuevo\",\r\n  \"message\": \"Tu cuenta fue accedida desde un nuevo dispositivo.\",\r\n  \"channel\": \"email\",\r\n  \"priority\": \"alta\",\r\n  \"relatedTransactionId\": \"698bda41bac2e470057ab46e\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/notifications/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": \"698bcde4bac2e470057ab45e\",\r\n  \"notificationType\": \"seguridad\",\r\n  \"title\": \"Inicio de sesión nuevo\",\r\n  \"message\": \"Tu cuenta fue accedida desde un nuevo dispositivo.\",\r\n  \"channel\": \"email\",\r\n  \"priority\": \"alta\",\r\n  \"relatedTransactionId\": \"698bda41bac2e470057ab46e\"\r\n}\r\n"
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/notifications/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": \"698bcde4bac2e470057ab45e\",\r\n  \"notificationType\": \"seguridad\",\r\n  \"title\": \"Modificado 👻\",\r\n  \"message\": \"Tu cuenta fue accedida desde un nuevo dispositivo.\",\r\n  \"channel\": \"email\",\r\n  \"priority\": \"alta\",\r\n  \"relatedTransactionId\": \"698bda41bac2e470057ab46e\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/notifications/6993b26f6fc7fee42790fcaa",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "6993b26f6fc7fee42790fcaa"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "buscar-nofificacion",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/notifications/6993b26f6fc7fee42790fcaa",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "6993b26f6fc7fee42790fcaa"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "borrar",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"userId\": \"698bcde4bac2e470057ab45e\",\r\n  \"notificationType\": \"seguridad\",\r\n  \"title\": \"Modificado 👻\",\r\n  \"message\": \"Tu cuenta fue accedida desde un nuevo dispositivo.\",\r\n  \"channel\": \"email\",\r\n  \"priority\": \"alta\",\r\n  \"relatedTransactionId\": \"698bda41bac2e470057ab46e\"\r\n}\r\n"
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/notifications/6993b26f6fc7fee42790fcaa",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "notifications",
+                "6993b26f6fc7fee42790fcaa"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "AccountStatement",
+      "item": [
+        {
+          "name": "listar-estado de cuenta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accountStatements",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accountStatements"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar-AccounStatement",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accountStatements/account/ACC-845-4601/pdf",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accountStatements",
+                "account",
+                "ACC-845-4601",
+                "pdf"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "AccountLock/ Cuenta Bloqueada",
+      "item": [
+        {
+          "name": "crear-CuentaBloqueada",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"accountId\": \"698bcde4bac2e470057ab45e\",\r\n  \"userId\": \"698bcde4bac2e470057ab460\",\r\n  \"lockReason\": \"seguridad\",\r\n  \"description\": \"Prque si 👻.\",\r\n  \"lockDate\": \"2026-02-10T15:30:00.000Z\",\r\n  \"unlockDate\": \"2026-02-10T15:30:00.000Z\",\r\n  \"lockedBy\": \"698bcdeebac2e470057ab460\",\r\n  \"unlockedBy\": null,\r\n  \"status\": \"bloqueado\",\r\n  \"automatic\": true,\r\n  \"failedAttempts\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accountLocks/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accountLocks",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "listar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accountLocks/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accountLocks",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"accountId\": \"698bcde4bac2e470057ab45e\",\r\n  \"userId\": \"698bcde4bac2e470057ab460\",\r\n  \"lockReason\": \"seguridad\",\r\n  \"description\": \"Prque si o porque no 👻.\",\r\n  \"lockDate\": \"2026-02-10T15:30:00.000Z\",\r\n  \"unlockDate\": \"2026-02-10T15:30:00.000Z\",\r\n  \"lockedBy\": \"698bcdeebac2e470057ab460\",\r\n  \"unlockedBy\": \"698bcdeebac2e470057ab460\",\r\n  \"status\": \"bloqueado\",\r\n  \"automatic\": true,\r\n  \"failedAttempts\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accountLocks/6993a86d698753ee12486a6b",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accountLocks",
+                "6993a86d698753ee12486a6b"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "buscar",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accountLocks/6993a86d698753ee12486a6b",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accountLocks",
+                "6993a86d698753ee12486a6b"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "eliminar-cuentablock",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accountLocks/6993a86d698753ee12486a6b",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accountLocks",
+                "6993a86d698753ee12486a6b"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Authentication-AutService",
+      "item": [
+        {
+          "name": "Register-registrar",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "jefry",
+                  "type": "text",
+                  "uuid": "2a5a730c-61e0-4d3e-9637-abb05b3bcb2c"
+                },
+                {
+                  "key": "surname",
+                  "value": "cruz",
+                  "type": "text",
+                  "uuid": "f48a7522-117c-42f1-abb3-e443ff530613"
+                },
+                {
+                  "key": "username",
+                  "value": "jcruz",
+                  "type": "text",
+                  "uuid": "9f92c7b1-1deb-4b1b-8c10-036e57b89752"
+                },
+                {
+                  "key": "email",
+                  "value": "jefryyu67@gmail.com",
+                  "type": "text",
+                  "uuid": "522ea40b-267f-4c90-b2ed-7775f569b33c"
+                },
+                {
+                  "key": "password",
+                  "value": "admin123",
+                  "type": "text",
+                  "uuid": "d9b9f1b6-acdb-4c24-af6f-c09c0dcdce87"
+                },
+                {
+                  "key": "phone",
+                  "value": "41531453",
+                  "type": "text",
+                  "uuid": "7f406b67-1b92-4032-95ae-b56810fe98e7"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3005/api/v1/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3005",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get-token-login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"token\": \"PK2cE7JMMLF_zx-52Utt28i9JK-xvB8NO_44dQA-mDo\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3005/api/v1/auth/verify-email",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3005",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "verify-email"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "protocolProfileBehavior": {
+            "disabledSystemHeaders": {}
+          },
+          "request": {
+            "auth": {
+              "type": "jwt",
+              "jwt": [
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "algorithm",
+                  "value": "HS256",
+                  "type": "string"
+                },
+                {
+                  "key": "isSecretBase64Encoded",
+                  "value": false,
+                  "type": "boolean"
+                },
+                {
+                  "key": "payload",
+                  "value": "{}",
+                  "type": "string"
+                },
+                {
+                  "key": "headerPrefix",
+                  "value": "Bearer",
+                  "type": "string"
+                },
+                {
+                  "key": "queryParamKey",
+                  "value": "token",
+                  "type": "string"
+                },
+                {
+                  "key": "header",
+                  "value": "{}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{vault:json-web-token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"emailOrUsername\": \"sistemabancarioin@gmail.com\",\r\n  \"password\": \"admin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3005/api/v1/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3005",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Income-ingreso minio 100",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{vault:authorization-secret}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"income\": 9101.00\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3005/api/v1/users/usr_iSSg8KmzCswx/income",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3005",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "usr_iSSg8KmzCswx",
+                "income"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Withdrawal/Retiros",
+      "item": [
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"accountNumber\": \"ACC-830-001\",\r\n  \"amount\": 500\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/withdrawal/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "withdrawal",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Estado De Cuenta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/withdrawal/statement/ACC-830-001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "withdrawal",
+                "statement",
+                "ACC-830-001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Bloquear Cuenta",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"accountId\": \"ACC-830-001\",\r\n  \"userId\": \"USR-101\",\r\n  \"lockReason\": \"seguridad\",\r\n  \"description\": \"Actividad sospechosa detectada\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accountLock/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accountLock",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Check if token exists, warn if missing",
+          "const token = pm.environment.get('adminToken');",
+          "if (!token && !pm.request.url.toString().includes('/health') && !pm.request.url.toString().includes('/auth/login')) {",
+          "    console.warn(\"⚠️ No adminToken found. Authentication may fail. Run Auth requests first or set token manually.\");",
+          "}",
+          "",
+          "// Log current request",
+          "console.log(`🔄 Executing: ${pm.info.requestName}`);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Common error handling",
+          "if (pm.response.code === 401) {",
+          "    pm.test(\"⚠️ Unauthorized - Check token\", () => {",
+          "        console.error(\"Token missing or invalid. Run Auth requests or set token manually.\");",
+          "    });",
+          "}",
+          "",
+          "if (pm.response.code === 403) {",
+          "    pm.test(\"⚠️ Forbidden - Check permissions\", () => {",
+          "        console.warn(\"User role doesn't have permission for this operation.\");",
+          "    });",
+          "}",
+          "",
+          "if (pm.response.code === 500) {",
+          "    pm.test(\"❌ Server Error\", () => {",
+          "        console.error(\"Internal server error:\", pm.response.json());",
+          "    });",
+          "}"
+        ]
+      }
+    }
+  ]
+}

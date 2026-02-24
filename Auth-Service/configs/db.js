@@ -2,8 +2,17 @@
 
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
+<<<<<<< HEAD
 
 dotenv.config();
+=======
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+>>>>>>> dd6f82ae1626f4387311362a8587b9fabcd054fa
 
 // Configuración de PostgreSQL (igual que la API .NET)
 export const sequelize = new Sequelize({
