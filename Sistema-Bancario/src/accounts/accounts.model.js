@@ -59,6 +59,50 @@ const accountSchema = mongoose.Schema({
         trim: true,
         match: [/^[A-Z]{3}$/, 'El codigo de moneda debe tener formato ABC']
     },
+    //nombre del titular
+    name: {
+        type: String,
+        required: [true, 'El nombre es requerido'],
+        trim: true
+    },
+    //username del titular
+    username: {
+        type: String,
+        required: [true, 'El username es requerido'],
+        trim: true
+    },
+    //dpi de 13 digitos
+    dpi: {
+        type: String,
+        required: [true, 'El DPI es requerido'],
+        trim: true,
+        match: [/^\d{13}$/, 'El DPI debe tener 13 digitos']
+    },
+    //direccion del titular
+    address: {
+        type: String,
+        required: [true, 'La direccion es requerida'],
+        trim: true
+    },
+    //celular del titular
+    phone: {
+        type: String,
+        required: [true, 'El celular es requerido'],
+        trim: true,
+        match: [/^\d{8}$/, 'El celular debe tener 8 digitos']
+    },
+    //nombre del trabajo
+    jobName: {
+        type: String,
+        required: [true, 'El nombre del trabajo es requerido'],
+        trim: true
+    },
+    //ingreso mensual
+    monthlyIncome: {
+        type: Number,
+        required: [true, 'El ingreso mensual es requerido'],
+        min: [0, 'El ingreso mensual no puede ser negativo']
+    },
     userId: {
         type: String,
         required: [true, 'El usuario es requerido']

@@ -8,10 +8,24 @@ export const Role = sequelize.define(
     'Role',
     {
         Id: {
+
             type: DataTypes.STRING(16),
             primaryKey: true,
             field: 'id',
             defaultValue: () => generateUserId(),
+        },
+        Name: {
+            type: DataTypes.STRING(50),
+            allowNull: false,
+            unique: true,
+            field: 'name',
+            validate: {
+                notEmpty: { msg: 'El nombre del rol es obligatorio.' },
+                isIn: {
+                    args: [ALLOWED_ROLES],
+                    msg: 'Rol no permitido. Use ADMIN_ROLE o USER_ROLE.',
+                },
+            },
         },
         Name: {
             type: DataTypes.STRING(50),
@@ -37,6 +51,7 @@ export const Role = sequelize.define(
             allowNull: false,
             defaultValue: DataTypes.NOW,
             field: 'updated_at',
+
         },
     },
     {
@@ -51,6 +66,7 @@ export const UserRole = sequelize.define(
     'UserRole',
     {
         Id: {
+
             type: DataTypes.STRING(16),
             primaryKey: true,
             field: 'id',

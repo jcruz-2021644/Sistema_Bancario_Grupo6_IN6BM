@@ -42,3 +42,61 @@ export const validateUniqueAccountNumber = async (number) => {
 
     return true;
 };
+
+const DPI_REGEX = /^\d{13}$/;
+const PHONE_REGEX = /^\d{8}$/;
+
+const hasValue = (value) => value !== undefined && value !== null && `${value}`.trim() !== '';
+
+export const validateAccountHolderData = (accountData, { partial = false } = {}) => {
+    const requiredStringFields = [
+        { key: 'address', message: 'La direccion es requerida' },
+        { key: 'jobName', message: 'El nombre del trabajo es requerido' }
+    ];
+
+    for (const field of requiredStringFields) {
+        const value = accountData[field.key];
+
+        if (!partial && !hasValue(value)) {
+            throw new Error(field.message);
+        }
+
+        if (value !== undefined && typeof value !== 'string') {
+            throw new Error(`El campo ${field.key} debe ser texto`);
+        }
+    }
+
+    if (!partial && !hasValue(accountData.dpi)) {
+        throw new Error('El DPI es requerido');
+    }
+
+    if (accountData.dpi !== undefined && !DPI_REGEX.test(String(accountData.dpi).trim())) {
+        throw new Error('El DPI debe tener 13 digitos');
+    }
+
+    if (!partial && !hasValue(accountData.phone)) {
+        throw new Error('El celular es requerido');
+    }
+
+    if (accountData.phone !== undefined && !PHONE_REGEX.test(String(accountData.phone).trim())) {
+        throw new Error('El celular debe tener 8 digitos');
+    }
+
+    if (!partial && !hasValue(accountData.monthlyIncome)) {
+        throw new Error('El ingreso mensual es requerido');
+    }
+
+    if (accountData.monthlyIncome !== undefined) {
+        const monthlyIncome = Number(accountData.monthlyIncome);
+
+        if (Number.isNaN(monthlyIncome)) {
+            throw new Error('El ingreso mensual no es un numero valido');
+        }
+
+        if (monthlyIncome < 0) {
+            throw new Error('El ingreso mensual no puede ser negativo');
+        }
+    }
+
+    return true;
+};

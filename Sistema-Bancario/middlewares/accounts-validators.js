@@ -26,6 +26,31 @@ export const validateCreateAccount = [
     body('userId')
         .notEmpty()
         .withMessage('El ID del usuario es requerido'),
+    body('dpi')
+        .notEmpty()
+        .withMessage('El DPI es requerido')
+        .matches(/^\d{13}$/)
+        .withMessage('El DPI debe tener 13 digitos'),
+    body('address')
+        .notEmpty()
+        .withMessage('La direccion es requerida')
+        .isString()
+        .withMessage('La direccion debe ser texto'),
+    body('phone')
+        .notEmpty()
+        .withMessage('El celular es requerido')
+        .matches(/^\d{8}$/)
+        .withMessage('El celular debe tener 8 digitos'),
+    body('jobName')
+        .notEmpty()
+        .withMessage('El nombre del trabajo es requerido')
+        .isString()
+        .withMessage('El nombre del trabajo debe ser texto'),
+    body('monthlyIncome')
+        .notEmpty()
+        .withMessage('El ingreso mensual es requerido')
+        .isFloat({ min: 0 })
+        .withMessage('El ingreso mensual debe ser un numero positivo'),
     body('balance')
         .optional()
         .isFloat({ min: 0 })
@@ -69,6 +94,26 @@ export const validateUpdateAccount = [
         .optional()
         .isFloat({ min: 0 })
         .withMessage('El balance debe ser un numero positivo'),
+    body('dpi')
+        .optional()
+        .matches(/^\d{13}$/)
+        .withMessage('El DPI debe tener 13 digitos'),
+    body('address')
+        .optional()
+        .isString()
+        .withMessage('La direccion debe ser texto'),
+    body('phone')
+        .optional()
+        .matches(/^\d{8}$/)
+        .withMessage('El celular debe tener 8 digitos'),
+    body('jobName')
+        .optional()
+        .isString()
+        .withMessage('El nombre del trabajo debe ser texto'),
+    body('monthlyIncome')
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage('El ingreso mensual debe ser un numero positivo'),
     body('currencyCode')
         .optional()
         .trim()

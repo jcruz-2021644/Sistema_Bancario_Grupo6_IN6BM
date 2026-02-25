@@ -75,18 +75,6 @@ export const User = sequelize.define(
                 },
             },
         },
-        Income: {
-            type: DataTypes.DECIMAL(10, 2),
-            allowNull: false,
-            defaultValue: 0,
-            field: 'income',
-            validate: {
-                min: {
-                    args: [0],
-                    msg: 'El ingreso no puede ser negativo'
-                }
-            }
-        },
         Status: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
@@ -205,6 +193,7 @@ export const UserPasswordReset = sequelize.define(
     'UserPasswordReset',
     {
         Id: {
+
             type: DataTypes.STRING(16),
             primaryKey: true,
             field: 'id',

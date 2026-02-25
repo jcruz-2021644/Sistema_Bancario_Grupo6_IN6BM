@@ -9,7 +9,14 @@ export const validateCreateLoan = [
     requireRole('ADMIN_ROLE', 'MANAGER_ROLE', 'ATM_ROLE', 'USER_ROLE'),
     body('userId')
         .notEmpty()
-        .withMessage('El ID del usuario es requerido'),
+        .withMessage('El ID del usuario es requerido')
+        .matches(/^usr_/)
+        .withMessage('El ID del usuario debe empezar con usr_'),
+    body('accountNumber')
+        .notEmpty()
+        .withMessage('El número de cuenta es requerido')
+        .matches(/^ACC-\d{3}-\d{4}$/)
+        .withMessage('El número de cuenta debe tener el formato ACC-000-0000'),
     body('requestedAmount')
         .notEmpty()
         .withMessage('El monto del préstamo es requerido')
@@ -39,6 +46,18 @@ export const validateUpdateLoan = [
     param('id')
         .notEmpty()
         .withMessage('El ID del préstamo es requerido'),
+    body('userId')
+        .optional()
+        .matches(/^usr_/)
+        .withMessage('El ID del usuario debe empezar con usr_'),
+    body('accountNumber')
+        .optional()
+        .matches(/^ACC-\d{3}-\d{4}$/)
+        .withMessage('El número de cuenta debe tener el formato ACC-000-0000'),
+    body('approvedByUserId')
+        .optional()
+        .matches(/^usr_/)
+        .withMessage('El ID del usuario debe empezar con usr_'),
     body('status')
         .optional()
         .isIn(['solicitado', 'aprobado', 'rechazado', 'desembolsado', 'pagado', 'vencido'])

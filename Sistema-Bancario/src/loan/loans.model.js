@@ -4,14 +4,13 @@ import mongoose from "mongoose";
 
 const loanSchema  = mongoose.Schema({
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        type: String,
         required: [true, 'El usuario es requerido']
     },
-    // id de cuenta para desembolso
-    disbursementAccountId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Account'
+    // numero de cuenta para desembolso
+    accountNumber: {
+        type: String,
+        required: [true, 'El número de cuenta es requerido']
     },
     // id de cuenta para pagos
     requestedAmount: {
@@ -75,8 +74,7 @@ const loanSchema  = mongoose.Schema({
     },
     // id del usuario que aprueba el prestamo
     approvedByUserId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        type: String
     }
 }, {
     timestamps: true,

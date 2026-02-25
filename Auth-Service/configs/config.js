@@ -2,6 +2,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const parseCsv = (value) =>
+    value ? value.split(',').map((item) => item.trim()) : [];
+
+const hoursToMs = (value, fallbackHours) =>
+    (value ? parseInt(value, 10) : fallbackHours) * 60 * 60 * 1000;
+
 export const config = {
     // JWT Configuration
     jwt: {
@@ -39,6 +45,16 @@ export const config = {
         folder: process.env.CLOUDINARY_FOLDER,
 
         defaultAvatar: process.env.CLOUDINARY_DEFAULT_AVATAR_FILENAME,
+        defaultAvatarPath:
+        process.env.CLOUDINARY_DEFAULT_AVATAR &&
+        !process.env.CLOUDINARY_DEFAULT_AVATAR.includes('${')
+            ? process.env.CLOUDINARY_DEFAULT_AVATAR
+            : [
+                process.env.CLOUDINARY_FOLDER,
+                process.env.CLOUDINARY_DEFAULT_AVATAR_FILENAME,
+            ]
+                .filter(Boolean)
+                .join('/'),
     },
 
     // Rate Limiting (aligned with .NET AuthPolicy and ApiPolicy)
@@ -61,15 +77,9 @@ export const config = {
         lockoutTime: 30 * 60 * 1000,
         passwordMinLength: 8,
         // IP Filtering (aligned with .NET IpFilteringMiddleware)
-        blacklistedIPs: process.env.BLACKLISTED_IPS
-            ? process.env.BLACKLISTED_IPS.split(',').map((ip) => ip.trim())
-            : [],
-        whitelistedIPs: process.env.WHITELISTED_IPS
-            ? process.env.WHITELISTED_IPS.split(',').map((ip) => ip.trim())
-            : [],
-        restrictedPaths: process.env.RESTRICTED_PATHS
-            ? process.env.RESTRICTED_PATHS.split(',').map((path) => path.trim())
-            : [],
+        blacklistedIPs: parseCsv(process.env.BLACKLISTED_IPS),
+        whitelistedIPs: parseCsv(process.env.WHITELISTED_IPS),
+        restrictedPaths: parseCsv(process.env.RESTRICTED_PATHS),
     },
 
     // App Settings (aligned with .NET AppSettings)
@@ -79,30 +89,14 @@ export const config = {
 
     // Security Settings (aligned with .NET Security config)
     cors: {
-        allowedOrigins: process.env.ALLOWED_ORIGINS
-            ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
-            : [],
-        adminAllowedOrigins: process.env.ADMIN_ALLOWED_ORIGINS
-            ? process.env.ADMIN_ALLOWED_ORIGINS.split(',').map((o) => o.trim())
-            : [],
+        allowedOrigins: parseCsv(process.env.ALLOWED_ORIGINS),
+        adminAllowedOrigins: parseCsv(process.env.ADMIN_ALLOWED_ORIGINS),
     },
 
     // Verification tokens
     verification: {
         // Read expirations from env (hours) for easy configuration and parity with .NET
-        emailTokenExpiry:
-            (process.env.VERIFICATION_EMAIL_EXPIRY_HOURS
-                ? parseInt(process.env.VERIFICATION_EMAIL_EXPIRY_HOURS, 10)
-                : 24) *
-            60 *
-            60 *
-            1000,
-        passwordResetExpiry:
-            (process.env.PASSWORD_RESET_EXPIRY_HOURS
-                ? parseInt(process.env.PASSWORD_RESET_EXPIRY_HOURS, 10)
-                : 1) *
-            60 *
-            60 *
-            1000,
+        emailTokenExpiry: hoursToMs(process.env.VERIFICATION_EMAIL_EXPIRY_HOURS, 24),
+        passwordResetExpiry: hoursToMs(process.env.PASSWORD_RESET_EXPIRY_HOURS, 1),
     },
 };

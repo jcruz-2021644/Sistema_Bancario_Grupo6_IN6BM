@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "19497cad-a359-405c-887f-361bf62237b3",
+    "_postman_id": "97ca161f-fd5d-411d-a758-a3743e97b94c",
     "name": "Sistema-Bancario-IN6BM",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "48332475",
-    "_collection_link": "https://go.postman.co/collection/48332475-19497cad-a359-405c-887f-361bf62237b3?source=collection_link"
+    "_exporter_id": "48329726",
+    "_collection_link": "https://go.postman.co/collection/48329726-97ca161f-fd5d-411d-a758-a3743e97b94c?source=collection_link"
   },
   "item": [
     {
@@ -18,7 +18,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiZWU4MjI4YTYtNjNmNS00Mzc4LWI1Y2YtYTlkNDI4ZDI2NzJkIiwiaWF0IjoxNzcxNzkyNjQ1LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTc5NDQ0NSwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.Mt9KzIforkZ7fyKF6gf3D3YBlcCmVF0FlCLVxTk-L6A",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -81,7 +81,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiMDAwOTc0MmMtZTBiYy00NzczLTljMDMtZjQyMjk2NWI0M2VmIiwiaWF0IjoxNzcxMjg1MDk4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Njg5OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.Ce05gkWZ-d5ddAQY_vbNqe3veTV9TURfabPA_95sczY",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -122,7 +122,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfR1Z1MlZTRmNRNm03IiwianRpIjoiZmIxMWFjZjctOWE1NC00YzY1LTk2ODAtYjRlOGVmYmQ1NjZlIiwiaWF0IjoxNzcxMjkzNDEyLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI5NTIxMiwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.OVyLx9UVQiJ0UtZ09TJWv5JH47zTFzA22HTkhbP1chY",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -154,7 +154,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiMDAwOTc0MmMtZTBiYy00NzczLTljMDMtZjQyMjk2NWI0M2VmIiwiaWF0IjoxNzcxMjg1MDk4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Njg5OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.Ce05gkWZ-d5ddAQY_vbNqe3veTV9TURfabPA_95sczY",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -223,7 +223,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiZmNmOTI3NjUtYjQxYy00ODU4LWI3Y2ItYTIzM2U1YzBiMTU5IiwiaWF0IjoxNzcxNzk4NDY3LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwMDI2NywiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.KXmLtcSa3mjfXE5VT-n6G1OMJuRapOshZEIAIJT0_MU",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -286,7 +286,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiOWNmOTQzZGEtZTkxZi00MTE2LTllYjctOTYxYWI5Y2I4NmYzIiwiaWF0IjoxNzcxNzk2MDIxLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTc5NzgyMSwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.pgnxv4qXcSyUG94nDGPkNlZzQJAkeCbI5tgF6Qz1CMg",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -327,7 +327,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiOWNmOTQzZGEtZTkxZi00MTE2LTllYjctOTYxYWI5Y2I4NmYzIiwiaWF0IjoxNzcxNzk2MDIxLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTc5NzgyMSwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.pgnxv4qXcSyUG94nDGPkNlZzQJAkeCbI5tgF6Qz1CMg",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -359,7 +359,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiZmNmOTI3NjUtYjQxYy00ODU4LWI3Y2ItYTIzM2U1YzBiMTU5IiwiaWF0IjoxNzcxNzk4NDY3LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwMDI2NywiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.KXmLtcSa3mjfXE5VT-n6G1OMJuRapOshZEIAIJT0_MU",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -428,7 +428,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiZmNmOTI3NjUtYjQxYy00ODU4LWI3Y2ItYTIzM2U1YzBiMTU5IiwiaWF0IjoxNzcxNzk4NDY3LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwMDI2NywiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.KXmLtcSa3mjfXE5VT-n6G1OMJuRapOshZEIAIJT0_MU",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -472,7 +472,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfajJiMUdmOVlISlJLIiwianRpIjoiOWU3OTQ3ZDEtYTQ0MS00NTUwLTkxZTYtN2FkNmQzNzI0NjM3IiwiaWF0IjoxNzcxMjgwNTU3LCJyb2xlIjoiVVNFUl9ST0xFIiwiZXhwIjoxNzcxMjgyMzU3LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0._CrlhyluGRIXHYngUtvBaEr-R_j7HD3ZEo1mUViNJw4",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -508,7 +508,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -549,7 +549,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -585,7 +585,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -622,7 +622,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiMzZjZjUzYjQtYjJlZi00OTVjLWJhZTItZjBmMWNkZjU5MjcwIiwiaWF0IjoxNzcxODA3MjU0LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwOTA1NCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.LZWwOVbwqvEgZ0CASR-nFMzyfEzW2-0AyF2kHoG10Ao",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -697,7 +697,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiMzZjZjUzYjQtYjJlZi00OTVjLWJhZTItZjBmMWNkZjU5MjcwIiwiaWF0IjoxNzcxODA3MjU0LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwOTA1NCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.LZWwOVbwqvEgZ0CASR-nFMzyfEzW2-0AyF2kHoG10Ao",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -770,7 +770,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiMzZjZjUzYjQtYjJlZi00OTVjLWJhZTItZjBmMWNkZjU5MjcwIiwiaWF0IjoxNzcxODA3MjU0LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwOTA1NCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.LZWwOVbwqvEgZ0CASR-nFMzyfEzW2-0AyF2kHoG10Ao",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -806,7 +806,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiMzZjZjUzYjQtYjJlZi00OTVjLWJhZTItZjBmMWNkZjU5MjcwIiwiaWF0IjoxNzcxODA3MjU0LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwOTA1NCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.LZWwOVbwqvEgZ0CASR-nFMzyfEzW2-0AyF2kHoG10Ao",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -843,7 +843,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiNjgzZGI3MTgtYzcwYi00ZmVhLTkwNTgtMjFkYzcwYjc1MWRhIiwiaWF0IjoxNzcxODA0Mzc0LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwNjE3NCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.49UGqaICk_llA0xs8nTn1FWXecTkYnSlZGmjMYRVMfk",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -912,7 +912,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -953,7 +953,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -985,7 +985,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -1022,7 +1022,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -1092,7 +1092,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -1133,7 +1133,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -1165,7 +1165,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiZWEzZjdhMGYtYzhhNy00YTQ1LTliMWMtYmQ3MmNhNTU0MWI1IiwiaWF0IjoxNzcxMjg1OTU4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4Nzc1OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.gc6h_RVYSONebsmWUchw15IYqHxSnovyDmrcKYPTuxk",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -1227,7 +1227,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiMzRkZDU2YjQtOWYxMS00N2E0LTliY2QtYzE4ZWRmNzUyZjkyIiwiaWF0IjoxNzcxODAyOTY5LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTgwNDc2OSwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.UbolAMat7tbKD3-70MMCAOz7P-WYoJMX1XPrzhHiiHQ",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -1266,7 +1266,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiOTg3OWNkZWUtMmQwZC00NDE3LWIyOTEtNzcyNTkyNDViODYzIiwiaWF0IjoxNzcxMjg3MjcwLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4OTA3MCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.UnXdA82rBJXowShX4LG05o1Yc19FfckZiyPItOvUYTM",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -1329,7 +1329,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiOTg3OWNkZWUtMmQwZC00NDE3LWIyOTEtNzcyNTkyNDViODYzIiwiaWF0IjoxNzcxMjg3MjcwLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4OTA3MCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.UnXdA82rBJXowShX4LG05o1Yc19FfckZiyPItOvUYTM",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -1370,7 +1370,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiOTg3OWNkZWUtMmQwZC00NDE3LWIyOTEtNzcyNTkyNDViODYzIiwiaWF0IjoxNzcxMjg3MjcwLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4OTA3MCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.UnXdA82rBJXowShX4LG05o1Yc19FfckZiyPItOvUYTM",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -1402,7 +1402,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiOTg3OWNkZWUtMmQwZC00NDE3LWIyOTEtNzcyNTkyNDViODYzIiwiaWF0IjoxNzcxMjg3MjcwLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI4OTA3MCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.UnXdA82rBJXowShX4LG05o1Yc19FfckZiyPItOvUYTM",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -1575,7 +1575,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfRTZBNEJLQ25ObWo4IiwianRpIjoiYTA2YWEzNjEtYWFlNy00Njg1LWFlMTktYmU5MmVlODBiYTZiIiwiaWF0IjoxNzcxMjc4MDY4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTI3OTg2OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.Oe-FK6UTXezOKbowD-6FzzTsLBOsvvSwm5WZ0gUUHMY",
+                "value": "Bearer {{vault:json-web-token}}",
                 "type": "text"
               }
             ],
@@ -1613,7 +1613,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaVNTZzhLbXpDc3d4IiwianRpIjoiOWNmOTQzZGEtZTkxZi00MTE2LTllYjctOTYxYWI5Y2I4NmYzIiwiaWF0IjoxNzcxNzk2MDIxLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MTc5NzgyMSwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.pgnxv4qXcSyUG94nDGPkNlZzQJAkeCbI5tgF6Qz1CMg",
+                  "value": "{{vault:authorization-secret}}",
                   "type": "string"
                 }
               ]
@@ -1642,6 +1642,96 @@
                 "users",
                 "usr_iSSg8KmzCswx",
                 "income"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Withdrawal/Retiros",
+      "item": [
+        {
+          "name": "Crear",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"accountNumber\": \"ACC-830-001\",\r\n  \"amount\": 500\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/withdrawal/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "withdrawal",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Estado De Cuenta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/api/v1/withdrawal/statement/ACC-830-001",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "withdrawal",
+                "statement",
+                "ACC-830-001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Bloquear Cuenta",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"accountId\": \"ACC-830-001\",\r\n  \"userId\": \"USR-101\",\r\n  \"lockReason\": \"seguridad\",\r\n  \"description\": \"Actividad sospechosa detectada\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accountLock/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accountLock",
+                "create"
               ]
             }
           },

@@ -10,13 +10,13 @@ export const validateCreateAccountLock = [
     body('accountId')
         .notEmpty()
         .withMessage('El ID de la cuenta es requerido')
-        .isMongoId()
-        .withMessage('El ID de la cuenta no es válido'),
+        .matches(/^ACC-\d{3}-\d{4}$/)
+        .withMessage('El ID de la cuenta debe tener el formato ACC-000-0000'),
     body('userId')
         .notEmpty()
         .withMessage('El ID del usuario es requerido')
-        .isMongoId()
-        .withMessage('El ID del usuario no es válido'),
+        .matches(/^usr_/)
+        .withMessage('El ID del usuario debe empezar con usr_'),
     body('lockReason')
         .trim()
         .notEmpty()
@@ -34,8 +34,8 @@ export const validateCreateAccountLock = [
         .withMessage('La fecha de desbloqueo debe ser válida'),
     body('lockedBy')
         .optional()
-        .isMongoId()
-        .withMessage('El ID del bloqueador no es válido'),
+        .matches(/^usr_/)
+        .withMessage('El ID del bloqueador debe empezar con usr_'),
     body('automatic')
         .optional()
         .isBoolean()
@@ -72,8 +72,8 @@ export const validateUpdateAccountLock = [
         .withMessage('La fecha de desbloqueo debe ser válida'),
     body('unlockedBy')
         .optional()
-        .isMongoId()
-        .withMessage('El ID del desbloqueador no es válido'),
+        .matches(/^usr_/)
+        .withMessage('El ID del desbloqueador debe empezar con usr_'),
     body('status')
         .optional()
         .isIn(['bloqueado', 'desbloqueado'])

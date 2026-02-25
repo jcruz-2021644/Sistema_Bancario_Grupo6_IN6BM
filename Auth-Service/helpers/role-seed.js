@@ -4,9 +4,9 @@ import { ALLOWED_ROLES } from './role-constants.js';
 export const seedRoles = async () => {
     for (const name of ALLOWED_ROLES) {
         await Role.findOrCreate({
-            where: { Name: name },
-            defaults: { Name: name },
+        where: { Name: name },
+        defaults: { Name: name },
         });
     }
-    console.log('Roles seeded successfully');
 };
+

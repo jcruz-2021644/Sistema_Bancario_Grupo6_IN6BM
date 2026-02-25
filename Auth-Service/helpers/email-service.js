@@ -106,9 +106,9 @@ export const sendWelcomeEmail = async (email, name) => {
         const mailOptions = {
         from: `${config.smtp.fromName} <${config.smtp.fromEmail}>`,
         to: email,
-        subject: 'Welcome to AuthDotnet!', // Aligned with .NET
+        subject: 'Welcome to Kinal Banks!', // Aligned with .NET
         html: `
-            <h2>Welcome to AuthDotnet, ${name}!</h2>
+            <h2>Welcome to Kinal Banks, ${name}!</h2>
             <p>Your account has been successfully verified and activated.</p>
             <p>You can now enjoy all the features of our platform.</p>
             <p>If you have any questions, feel free to contact our support team.</p>

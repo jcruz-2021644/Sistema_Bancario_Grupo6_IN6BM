@@ -2,7 +2,8 @@ import Account from './accounts.model.js';
 import {
     validateMinimumIncome,
     generateAccountNumber,
-    validateUniqueAccountNumber
+    validateUniqueAccountNumber,
+    validateAccountHolderData
 } from '../../helpers/account.helper.js';
 import { User } from '../../../Auth-Service/src/users/user.model.js';
 import Currency from '../coins/coins.model.js';
@@ -38,7 +39,12 @@ export const createAccount = async (req, res) => {
             });
         }
 
-        validateMinimumIncome(Number(user.Income));
+        // El nombre y username se obtienen del usuario autenticado/registrado
+        accountData.name = user.Name;
+        accountData.username = user.Username;
+
+        validateAccountHolderData(accountData);
+        validateMinimumIncome(accountData.monthlyIncome);
         accountData.accountNumber = generateAccountNumber();
 
         let retries = 0;
@@ -122,6 +128,16 @@ export const updateAccount = async (req, res) => {
         if (accountData.currencyCode || accountData.currency || accountData.currencyId) {
             accountData.currencyCode = normalizeCurrencyCode(accountData);
             await validateExistingCurrencyCode(accountData.currencyCode);
+        }
+
+        // name y username no se reciben desde cliente
+        delete accountData.name;
+        delete accountData.username;
+
+        validateAccountHolderData(accountData, { partial: true });
+
+        if (accountData.monthlyIncome !== undefined) {
+            validateMinimumIncome(accountData.monthlyIncome);
         }
 
         const account = await Account.findOneAndUpdate(
