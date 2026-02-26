@@ -1,7 +1,4 @@
-import fs from 'fs';
-import path from 'path';
 import mongoose from 'mongoose';
-import { fileURLToPath } from 'url';
 import AccountStatement from './accountStatements.model.js';
 import Account from '../accounts/accounts.model.js';
 import Transaction from '../transaction/transaction.model.js';
@@ -9,18 +6,11 @@ import Withdrawal from '../withdrawal/withdrawal.model.js';
 import Deposit from '../deposits/deposits.model.js';
 import {
     buildStatementSummary,
-    generateStatementPdf          
+    generateStatementPdf,
 } from '../../helpers/accountStatement.helper.js';
+import { sendAccountStatementEmail } from '../../helpers/email-service.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const STATEMENTS_DIR = path.resolve(__dirname, '../../storage/account-statements');
-
-const ensureStatementsDir = () => {
-    if (!fs.existsSync(STATEMENTS_DIR)) {
-        fs.mkdirSync(STATEMENTS_DIR, { recursive: true });
-    }
-};
+// Utilidades internas 
 
 const resolveAccountByCode = async (accountNumber) => {
     const normalized = String(accountNumber || '').toUpperCase().trim();
@@ -31,7 +21,7 @@ const parseDateRange = (query) => {
     const now = new Date();
     const defaultStart = new Date(now.getFullYear(), now.getMonth(), 1);
     const periodStart = query.periodStart ? new Date(query.periodStart) : defaultStart;
-    const periodEnd   = query.periodEnd   ? new Date(query.periodEnd)   : now;
+    const periodEnd = query.periodEnd ? new Date(query.periodEnd) : now;
 
     if (Number.isNaN(periodStart.getTime()) || Number.isNaN(periodEnd.getTime())) {
         throw new Error('periodStart y periodEnd deben ser fechas validas');
@@ -42,6 +32,8 @@ const parseDateRange = (query) => {
 
     return { periodStart, periodEnd };
 };
+
+// CRUD
 
 export const createAccountStatement = async (req, res) => {
     try {
@@ -61,7 +53,7 @@ export const createAccountStatement = async (req, res) => {
         res.status(201).json({
             success: true,
             message: 'Estado de cuenta creado exitosamente',
-            data: accountStatement
+            data: accountStatement,
         });
     } catch (error) {
         res.status(400).json({ success: false, message: 'Error al crear el estado de cuenta', error: error.message });
@@ -88,7 +80,7 @@ export const getAccountStatements = async (req, res) => {
             filter.accountId = account._id;
         }
 
-        const numericPage  = parseInt(page, 10);
+        const numericPage = parseInt(page, 10);
         const numericLimit = parseInt(limit, 10);
 
         const accountStatements = await AccountStatement.find(filter)
@@ -105,8 +97,8 @@ export const getAccountStatements = async (req, res) => {
                 currentPage: numericPage,
                 totalPages: Math.ceil(total / numericLimit),
                 totalRecords: total,
-                limit: numericLimit
-            }
+                limit: numericLimit,
+            },
         });
     } catch (error) {
         res.status(500).json({ success: false, message: 'Error al mandar los estados de cuenta', error: error.message });
@@ -119,7 +111,7 @@ export const updateAccountStatement = async (req, res) => {
         const accountStatement = await AccountStatement.findByIdAndUpdate(
             id,
             req.body,
-            { new: true, runValidators: true }
+            { new: true, runValidators: true },
         );
 
         if (!accountStatement) {
@@ -162,32 +154,47 @@ export const getAccountStatementById = async (req, res) => {
     }
 };
 
+// Generación y envío del PDF por correo
+
 export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
     try {
         const { accountNumber } = req.params;
-        const account = await resolveAccountByCode(accountNumber);
 
+        // 1. Resolver cuenta
+        const account = await resolveAccountByCode(accountNumber);
         if (!account) {
             return res.status(404).json({ success: false, message: 'Cuenta no encontrada' });
         }
 
+        // 2. Datos del usuario autenticado viene del token
+        const userEmail = req.user?.email;
+        const userName = [req.user?.name, req.user?.surname].filter(Boolean).join(' ') || 'Usuario';
+
+        if (!userEmail) {
+            return res.status(401).json({
+                success: false,
+                message: 'No se pudo obtener el correo del usuario autenticado',
+            });
+        }
+
+        // 3. Rango de fechas
         const { periodStart, periodEnd } = parseDateRange(req.query);
 
+        // 4. Obtener transacciones del período
         const transactions = await Transaction.find({
             status: 'exitosa',
             transactionType: { $ne: 'deposito' },
             transactionDate: { $gte: periodStart, $lte: periodEnd },
             $or: [
                 { sourceAccountNumber: account.accountNumber },
-                { destinationAccountNumber: account.accountNumber }
-            ]
+                { destinationAccountNumber: account.accountNumber },
+            ],
         }).sort({ transactionDate: 1 });
 
-        // Integrar retiros creados desde el modulo withdrawal para que el PDF
-        // refleje correctamente "Total retiros" y el detalle de movimientos.
+        // 5. Integrar retiros del módulo withdrawal
         const withdrawals = await Withdrawal.find({
             accountNumber: account.accountNumber,
-            createdAt: { $gte: periodStart, $lte: periodEnd }
+            createdAt: { $gte: periodStart, $lte: periodEnd },
         }).sort({ createdAt: 1 });
 
         const withdrawalTransactions = withdrawals.map((wd) => ({
@@ -197,13 +204,14 @@ export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
             description: wd.description,
             sourceAccountNumber: wd.accountNumber,
             destinationAccountNumber: null,
-            status: 'exitosa'
+            status: 'exitosa',
         }));
 
+        // 6. Integrar depósitos
         const deposits = await Deposit.find({
             accountNumber: account.accountNumber,
             status: 'exitosa',
-            createdAt: { $gte: periodStart, $lte: periodEnd }
+            createdAt: { $gte: periodStart, $lte: periodEnd },
         }).sort({ createdAt: 1 });
 
         const depositTransactions = deposits.map((dp) => ({
@@ -213,63 +221,80 @@ export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
             description: dp.description,
             sourceAccountNumber: null,
             destinationAccountNumber: dp.accountNumber,
-            status: 'exitosa'
+            status: 'exitosa',
         }));
 
+        // 7. Unir y ordenar todos los movimientos
         const allTransactions = [...transactions, ...withdrawalTransactions, ...depositTransactions]
             .sort((a, b) => new Date(a.transactionDate) - new Date(b.transactionDate));
 
+        // 8. Construir resumen
         const summary = buildStatementSummary({ account, transactions: allTransactions, periodStart, periodEnd });
 
+        // 9. Persistir el estado de cuenta en BD
         const statement = await AccountStatement.create({
-            accountId:             account._id,
-            periodStart:           summary.periodStart,
-            periodEnd:             summary.periodEnd,
-            openingBalance:        summary.openingBalance,
-            closingBalance:        summary.closingBalance,
-            totalDeposits:         summary.totalDeposits,
-            totalWithdrawals:      summary.totalWithdrawals,
-            totalTransfersSent:    summary.totalTransfersSent,
+            accountId: account._id,
+            periodStart: summary.periodStart,
+            periodEnd: summary.periodEnd,
+            openingBalance: summary.openingBalance,
+            closingBalance: summary.closingBalance,
+            totalDeposits: summary.totalDeposits,
+            totalWithdrawals: summary.totalWithdrawals,
+            totalTransfersSent: summary.totalTransfersSent,
             totalTransfersReceived: summary.totalTransfersReceived,
-            interestEarned:        summary.interestEarned,
-            feesCharged:           summary.feesCharged
+            interestEarned: summary.interestEarned,
+            feesCharged: summary.feesCharged,
         });
 
+        // 10. Generar el PDF en memoria 
         const pdfBuffer = generateStatementPdf({
             account: {
-                bankName:      account.bankName      ?? 'Banco Nacional',
-                ownerName:     account.ownerName     ?? account.userId,
+                bankName: account.bankName ?? 'Banco Nacional',
+                ownerId: req.user?.sub,
+                ownerName: userName,
                 accountNumber: account.accountNumber,
-                accountType:   account.accountType   ?? account.type,
-                currency:      account.currencyCode  ?? 'GTQ',
+                accountType: account.accountType ?? account.type,
+                currency: account.currencyCode ?? 'GTQ',
             },
             summary,
             transactions: allTransactions.map((tx) => ({
-                date:                   tx.transactionDate,
-                transactionType:        tx.transactionType,
-                amount:                 tx.amount,
-                description:            tx.description,
-                sourceAccountNumber:    tx.sourceAccountNumber,
+                date: tx.transactionDate,
+                transactionType: tx.transactionType,
+                amount: tx.amount,
+                description: tx.description,
+                sourceAccountNumber: tx.sourceAccountNumber,
                 destinationAccountNumber: tx.destinationAccountNumber,
             })),
         });
 
-        ensureStatementsDir();
-        const filename   = `statement-${account.accountNumber}-${statement._id}.pdf`;
-        const outputPath = path.join(STATEMENTS_DIR, filename);
-        fs.writeFileSync(outputPath, pdfBuffer);
+        // 11. Enviar el PDF por correo al usuario autenticado
+        await sendAccountStatementEmail({
+            email: userEmail,
+            name: userName,
+            pdfBuffer,
+            accountNumber: account.accountNumber,
+            periodStart,
+            periodEnd,
+        });
 
-        statement.pdfFile = outputPath;
-        await statement.save();
+        // 12. Responder al cliente con confirmación 
+        return res.status(200).json({
+            success: true,
+            message: `Estado de cuenta enviado correctamente al correo ${userEmail}`,
+            data: {
+                statementId: statement._id,
+                accountNumber: account.accountNumber,
+                periodStart,
+                periodEnd,
+                sentTo: userEmail,
+            },
+        });
 
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-        return res.send(pdfBuffer);
     } catch (error) {
         return res.status(400).json({
             success: false,
-            message: 'Error al generar el PDF del estado de cuenta',
-            error: error.message
+            message: 'Error al generar o enviar el estado de cuenta',
+            error: error.message,
         });
     }
 };

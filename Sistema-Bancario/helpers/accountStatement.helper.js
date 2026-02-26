@@ -272,7 +272,8 @@ export const generateStatementPdf = ({ account, summary, transactions }) => {
         { type: 'spacer', h: 14 },
 
         { type: 'sectionHeader', text: 'Informacion de la cuenta' },
-        { type: 'keyvalue', key: 'Titular',        value: account.ownerName     ?? '—', zebra: false },
+        { type: 'keyvalue', key: 'ID',      value: account.ownerId    ?? '—', zebra: true  },
+        { type: 'keyvalue', key: 'Titular', value: account.ownerName  ?? '—', zebra: false },
         { type: 'keyvalue', key: 'No. de cuenta',  value: account.accountNumber ?? '—', zebra: true  },
         { type: 'keyvalue', key: 'Tipo de cuenta', value: account.accountType   ?? '—', zebra: false },
         { type: 'keyvalue', key: 'Moneda',         value: account.currency      ?? 'GTQ', zebra: true },

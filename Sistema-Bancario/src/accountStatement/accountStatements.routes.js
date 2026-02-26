@@ -1,33 +1,58 @@
 import { Router } from 'express';
-import {createAccountStatement,getAccountStatements,updateAccountStatement,deleteAccountStatement,getAccountStatementById,downloadAccountStatementPdfByAccountNumber} from './accountStatements.controller.js';
-import {validateCreateAccountStatement,validateUpdateAccountStatement,validateAccountStatementById,validateAccountStatementByAccountNumber} from '../../middlewares/accountStatement-validators.js';
+import {
+    createAccountStatement,
+    getAccountStatements,
+    updateAccountStatement,
+    deleteAccountStatement,
+    getAccountStatementById,
+    downloadAccountStatementPdfByAccountNumber,
+} from './accountStatements.controller.js';
+import {
+    validateCreateAccountStatement,
+    validateUpdateAccountStatement,
+    validateAccountStatementById,
+    validateAccountStatementByAccountNumber,
+} from '../../middlewares/accountStatement-validators.js';
+
+import { validateJWT } from '../../middlewares/validate-JWT.js';
 
 const router = Router();
 
 router.post(
-    '/create', 
-    validateCreateAccountStatement, 
-    createAccountStatement
+    '/create',
+    validateCreateAccountStatement,
+    createAccountStatement,
 );
+
 router.get(
-    '/', 
-    getAccountStatements
+    '/',
+    getAccountStatements,
 );
+
+
 router.get(
-    '/account/:accountNumber/pdf', 
-    validateAccountStatementByAccountNumber, 
-    downloadAccountStatementPdfByAccountNumber);
+    '/account/:accountNumber/pdf',
+    validateJWT,                      
+    validateAccountStatementByAccountNumber,
+    downloadAccountStatementPdfByAccountNumber,
+);
+
 router.put(
-    '/:id', 
-    validateUpdateAccountStatement, 
-    updateAccountStatement);
+    '/:id',
+    validateUpdateAccountStatement,
+    updateAccountStatement,
+);
+
 router.delete(
-    '/:id', 
-    validateAccountStatementById, 
-    deleteAccountStatement);
+    '/:id',
+    validateAccountStatementById,
+    deleteAccountStatement,
+);
+
 router.get(
-    '/:id', 
-    validateAccountStatementById, 
-    getAccountStatementById);
+    '/:id',
+    validateAccountStatementById,
+    getAccountStatementById,
+);
 
 export default router;

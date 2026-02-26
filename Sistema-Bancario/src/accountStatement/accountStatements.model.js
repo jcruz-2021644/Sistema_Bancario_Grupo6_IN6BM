@@ -63,12 +63,6 @@ const accountStatementSchema  = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    // ruta del archivo PDF generado
-    pdfFile: {
-        type: String,
-        trim: true,
-        maxLength: [255, 'La ruta del archivo no puede exceder 255 caracteres']
-    }
 }, {
     timestamps: true,
     versionKey: false
