@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createAccount, getAccounts, updateAccount, deleteAccount, changeAccountStatus, getAccountByAccountNumber } from "./accounts.controller.js";
-import { validateCreateAccount, validateUpdateAccount, validateAccountById } from "../../middlewares/accounts-validators.js";
+import { validateCreateAccount, validateUpdateAccount, validateAccountById, validateReadAccountById } from "../../middlewares/accounts-validators.js";
 
 const router = Router();
 
@@ -25,7 +25,7 @@ router.delete(
 )
 router.get(
     '/:accountNumber',
-    validateAccountById,
+    validateReadAccountById,
     getAccountByAccountNumber
 )
 router.patch(

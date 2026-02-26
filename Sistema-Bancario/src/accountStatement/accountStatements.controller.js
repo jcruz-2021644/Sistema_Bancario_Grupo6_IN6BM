@@ -6,6 +6,7 @@ import AccountStatement from './accountStatements.model.js';
 import Account from '../accounts/accounts.model.js';
 import Transaction from '../transaction/transaction.model.js';
 import Withdrawal from '../withdrawal/withdrawal.model.js';
+import Deposit from '../deposits/deposits.model.js';
 import {
     buildStatementSummary,
     generateStatementPdf          
@@ -174,6 +175,7 @@ export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
 
         const transactions = await Transaction.find({
             status: 'exitosa',
+            transactionType: { $ne: 'deposito' },
             transactionDate: { $gte: periodStart, $lte: periodEnd },
             $or: [
                 { sourceAccountNumber: account.accountNumber },
@@ -198,7 +200,23 @@ export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
             status: 'exitosa'
         }));
 
-        const allTransactions = [...transactions, ...withdrawalTransactions]
+        const deposits = await Deposit.find({
+            accountNumber: account.accountNumber,
+            status: 'exitosa',
+            createdAt: { $gte: periodStart, $lte: periodEnd }
+        }).sort({ createdAt: 1 });
+
+        const depositTransactions = deposits.map((dp) => ({
+            transactionDate: dp.createdAt ?? dp.date,
+            transactionType: 'deposito',
+            amount: dp.amount,
+            description: dp.description,
+            sourceAccountNumber: null,
+            destinationAccountNumber: dp.accountNumber,
+            status: 'exitosa'
+        }));
+
+        const allTransactions = [...transactions, ...withdrawalTransactions, ...depositTransactions]
             .sort((a, b) => new Date(a.transactionDate) - new Date(b.transactionDate));
 
         const summary = buildStatementSummary({ account, transactions: allTransactions, periodStart, periodEnd });

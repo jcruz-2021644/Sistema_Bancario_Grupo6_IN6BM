@@ -80,7 +80,7 @@ export const validateCreateAccount = [
 // Validaciones para actualizar cuenta
 export const validateUpdateAccount = [
     validateJWT,
-    requireRole('ADMIN_ROLE', 'MANAGER_ROLE', 'ATM_ROLE'),
+    requireRole('ADMIN_ROLE', 'MANAGER_ROLE', 'ATM_ROLE', 'USER_ROLE'),
     param('accountNumber')
         .notEmpty()
         .withMessage('El numero de cuenta es requerido')
@@ -94,6 +94,10 @@ export const validateUpdateAccount = [
         .optional()
         .isFloat({ min: 0 })
         .withMessage('El balance debe ser un numero positivo'),
+    body('name')
+        .optional()
+        .isString()
+        .withMessage('El nombre debe ser texto'),
     body('dpi')
         .optional()
         .matches(/^\d{13}$/)
@@ -140,6 +144,18 @@ export const validateUpdateAccount = [
 export const validateAccountById = [
     validateJWT,
     requireRole('ADMIN_ROLE', 'MANAGER_ROLE', 'ATM_ROLE'),
+    param('accountNumber')
+        .notEmpty()
+        .withMessage('El numero de cuenta es requerido')
+        .matches(/^[A-Z]{3}-\d{3}-\d{4}$/)
+        .withMessage('El numero de cuenta debe tener formato ABC-000-0000'),
+    checkValidators,
+];
+
+// Validaciones para obtener cuenta por accountNumber (incluye USER_ROLE)
+export const validateReadAccountById = [
+    validateJWT,
+    requireRole('ADMIN_ROLE', 'MANAGER_ROLE', 'ATM_ROLE', 'USER_ROLE'),
     param('accountNumber')
         .notEmpty()
         .withMessage('El numero de cuenta es requerido')

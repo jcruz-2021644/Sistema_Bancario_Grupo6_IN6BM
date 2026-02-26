@@ -4,7 +4,8 @@ import {
     normalizeTransactionData,
     validateAccountNumberFormat,
     validateCurrencyForTransaction,
-    applyTransactionBalances
+    applyTransactionBalances,
+    validateTransferLimits
 } from '../../helpers/transaction.helper.js';
 
 //agregar
@@ -38,6 +39,15 @@ export const createTransaction = async (req, res) => {
         }
 
         await validateCurrencyForTransaction(transactionData.currencyCode, sourceAccount, destinationAccount);
+
+        // Valida reglas de negocio para transferencias:
+        // maximo por operacion (Q2000), saldo disponible y limite diario (Q10000).
+        await validateTransferLimits({
+            transactionType: transactionData.transactionType,
+            sourceAccountNumber,
+            amount: Number(transactionData.amount),
+            sourceAccount
+        });
 
         const { previousBalance, newBalance } = applyTransactionBalances({
             transactionType: transactionData.transactionType,

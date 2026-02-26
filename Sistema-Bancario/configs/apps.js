@@ -16,6 +16,8 @@ import notificationRoutes from '../src/notifications/notifications.routes.js';
 import accountStatementsRoutes from '../src/accountStatement/accountStatements.routes.js';
 import accountLockRoutes from '../src/accountLock/accountLock.routes.js';
 import withdrawalRoutes from '../src/withdrawal/withdrawal.routes.js';
+import benefitsRoutes from '../src/benefits/benefits.routes.js';
+import depositsRoutes from '../src/deposits/deposits.routes.js';
 
 
 const BASE_PATH = '/api/v1';
@@ -39,6 +41,8 @@ const routes = (app) => {
     app.use(`${BASE_PATH}/accountStatements`, accountStatementsRoutes);
     app.use(`${BASE_PATH}/accountLocks`, accountLockRoutes);
     app.use(`${BASE_PATH}/withdrawal`, withdrawalRoutes);
+    app.use(`${BASE_PATH}/benefits`, benefitsRoutes);
+    app.use(`${BASE_PATH}/deposits`, depositsRoutes);
 
 
 

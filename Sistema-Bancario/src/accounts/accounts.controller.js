@@ -12,6 +12,10 @@ const normalizeCurrencyCode = (accountData) => (
     accountData.currencyCode || accountData.currency || accountData.currencyId || ''
 ).toUpperCase().trim();
 
+const resolveRequesterUserId = (req) => (
+    req.user?.sub || req.user?.userId || req.userId || ''
+);
+
 const validateExistingCurrencyCode = async (currencyCode) => {
     const currency = await Currency.findOne({ code: currencyCode, status: 'activa' });
 
@@ -124,14 +128,28 @@ export const updateAccount = async (req, res) => {
     try {
         const { accountNumber } = req.params;
         const accountData = req.body;
+        const requesterRole = req.user?.role;
+
+        if (requesterRole === 'USER_ROLE') {
+            const allowedFieldsForUser = ['name', 'address', 'jobName', 'monthlyIncome'];
+            const payloadKeys = Object.keys(accountData);
+            const blockedFields = payloadKeys.filter((field) => !allowedFieldsForUser.includes(field));
+
+            if (blockedFields.length > 0) {
+                return res.status(403).json({
+                    success: false,
+                    message: 'Como USER_ROLE solo puedes editar: name, address, jobName, monthlyIncome',
+                    blockedFields
+                });
+            }
+        }
 
         if (accountData.currencyCode || accountData.currency || accountData.currencyId) {
             accountData.currencyCode = normalizeCurrencyCode(accountData);
             await validateExistingCurrencyCode(accountData.currencyCode);
         }
 
-        // name y username no se reciben desde cliente
-        delete accountData.name;
+        // username no se actualiza desde cliente
         delete accountData.username;
 
         validateAccountHolderData(accountData, { partial: true });
@@ -198,6 +216,8 @@ export const deleteAccount = async (req, res) => {
 export const getAccountByAccountNumber = async (req, res) => {
     try {
         const { accountNumber } = req.params;
+        const requesterRole = req.user?.role;
+        const requesterUserId = resolveRequesterUserId(req);
 
         const account = await Account.findOne({ accountNumber });
 
@@ -205,6 +225,13 @@ export const getAccountByAccountNumber = async (req, res) => {
             return res.status(404).json({
                 success: false,
                 message: 'Cuenta no encontrada'
+            });
+        }
+
+        if (requesterRole === 'USER_ROLE' && String(account.userId) !== String(requesterUserId)) {
+            return res.status(403).json({
+                success: false,
+                message: 'Esta cuenta no te pertenece'
             });
         }
 

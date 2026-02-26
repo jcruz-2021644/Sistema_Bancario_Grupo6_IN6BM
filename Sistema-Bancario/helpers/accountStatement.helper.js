@@ -285,7 +285,7 @@ export const generateStatementPdf = ({ account, summary, transactions }) => {
 
         { type: 'sectionHeader', text: 'Resumen de movimientos' },
         { type: 'keyvalue', key: 'Saldo inicial',                value: fmt(summary.openingBalance),         zebra: false },
-        //{ type: 'keyvalue', key: 'Total depositos',              value: fmt(summary.totalDeposits),          zebra: true  },
+        { type: 'keyvalue', key: 'Total depositos',              value: fmt(summary.totalDeposits),          zebra: true  },
         { type: 'keyvalue', key: 'Total de dinero retirado',                value: fmt(summary.totalWithdrawals),       zebra: false },
         { type: 'keyvalue', key: 'Total de transferencias enviadas',      value: fmt(summary.totalTransfersSent),     zebra: true  },
         { type: 'keyvalue', key: 'Total de transferencias recibidas',     value: fmt(summary.totalTransfersReceived), zebra: false },
