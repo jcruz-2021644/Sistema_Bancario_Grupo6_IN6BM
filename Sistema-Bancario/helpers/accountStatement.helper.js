@@ -16,8 +16,6 @@ const approxWidth = (text, fs) => String(text).length * fs * CHAR_W;
 const centerX     = (text, fs) => MARGIN_X + (CONTENT_W - approxWidth(text, fs)) / 2;
 const rightX      = (text, fs) => RIGHT_X - approxWidth(text, fs);
 
-// PDF primitive operators
-
 const opText = (x, y, font, size, text) =>
     `BT /${font} ${size} Tf ${x.toFixed(1)} ${y.toFixed(1)} Td (${escapePdfText(text)}) Tj ET`;
 
@@ -40,7 +38,6 @@ const opLine = (x1, y1, x2, y2, width = 0.5, r = 0.78, g = 0.78, b = 0.78) => [
     `0 0 0 RG`,
 ];
 
-// Brand palette 
 
 const BLUE_D = [0.094, 0.196, 0.384];
 const BLUE_M = [0.157, 0.337, 0.627];
@@ -156,8 +153,6 @@ const buildPages = (commands) => {
     return pages;
 };
 
-// PDF binary assembly
-
 export const generatePdfFromCommands = (commands) => {
     const pages = buildPages(commands);
     const N     = pages.length;
@@ -222,8 +217,6 @@ export const generatePdfFromCommands = (commands) => {
 export const generateSimplePdfBuffer = (lines) =>
     generatePdfFromCommands(lines.map((l) => ({ type: 'text', text: l })));
 
-// Statement summary builder 
-
 export const buildStatementSummary = ({ account, transactions, periodStart, periodEnd }) => {
     const totals = {
         totalDeposits: 0, totalWithdrawals: 0,
@@ -249,8 +242,6 @@ export const buildStatementSummary = ({ account, transactions, periodStart, peri
     const closingBalance = Number(account.balance) || 0;
     return { periodStart, periodEnd, openingBalance: closingBalance - netChange, closingBalance, ...totals };
 };
-
-// Statement PDF generator 
 
 export const generateStatementPdf = ({ account, summary, transactions }) => {
     const fmt = (n) => `Q${Number(n).toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;

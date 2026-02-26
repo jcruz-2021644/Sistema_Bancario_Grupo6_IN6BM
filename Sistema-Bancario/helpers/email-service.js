@@ -1,7 +1,5 @@
 import nodemailer from 'nodemailer';
 
-// Transporter creado directamente desde variables de entorno
-// El Sistema-Bancario no comparte config.js con Auth-Service
 const transporter = nodemailer.createTransport({
     host:   process.env.SMTP_HOST   || 'smtp.gmail.com',
     port:   parseInt(process.env.SMTP_PORT, 10) || 587,
