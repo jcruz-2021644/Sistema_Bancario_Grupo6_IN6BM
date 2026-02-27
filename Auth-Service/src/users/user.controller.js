@@ -9,6 +9,7 @@ import {
 import { ALLOWED_ROLES, ADMIN_ROLE } from '../../helpers/role-constants.js';
 import { buildUserResponse } from '../../utils/user-helpers.js';
 import { sequelize } from '../../configs/db.js';
+const ALLOWED_ROLES_MESSAGE ='Role not allowed. Use ADMIN_ROLE, MANAGER_ROLE, USER_ROLE or ATM_ROLE';
 
 const ensureAdmin = async (req) => {
     const currentUserId = req.userId;
@@ -33,7 +34,7 @@ export const updateUserRole = [
         if (!ALLOWED_ROLES.includes(normalized)) {
         return res.status(400).json({
             success: false,
-            message: 'Role not allowed. Use ADMIN_ROLE or USER_ROLE',
+            message: ALLOWED_ROLES_MESSAGE,
         });
         }
 
@@ -75,7 +76,7 @@ export const getUsersByRole = [
         if (!ALLOWED_ROLES.includes(normalized)) {
         return res.status(400).json({
             success: false,
-            message: 'Role not allowed. Use ADMIN_ROLE or USER_ROLE',
+            message: ALLOWED_ROLES_MESSAGE,
         });
         }
 
@@ -84,3 +85,5 @@ export const getUsersByRole = [
         return res.status(200).json(payload);
     }),
 ];
+
+export const changeRole = updateUserRole;

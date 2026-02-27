@@ -42,7 +42,7 @@ const routes = (app) => {
     app.use(`${BASE_PATH}/accountStatements`, accountStatementsRoutes);
     app.use(`${BASE_PATH}/accountLocks`, accountLockRoutes);
     app.use(`${BASE_PATH}/withdrawal`, withdrawalRoutes);
-    app.use(`${BASE_PATH}/benefits`, benefitsRoutes);
+    app.use(`${BASE_PATH}/service`, benefitsRoutes);
     app.use(`${BASE_PATH}/deposits`, depositsRoutes);
 
 

@@ -5,17 +5,7 @@ export const createLoan = async (req, res) => {
     try {
 
         const loanData = req.body;
-
-        /* if(req.file){
-             const extension = req.file.path.split('.').pop();
-             const filename = req.file.filename;
-             const relativePath = filename.substring(filename.indexOf('fields/'));
-         
-             fieldData.photo = `$(relativePath).$(extension)`;
-         }else{
-             fieldData.photo = 'fields/kinal_sports_nyvxo5';
-         }
- */
+        
         const loan = new Loan(loanData);
         await loan.save();
 
@@ -72,6 +62,9 @@ export const getLoans = async (req, res) => {
 export const getLoanById = async (req, res) => {
     try {
         const { id } = req.params;
+        const requesterRole = req.user?.role;
+        const requesterUserId = req.user?.sub || req.user?.userId || req.userId || '';
+
         const loan = await Loan.findById(id);
         if (!loan) {
             return res.status(404).json({
@@ -79,6 +72,22 @@ export const getLoanById = async (req, res) => {
                 message: 'Préstamo no encontrado'
             });
         }
+
+        // Si el solicitante es un usuario normal, asegurar que el préstamo le pertenece
+        if (requesterRole === 'USER_ROLE') {
+            if (String(loan.userId) !== String(requesterUserId)) {
+                // Listar los préstamos del usuario
+                const ownLoans = await Loan.find({ userId: requesterUserId }).select('_id').limit(20);
+                const loanIds = ownLoans.map(l => String(l._id));
+                const idsText = loanIds.length > 0 ? loanIds.join(',') : 'ninguno';
+
+                return res.status(403).json({
+                    success: false,
+                    message: `tus prestamos son idPrestamo: ${idsText}`
+                });
+            }
+        }
+
         res.status(200).json({
             success: true,
             data: loan
@@ -96,7 +105,30 @@ export const updateLoan = async (req, res) => {
     try {
         const { id } = req.params;
         const loanData = req.body;
-        
+        const requesterRole = req.user?.role;
+        const requesterUserId = req.user?.sub || req.user?.userId || req.userId || '';
+
+        const existingLoan = await Loan.findById(id);
+        if (!existingLoan) {
+            return res.status(404).json({
+                success: false,
+                message: 'Préstamo no encontrado'
+            });
+        }
+
+        if (requesterRole === 'USER_ROLE') {
+            if (String(existingLoan.userId) !== String(requesterUserId)) {
+                const ownLoans = await Loan.find({ userId: requesterUserId }).select('_id').limit(20);
+                const loanIds = ownLoans.map(l => String(l._id));
+                const idsText = loanIds.length > 0 ? loanIds.join(',') : 'ninguno';
+
+                return res.status(403).json({
+                    success: false,
+                    message: `tus prestamos son idPrestamo: ${idsText}`
+                });
+            }
+        }
+
         const loan = await Loan.findByIdAndUpdate(
             id,
             loanData,

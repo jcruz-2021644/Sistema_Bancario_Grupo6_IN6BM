@@ -17,6 +17,8 @@ import {
 const resolveExecutingUserId = (req, payload) =>
     payload.executedByUserId || payload.userId || req.user?.sub || req.user?.userId || '';
 
+const roundToTwoDecimals = (value) => Number(Number(value || 0).toFixed(2));
+
 
 export const createDeposit = async (req, res) => {
     try {
@@ -36,8 +38,9 @@ export const createDeposit = async (req, res) => {
 
         // Permitimos depositos en otra moneda: convertiremos al currency de la cuenta
         const { previousBalance, newBalance } = await applyDepositBalance(account, depositData.amount, depositData.currencyCode);
-        depositData.previousBalance = previousBalance;
-        depositData.newBalance = newBalance;
+        account.balance = roundToTwoDecimals(account.balance);
+        depositData.previousBalance = roundToTwoDecimals(previousBalance);
+        depositData.newBalance = roundToTwoDecimals(newBalance);
 
         const deposit = new Deposit(depositData);
 
@@ -174,9 +177,10 @@ export const updateDepositAmount = async (req, res) => {
             deposit.currencyCode
         );
 
-        deposit.amount = newAmount;
-        deposit.previousBalance = previousBalance;
-        deposit.newBalance = newBalance;
+        account.balance = roundToTwoDecimals(account.balance);
+        deposit.amount = roundToTwoDecimals(newAmount);
+        deposit.previousBalance = roundToTwoDecimals(previousBalance);
+        deposit.newBalance = roundToTwoDecimals(newBalance);
         deposit.executedByUserId = executedByUserId || deposit.executedByUserId;
 
         await account.save();
@@ -230,10 +234,11 @@ export const revertDeposit = async (req, res) => {
 
         const { previousBalance, newBalance } = await applyDepositReversal(account, deposit.amount, deposit.currencyCode);
 
+        account.balance = roundToTwoDecimals(account.balance);
         deposit.status = 'reversada';
         deposit.reversedAt = new Date();
-        deposit.previousBalance = previousBalance;
-        deposit.newBalance = newBalance;
+        deposit.previousBalance = roundToTwoDecimals(previousBalance);
+        deposit.newBalance = roundToTwoDecimals(newBalance);
         deposit.executedByUserId = executedByUserId || deposit.executedByUserId;
 
         await account.save();

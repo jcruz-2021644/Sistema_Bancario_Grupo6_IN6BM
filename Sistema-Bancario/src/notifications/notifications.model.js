@@ -4,8 +4,7 @@ import mongoose from "mongoose";
 
 const notificationSchema = mongoose.Schema({
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        type: String,
         required: [true, 'El usuario es requerido']
     },
     // tipo de notificacion (alerta, confirmacion, informativa, seguridad)

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+    changeRole,
     updateUserRole,
     getUserRoles,
     getUsersByRole
@@ -9,6 +10,9 @@ const router = Router();
 
 // PUT /api/v1/users/:userId/role
 router.put('/:userId/role', ...updateUserRole);
+
+// PUT /api/v1/users/change-role/:userId
+router.put('/change-role/:userId', ...changeRole);
 
 // GET /api/v1/users/:userId/roles
 router.get('/:userId/roles', ...getUserRoles);

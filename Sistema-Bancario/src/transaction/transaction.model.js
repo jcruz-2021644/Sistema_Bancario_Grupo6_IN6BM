@@ -69,6 +69,18 @@ const transactionSchema = mongoose.Schema({
     executedByUserId: {
         type: String,
         required: [true, 'Executing user is required']
+    },
+    //marca si la transaccion queda guardada en favoritos
+    favorito: {
+        type: Boolean,
+        default: false
+    },
+    //alias para favoritos
+    alias: {
+        type: String,
+        trim: true,
+        maxLength: [80, 'El alias no puede exceder 80 caracteres'],
+        default: ''
     }
 }, {
     timestamps: true,
@@ -80,5 +92,6 @@ transactionSchema.index({ destinationAccountNumber: 1 });
 transactionSchema.index({ transactionType: 1 });
 transactionSchema.index({ status: 1 });
 transactionSchema.index({ transactionDate: -1 });
+transactionSchema.index({ executedByUserId: 1, favorito: 1 });
 
 export default mongoose.model('Transaction', transactionSchema);

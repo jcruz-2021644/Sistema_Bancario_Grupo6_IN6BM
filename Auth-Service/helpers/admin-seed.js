@@ -5,8 +5,22 @@ import { hashPassword } from '../utils/password-utils.js';
 
 export const seedDefaultAdmin = async () => {
     try {
-        const ADMIN_EMAIL = 'sistemabancarioin@gmail.com';
-        const ADMIN_PASSWORD = 'admin';
+        const DEFAULT_ADMINS = [
+            {
+                email: 'sistemabancarioin@gmail.com',
+                password: 'admin',
+                username: 'sistemabancarioadmin',
+                name: 'Admin',
+                surname: 'Sistema Bancario',
+            },
+            {
+                email: 'jefryyu88@gmail.com',
+                password: 'admin2',
+                username: 'admin2',
+                name: 'Admin',
+                surname: '2',
+            },
+        ];
 
         // Asegurar que existe el rol ADMIN
         const [adminRole] = await Role.findOrCreate({
@@ -14,42 +28,44 @@ export const seedDefaultAdmin = async () => {
             defaults: { Name: ADMIN_ROLE },
         });
 
-        // Buscar usuario por email
-        let user = await User.findOne({ where: { Email: ADMIN_EMAIL } });
+        for (const admin of DEFAULT_ADMINS) {
+            let user = await User.findOne({ where: { Email: admin.email } });
 
-        if (!user) {
-            const hashed = await hashPassword(ADMIN_PASSWORD);
-            user = await User.create({
-                Name: 'Admin',
-                Surname: 'Sistema Bancario',
-                Username: 'sistemabancarioadmin',
-                Email: ADMIN_EMAIL,
-                Password: hashed,
-                Status: true,
-            });
+            if (!user) {
+                const hashed = await hashPassword(admin.password);
+                user = await User.create({
+                    Name: admin.name,
+                    Surname: admin.surname,
+                    Username: admin.username,
+                    Email: admin.email,
+                    Password: hashed,
+                    Status: true,
+                });
 
-            await UserProfile.create({
-                UserId: user.Id,
-                Phone: '00000000',
-                ProfilePicture: '',
-            });
-            
-            await UserEmail.create({ 
-                UserId: user.Id, 
-                EmailVerified: true 
-            });
-            
-            await UserPasswordReset.create({ 
-                UserId: user.Id 
-            });
+                await UserProfile.create({
+                    UserId: user.Id,
+                    Phone: '00000000',
+                    ProfilePicture: '',
+                });
 
-            await UserRole.create({ 
-                UserId: user.Id, 
-                RoleId: adminRole.Id 
-            });
-            
-            console.log(`Admin creado exitosamente: ${ADMIN_EMAIL}`);
-        } else {
+                await UserEmail.create({
+                    UserId: user.Id,
+                    EmailVerified: true
+                });
+
+                await UserPasswordReset.create({
+                    UserId: user.Id
+                });
+
+                await UserRole.create({
+                    UserId: user.Id,
+                    RoleId: adminRole.Id
+                });
+
+                console.log(`Admin creado exitosamente: ${admin.email}`);
+                continue;
+            }
+
             // Asegurar estado activo
             await User.update({ Status: true }, { where: { Id: user.Id } });
 
@@ -57,15 +73,15 @@ export const seedDefaultAdmin = async () => {
             const existing = await UserRole.findOne({
                 where: { UserId: user.Id, RoleId: adminRole.Id },
             });
-            
+
             if (!existing) {
-                await UserRole.create({ 
-                    UserId: user.Id, 
-                    RoleId: adminRole.Id 
+                await UserRole.create({
+                    UserId: user.Id,
+                    RoleId: adminRole.Id
                 });
-                console.log(`Rol ADMIN asignado a usuario existente: ${ADMIN_EMAIL}`);
+                console.log(`Rol ADMIN asignado a usuario existente: ${admin.email}`);
             } else {
-                console.log(`Admin ya existe: ${ADMIN_EMAIL}`);
+                console.log(`Admin ya existe: ${admin.email}`);
             }
         }
     } catch (err) {

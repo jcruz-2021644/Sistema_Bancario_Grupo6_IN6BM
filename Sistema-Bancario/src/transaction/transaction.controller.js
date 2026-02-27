@@ -8,12 +8,18 @@ import {
     validateTransferLimits
 } from '../../helpers/transaction.helper.js';
 
+const roundToTwoDecimals = (value) => Number(Number(value || 0).toFixed(2));
+
 //agregar
 export const createTransaction = async (req, res) => {
     try {
-
         const transactionData = normalizeTransactionData(req.body);
         const { sourceAccountNumber, destinationAccountNumber } = transactionData;
+        const requesterRole = req.user?.role;
+        const requesterUserId = req.user?.sub || req.user?.userId || req.userId || '';
+
+        // Forzar que el ejecutor sea el usuario autenticado (no confiar en el cliente)
+        transactionData.executedByUserId = requesterUserId;
 
         validateAccountNumberFormat(sourceAccountNumber, 'sourceAccountNumber');
         validateAccountNumberFormat(destinationAccountNumber, 'destinationAccountNumber');
@@ -40,6 +46,20 @@ export const createTransaction = async (req, res) => {
 
         await validateCurrencyForTransaction(transactionData.currencyCode, sourceAccount, destinationAccount);
 
+        // Si el solicitante es un usuario normal, asegurar que la cuenta origen le pertenece
+        if (requesterRole === 'USER_ROLE') {
+            if (String(sourceAccount.userId) !== String(requesterUserId)) {
+                // Intentar obtener una cuenta propia para mostrar en el mensaje, si existe
+                const ownAccount = await Account.findOne({ userId: requesterUserId });
+                const ownAccountNumber = ownAccount ? ownAccount.accountNumber : 'ACC-000-0000';
+
+                return res.status(403).json({
+                    success: false,
+                    message: `esta cuenta no te pertenece la tuya es ${ownAccountNumber}`
+                });
+            }
+        }
+
         // Valida reglas de negocio para transferencias:
         // maximo por operacion (Q2000), saldo disponible y limite diario (Q10000).
         await validateTransferLimits({
@@ -57,8 +77,10 @@ export const createTransaction = async (req, res) => {
             transactionCurrency: transactionData.currencyCode
         });
 
-        transactionData.previousBalance = previousBalance;
-        transactionData.newBalance = newBalance;
+        sourceAccount.balance = roundToTwoDecimals(sourceAccount.balance);
+        destinationAccount.balance = roundToTwoDecimals(destinationAccount.balance);
+        transactionData.previousBalance = roundToTwoDecimals(previousBalance);
+        transactionData.newBalance = roundToTwoDecimals(newBalance);
 
         await Promise.all([
             sourceAccount.save(),
@@ -119,10 +141,148 @@ export const getTransactions = async (req, res) => {
 
 }
 
+export const getFavorites = async (req, res) => {
+    try {
+        const requesterUserId = req.user?.sub || req.user?.userId || req.userId || '';
+
+        if (!requesterUserId) {
+            return res.status(401).json({
+                success: false,
+                message: 'Usuario no autenticado'
+            });
+        }
+
+        const favoriteTransactions = await Transaction.find(
+            {
+                executedByUserId: requesterUserId,
+                favorito: true,
+                destinationAccountNumber: { $nin: [null, ''] }
+            },
+            { destinationAccountNumber: 1, alias: 1, _id: 0 }
+        ).sort({ createdAt: -1 });
+
+        const favoritesByAccount = new Map();
+        for (const tx of favoriteTransactions) {
+            const accountNumber = tx.destinationAccountNumber;
+            if (!accountNumber || favoritesByAccount.has(accountNumber)) {
+                continue;
+            }
+
+            favoritesByAccount.set(accountNumber, {
+                accountNumber,
+                alias: String(tx.alias || '').trim()
+            });
+        }
+
+        const uniqueAccountNumbers = [...favoritesByAccount.keys()];
+
+        if (uniqueAccountNumbers.length === 0) {
+            return res.status(200).json({
+                success: true,
+                data: []
+            });
+        }
+
+        const destinationAccounts = await Account.find(
+            { accountNumber: { $in: uniqueAccountNumbers } },
+            { accountNumber: 1, name: 1, _id: 0 }
+        );
+
+        const accountByNumber = new Map(
+            destinationAccounts.map((acc) => [acc.accountNumber, acc])
+        );
+
+        const favorites = uniqueAccountNumbers.map((accountNumber) => {
+            const account = accountByNumber.get(accountNumber);
+            const favorite = favoritesByAccount.get(accountNumber);
+            return {
+                accountNumber,
+                name: account?.name || '',
+                alias: favorite?.alias || ''
+            };
+        });
+
+        return res.status(200).json({
+            success: true,
+            data: favorites
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error al obtener favoritos',
+            error: error.message
+        });
+    }
+}
+
 export const updateTransaction = async (req, res) => {
     try {
         const { id } = req.params;
-        const transactionData = req.body;
+        const transactionData = { ...req.body };
+        const requesterRole = req.user?.role;
+        const requesterUserId = req.user?.sub || req.user?.userId || req.userId || '';
+
+        // Verificar propiedad de la transacción / cuenta origen para usuarios normales
+        const existingTransaction = await Transaction.findById(id);
+        if (!existingTransaction) {
+            return res.status(404).json({ success: false, message: 'Transacción no encontrada' });
+        }
+
+        if (requesterRole === 'USER_ROLE') {
+            const sourceAcc = await Account.findOne({ accountNumber: existingTransaction.sourceAccountNumber });
+            if (!sourceAcc) {
+                return res.status(404).json({ success: false, message: 'Cuenta origen no encontrada' });
+            }
+
+            if (String(sourceAcc.userId) !== String(requesterUserId)) {
+                    const ownAccounts = await Account.find({ userId: requesterUserId }).select('accountNumber');
+                    const ownAccountNumbers = ownAccounts.map(a => a.accountNumber);
+                    let txIds = [];
+                    if (ownAccountNumbers.length > 0) {
+                        const userTxs = await Transaction.find({ sourceAccountNumber: { $in: ownAccountNumbers } }).select('_id').limit(20);
+                        txIds = userTxs.map(t => String(t._id));
+                    }
+
+                    const idsText = txIds.length > 0 ? txIds.join(',') : 'ninguna';
+                    return res.status(403).json({
+                        success: false,
+                        message: `tus transacciones hechas son idTransaccion: ${idsText}`
+                    });
+            }
+
+            // Si intenta cambiar la cuenta origen a otra, validar que la nueva también le pertenezca
+            if (transactionData.sourceAccountNumber && transactionData.sourceAccountNumber !== existingTransaction.sourceAccountNumber) {
+                const newSource = await Account.findOne({ accountNumber: transactionData.sourceAccountNumber });
+                if (!newSource || String(newSource.userId) !== String(requesterUserId)) {
+                    const ownAccount = await Account.findOne({ userId: requesterUserId });
+                    const ownAccountNumber = ownAccount ? ownAccount.accountNumber : 'ACC-000-0000';
+
+                    return res.status(403).json({
+                        success: false,
+                        message: `esta cuenta no te pertenece la tuya es ${ownAccountNumber}`
+                    });
+                }
+            }
+        }
+
+        if (Object.prototype.hasOwnProperty.call(transactionData, 'favorito')) {
+            const favoriteValue =
+                transactionData.favorito === true ||
+                transactionData.favorito === 'true' ||
+                transactionData.favorito === 1 ||
+                transactionData.favorito === '1';
+
+            transactionData.favorito = favoriteValue;
+            if (!favoriteValue) {
+                transactionData.alias = '';
+            } else if (Object.prototype.hasOwnProperty.call(transactionData, 'alias')) {
+                transactionData.alias = String(transactionData.alias || '').trim();
+            }
+        } else if (Object.prototype.hasOwnProperty.call(transactionData, 'alias')) {
+            const currentFavorite = Boolean(existingTransaction.favorito);
+            transactionData.alias = currentFavorite ? String(transactionData.alias || '').trim() : '';
+        }
+
         const transaction = await Transaction.findByIdAndUpdate(
             id,
             transactionData,
@@ -160,6 +320,11 @@ export const deleteTransaction = async (req, res) => {
                 message: 'Transacción no encontrada'
             })
         }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Transacción eliminada exitosamente'
+        });
         
     } catch (error) {
         res.status(400).json({
@@ -174,6 +339,9 @@ export const getTransactionById = async (req, res) => {
     try {
         const { id } = req.params;
 
+        const requesterRole = req.user?.role;
+        const requesterUserId = req.user?.sub || req.user?.userId || req.userId || '';
+
         const transaction = await Transaction.findById(id);
 
         if (!transaction) {
@@ -181,6 +349,35 @@ export const getTransactionById = async (req, res) => {
                 success: false,
                 message: 'Transacción no encontrada'
             });
+        }
+
+        // Si el solicitante es un usuario normal, asegurar que la cuenta origen le pertenece
+        if (requesterRole === 'USER_ROLE') {
+            const sourceAccount = await Account.findOne({ accountNumber: transaction.sourceAccountNumber });
+
+            if (!sourceAccount) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Cuenta origen no encontrada'
+                });
+            }
+
+            if (String(sourceAccount.userId) !== String(requesterUserId)) {
+                // Obtener las cuentas del usuario y listar sus transacciones (ids)
+                const ownAccounts = await Account.find({ userId: requesterUserId }).select('accountNumber');
+                const ownAccountNumbers = ownAccounts.map(a => a.accountNumber);
+                let txIds = [];
+                if (ownAccountNumbers.length > 0) {
+                    const userTxs = await Transaction.find({ sourceAccountNumber: { $in: ownAccountNumbers } }).select('_id').limit(20);
+                    txIds = userTxs.map(t => String(t._id));
+                }
+
+                const idsText = txIds.length > 0 ? txIds.join(',') : 'ninguna';
+                return res.status(403).json({
+                    success: false,
+                    message: `tus transacciones hechas son idTransaccion: ${idsText}`
+                });
+            }
         }
 
         res.status(200).json({

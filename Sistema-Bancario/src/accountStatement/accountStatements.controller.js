@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import AccountStatement from './accountStatements.model.js';
 import Account from '../accounts/accounts.model.js';
+import Currency from '../coins/coins.model.js';
 import Transaction from '../transaction/transaction.model.js';
 import Withdrawal from '../withdrawal/withdrawal.model.js';
 import Deposit from '../deposits/deposits.model.js';
@@ -166,6 +167,22 @@ export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
             return res.status(404).json({ success: false, message: 'Cuenta no encontrada' });
         }
 
+        // 1.1 Validar que la cuenta le pertenezca al usuario autenticado
+        const requesterUserId = req.user?.sub || req.user?.userId || req.userId || '';
+        if (!requesterUserId) {
+            return res.status(401).json({
+                success: false,
+                message: 'No se pudo identificar al usuario autenticado',
+            });
+        }
+
+        if (String(account.userId) !== String(requesterUserId)) {
+            return res.status(403).json({
+                success: false,
+                message: 'No tienes permisos para solicitar el estado de cuenta de esta cuenta',
+            });
+        }
+
         // 2. Datos del usuario autenticado viene del token
         const userEmail = req.user?.email;
         const userName = [req.user?.name, req.user?.surname].filter(Boolean).join(' ') || 'Usuario';
@@ -201,6 +218,7 @@ export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
             transactionDate: wd.createdAt ?? wd.date,
             transactionType: 'retiro',
             amount: wd.amount,
+            currencyCode: wd.currencyCode || account.currencyCode,
             description: wd.description,
             sourceAccountNumber: wd.accountNumber,
             destinationAccountNumber: null,
@@ -218,6 +236,7 @@ export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
             transactionDate: dp.createdAt ?? dp.date,
             transactionType: 'deposito',
             amount: dp.amount,
+            currencyCode: dp.currencyCode,
             description: dp.description,
             sourceAccountNumber: null,
             destinationAccountNumber: dp.accountNumber,
@@ -227,6 +246,14 @@ export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
         // 7. Unir y ordenar todos los movimientos
         const allTransactions = [...transactions, ...withdrawalTransactions, ...depositTransactions]
             .sort((a, b) => new Date(a.transactionDate) - new Date(b.transactionDate));
+
+        // 7.1 Obtener simbolos de moneda para mostrar en PDF
+        const activeCurrencies = await Currency.find({ status: 'activa' }).select('code symbol -_id');
+        const currencySymbols = activeCurrencies.reduce((acc, currency) => {
+            acc[currency.code] = currency.symbol;
+            return acc;
+        }, {});
+        const accountCurrencySymbol = currencySymbols[account.currencyCode] || account.currencyCode || 'GTQ';
 
         // 8. Construir resumen
         const summary = buildStatementSummary({ account, transactions: allTransactions, periodStart, periodEnd });
@@ -255,12 +282,15 @@ export const downloadAccountStatementPdfByAccountNumber = async (req, res) => {
                 accountNumber: account.accountNumber,
                 accountType: account.accountType ?? account.type,
                 currency: account.currencyCode ?? 'GTQ',
+                currencySymbol: accountCurrencySymbol,
             },
             summary,
+            currencySymbols,
             transactions: allTransactions.map((tx) => ({
                 date: tx.transactionDate,
                 transactionType: tx.transactionType,
                 amount: tx.amount,
+                currencyCode: tx.currencyCode || account.currencyCode,
                 description: tx.description,
                 sourceAccountNumber: tx.sourceAccountNumber,
                 destinationAccountNumber: tx.destinationAccountNumber,

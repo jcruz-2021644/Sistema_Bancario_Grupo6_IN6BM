@@ -42,7 +42,9 @@ export const setUserSingleRole = async (user, roleName, sequelize) => {
   // Normalize
     const normalized = (roleName || '').trim().toUpperCase();
     if (!ALLOWED_ROLES.includes(normalized)) {
-        const err = new Error('Role not allowed. Use ADMIN_ROLE or USER_ROLE');
+        const err = new Error(
+            'Role not allowed. Use ADMIN_ROLE, MANAGER_ROLE, USER_ROLE or ATM_ROLE'
+        );
         err.status = 400;
         throw err;
     }

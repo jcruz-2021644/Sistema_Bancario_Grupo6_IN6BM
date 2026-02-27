@@ -94,6 +94,17 @@ export const validateCreateTransaction = [
         .optional()
         .isIn(['exitosa', 'pendiente', 'rechazada', 'reversada'])
         .withMessage('Estado de transaccion no valido'),
+    body('favorito')
+        .optional()
+        .isBoolean()
+        .withMessage('favorito debe ser true o false'),
+    body('alias')
+        .optional()
+        .isString()
+        .withMessage('alias debe ser string')
+        .trim()
+        .isLength({ max: 80 })
+        .withMessage('El alias no puede exceder 80 caracteres'),
     checkValidators,
 ];
 
@@ -113,6 +124,17 @@ export const validateUpdateTransaction = [
         .trim()
         .isLength({ max: 500 })
         .withMessage('La descripcion no puede exceder 500 caracteres'),
+    body('favorito')
+        .optional()
+        .isBoolean()
+        .withMessage('favorito debe ser true o false'),
+    body('alias')
+        .optional()
+        .isString()
+        .withMessage('alias debe ser string')
+        .trim()
+        .isLength({ max: 80 })
+        .withMessage('El alias no puede exceder 80 caracteres'),
     checkValidators,
 ];
 

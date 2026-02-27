@@ -27,7 +27,21 @@ export const normalizeTransactionData = (transactionData) => {
         normalized.currencyCode || normalized.currency || normalized.currencyId || ''
     ).toUpperCase().trim();
 
+    // Normaliza el tipo de transacción a minúsculas para comparaciones consistentes
+    normalized.transactionType = (
+        normalized.transactionType || normalized.type || ''
+    ).toLowerCase().trim();
+
     normalized.executedByUserId = normalized.executedByUserId || normalized.userId || '';
+    normalized.favorito =
+        normalized.favorito === true ||
+        normalized.favorito === 'true' ||
+        normalized.favorito === 1 ||
+        normalized.favorito === '1';
+    normalized.alias = String(normalized.alias || '').trim();
+    if (!normalized.favorito) {
+        normalized.alias = '';
+    }
 
     return normalized;
 };

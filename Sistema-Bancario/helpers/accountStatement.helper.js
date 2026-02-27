@@ -243,8 +243,12 @@ export const buildStatementSummary = ({ account, transactions, periodStart, peri
     return { periodStart, periodEnd, openingBalance: closingBalance - netChange, closingBalance, ...totals };
 };
 
-export const generateStatementPdf = ({ account, summary, transactions }) => {
-    const fmt = (n) => `Q${Number(n).toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+export const generateStatementPdf = ({ account, summary, transactions, currencySymbols = {} }) => {
+    const resolveSymbol = (currencyCode) =>
+        currencySymbols[currencyCode] || account.currencySymbol || account.currency || 'GTQ';
+
+    const fmt = (n, currencyCode) =>
+        `${resolveSymbol(currencyCode)}${Number(n).toLocaleString('es-GT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     const fmtDate = (d)  => d ? new Date(d).toLocaleDateString('es-GT') : '—';
     const txLabel = (tx) => ({
         deposito:      'Deposito',
@@ -276,13 +280,13 @@ export const generateStatementPdf = ({ account, summary, transactions }) => {
         { type: 'spacer', h: 10 },
 
         { type: 'sectionHeader', text: 'Resumen de movimientos' },
-        { type: 'keyvalue', key: 'Saldo inicial',                value: fmt(summary.openingBalance),         zebra: false },
-        { type: 'keyvalue', key: 'Total depositos',              value: fmt(summary.totalDeposits),          zebra: true  },
-        { type: 'keyvalue', key: 'Total de dinero retirado',                value: fmt(summary.totalWithdrawals),       zebra: false },
-        { type: 'keyvalue', key: 'Total de transferencias enviadas',      value: fmt(summary.totalTransfersSent),     zebra: true  },
-        { type: 'keyvalue', key: 'Total de transferencias recibidas',     value: fmt(summary.totalTransfersReceived), zebra: false },
+        { type: 'keyvalue', key: 'Saldo inicial',                value: fmt(summary.openingBalance, account.currency),         zebra: false },
+        { type: 'keyvalue', key: 'Total depositos',              value: fmt(summary.totalDeposits, account.currency),          zebra: true  },
+        { type: 'keyvalue', key: 'Total de dinero retirado',                value: fmt(summary.totalWithdrawals, account.currency),       zebra: false },
+        { type: 'keyvalue', key: 'Total de transferencias enviadas',      value: fmt(summary.totalTransfersSent, account.currency),     zebra: true  },
+        { type: 'keyvalue', key: 'Total de transferencias recibidas',     value: fmt(summary.totalTransfersReceived, account.currency), zebra: false },
         //{ type: 'keyvalue', key: 'Pagos de servicios/prestamos', value: fmt(summary.feesCharged),            zebra: true  },
-        { type: 'totalRow', key: 'SALDO FINAL', value: fmt(summary.closingBalance) },
+        { type: 'totalRow', key: 'SALDO FINAL', value: fmt(summary.closingBalance, account.currency) },
         { type: 'spacer', h: 14 },
 
         { type: 'sectionHeader', text: 'Detalle de transacciones' },
@@ -294,7 +298,7 @@ export const generateStatementPdf = ({ account, summary, transactions }) => {
             type:    'txRow',
             date:    fmtDate(tx.date),
             label:   txLabel(tx) + (tx.description ? `  -  ${tx.description}` : ''),
-            amount:  fmt(tx.amount),
+            amount:  fmt(tx.amount, tx.currencyCode || account.currency),
             isDebit: isDebit(tx),
             index:   i,
         });

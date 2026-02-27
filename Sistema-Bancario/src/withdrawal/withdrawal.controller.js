@@ -4,6 +4,7 @@ import { validateWithdrawal } from '../../helpers/withdrawal.helper.js';
 
 const getAuthenticatedUserId = (req) =>
     req.user?.userId || req.user?.sub || req.userId || null;
+const roundToTwoDecimals = (value) => Number(Number(value || 0).toFixed(2));
 
 /**
  * CREAR UN NUEVO RETIRO
@@ -34,12 +35,10 @@ export const createWithdrawal = async (req, res) => {
             description: `Retiro de cuenta ${accountNumber}`
         });
 
-        // 3. Actualizar el saldo de la cuenta en la base de datos
-        // Restamos el monto del balance actual
-        await Account.findOneAndUpdate(
-            { accountNumber },
-            { $inc: { balance: -Number(amountToDeduct) } }
-        );
+        // 3. Actualizar el saldo de la cuenta en la base de datos con 2 decimales
+        const updatedBalance = roundToTwoDecimals(Number(account.balance) - Number(amountToDeduct));
+        account.balance = updatedBalance;
+        await account.save();
 
         // 4. Guardar el retiro
         await withdrawal.save();
