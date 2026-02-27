@@ -1,15 +1,15 @@
 'use strict'
 
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const accountSchema = mongoose.Schema({
     //numero de cuenta
     accountNumber: {
         type: String,
-        required: [true, 'El número de cuenta es requerido'],
+        required: [true, 'El numero de cuenta es requerido'],
         unique: true,
         trim: true,
-        maxLength: [100, 'El número de cuenta no puede exceder 100 caracteres']
+        match: [/^[A-Z]{3}-\d{3}-\d{4}$/, 'El numero de cuenta debe tener formato ABC-000-0000']
     },
     //tipo de cuenta
     accountType: {
@@ -17,7 +17,7 @@ const accountSchema = mongoose.Schema({
         required: [true, 'El tipo de cuenta es requerido'],
         enum: {
             values: ['ahorro', 'corriente', 'nomina'],
-            message: 'Tipo de cuenta no válido'
+            message: 'Tipo de cuenta no valido'
         }
     },
     //saldo
@@ -37,29 +37,74 @@ const accountSchema = mongoose.Schema({
         type: String,
         enum: {
             values: ['activa', 'inactiva', 'bloqueada'],
-            message: 'Estado no válido'
+            message: 'Estado no valido'
         },
         default: 'activa'
     },
     //limite_retiro_diario
     dailyWithdrawalLimit: {
         type: Number,
-        min: [0, 'El límite debe ser positivo']
+        min: [0, 'El limite debe ser positivo']
     },
     //interes_anual
     annualInterestRate: {
         type: Number,
-        min: [0, 'El interés debe ser positivo'],
-        max: [100, 'El interés no puede exceder 100%']
+        min: [0, 'El interes debe ser positivo'],
+        max: [100, 'El interes no puede exceder 100%']
     },
-    currencyId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Currency',
-        required: [true, 'La moneda es requerida']
+    currencyCode: {
+        type: String,
+        required: [true, 'El codigo de moneda es requerido'],
+        uppercase: true,
+        trim: true,
+        match: [/^[A-Z]{3}$/, 'El codigo de moneda debe tener formato ABC']
+    },
+    //nombre del titular
+    name: {
+        type: String,
+        required: [true, 'El nombre es requerido'],
+        trim: true
+    },
+    //username del titular
+    username: {
+        type: String,
+        required: [true, 'El username es requerido'],
+        trim: true
+    },
+    //dpi de 13 digitos
+    dpi: {
+        type: String,
+        required: [true, 'El DPI es requerido'],
+        trim: true,
+        match: [/^\d{13}$/, 'El DPI debe tener 13 digitos']
+    },
+    //direccion del titular
+    address: {
+        type: String,
+        required: [true, 'La direccion es requerida'],
+        trim: true
+    },
+    //celular del titular
+    phone: {
+        type: String,
+        required: [true, 'El celular es requerido'],
+        trim: true,
+        match: [/^\d{8}$/, 'El celular debe tener 8 digitos']
+    },
+    //nombre del trabajo
+    jobName: {
+        type: String,
+        required: [true, 'El nombre del trabajo es requerido'],
+        trim: true
+    },
+    //ingreso mensual
+    monthlyIncome: {
+        type: Number,
+        required: [true, 'El ingreso mensual es requerido'],
+        min: [0, 'El ingreso mensual no puede ser negativo']
     },
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario',
+        type: String,
         required: [true, 'El usuario es requerido']
     }
 }, {

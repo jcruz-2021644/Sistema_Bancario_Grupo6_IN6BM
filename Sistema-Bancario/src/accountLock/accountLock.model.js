@@ -4,13 +4,11 @@ import mongoose from "mongoose";
 
 const accountLockSchema  = mongoose.Schema({
     accountId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Account',
+        type: String, // Cambiado a String para el formato ACC-830-001
         required: [true, 'La cuenta es requerida']
     },
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        type: String, // Cambiado a String para el formato USR-001
         required: [true, 'El usuario es requerido']
     },
     lockReason: {
@@ -33,12 +31,10 @@ const accountLockSchema  = mongoose.Schema({
         type: Date
     },
     lockedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        type: String // También debe ser String si quien bloquea es un USR-
     },
     unlockedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        type: String // Para que coincida con el formato USR- del audio
     },
     status: {
         type: String,

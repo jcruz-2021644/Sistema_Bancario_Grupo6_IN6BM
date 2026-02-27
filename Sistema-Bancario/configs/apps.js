@@ -9,13 +9,15 @@ import { helmetConfiguration } from './helmet-configuration.js';
 
 import currencyRoutes from '../src/coins/coins.routes.js';
 import accountsRoutes from '../src/accounts/accounts.routes.js';
-import usersRoutes from '../src/users/users.routes.js';
 import transactionRoutes from '../src/transaction/transaction.routes.js';
 import cardRoutes from '../src/card/cards.routes.js';
 import loanRoutes from '../src/loan/loans.routes.js';
 import notificationRoutes from '../src/notifications/notifications.routes.js';
 import accountStatementsRoutes from '../src/accountStatement/accountStatements.routes.js';
 import accountLockRoutes from '../src/accountLock/accountLock.routes.js';
+import withdrawalRoutes from '../src/withdrawal/withdrawal.routes.js';
+import benefitsRoutes from '../src/benefits/benefits.routes.js';
+import depositsRoutes from '../src/deposits/deposits.routes.js';
 
 
 const BASE_PATH = '/api/v1';
@@ -32,14 +34,15 @@ const middlewares = (app) => {
 const routes = (app) => {
     app.use(`${BASE_PATH}/coins`, currencyRoutes);
     app.use(`${BASE_PATH}/accounts`, accountsRoutes);
-    app.use(`${BASE_PATH}/users`, usersRoutes);
     app.use(`${BASE_PATH}/transaction`, transactionRoutes);
     app.use(`${BASE_PATH}/cards`, cardRoutes);
     app.use(`${BASE_PATH}/loan`, loanRoutes);
     app.use(`${BASE_PATH}/notifications`, notificationRoutes);
     app.use(`${BASE_PATH}/accountStatements`, accountStatementsRoutes);
     app.use(`${BASE_PATH}/accountLocks`, accountLockRoutes);
-
+    app.use(`${BASE_PATH}/withdrawal`, withdrawalRoutes);
+    app.use(`${BASE_PATH}/benefits`, benefitsRoutes);
+    app.use(`${BASE_PATH}/deposits`, depositsRoutes);
 
 
 
