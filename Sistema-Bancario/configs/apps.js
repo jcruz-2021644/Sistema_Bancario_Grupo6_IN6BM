@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import { dbConnection } from './db.js';
 import { corsOptions } from './cors-configuration.js';
 import { helmetConfiguration } from './helmet-configuration.js';
+import { seedCommonCurrencies } from '../helpers/currency-seed.helper.js';
 
 import currencyRoutes from '../src/coins/coins.routes.js';
 import accountsRoutes from '../src/accounts/accounts.routes.js';
@@ -69,6 +70,7 @@ export const initServer = async () => {
 
     try {
         await dbConnection();
+        await seedCommonCurrencies();
         middlewares(app);
         routes(app);
 
