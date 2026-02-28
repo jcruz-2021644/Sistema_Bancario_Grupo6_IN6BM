@@ -1,4 +1,4 @@
-import Transaction from './transaction.model.js';
+﻿import Transaction from './transaction.model.js';
 import Account from '../accounts/accounts.model.js';
 import {
     normalizeTransactionData,
@@ -9,6 +9,31 @@ import {
 } from '../../helpers/transaction.helper.js';
 
 const roundToTwoDecimals = (value) => Number(Number(value || 0).toFixed(2));
+const FORBIDDEN_TRANSACTION_MESSAGE = 'Esta transaccion no te pertenece';
+
+const getRequesterContext = (req) => ({
+    role: req.user?.role,
+    userId: req.user?.sub || req.user?.userId || req.userId || ''
+});
+
+const validateSourceAccountOwnership = async (req, sourceAccountNumber) => {
+    const { role, userId } = getRequesterContext(req);
+
+    if (role === 'ADMIN_ROLE') {
+        return { allowed: true };
+    }
+
+    const sourceAccount = await Account.findOne({ accountNumber: sourceAccountNumber });
+    if (!sourceAccount) {
+        return { allowed: false, notFound: true };
+    }
+
+    if (String(sourceAccount.userId) !== String(userId)) {
+        return { allowed: false, notFound: false };
+    }
+
+    return { allowed: true };
+};
 
 //agregar
 export const createTransaction = async (req, res) => {
@@ -92,14 +117,14 @@ export const createTransaction = async (req, res) => {
 
         res.status(201).json({
             success: true,
-            message: 'Transacción creada exitosamente',
+            message: 'TransacciÃ³n creada exitosamente',
             data: transaction
         })
 
     } catch (error) {
         res.status(400).json({
             success: false,
-            message: 'Error al crear la transacción',
+            message: 'Error al crear la transacciÃ³n',
             error: error.message
         })
     }
@@ -219,50 +244,21 @@ export const updateTransaction = async (req, res) => {
     try {
         const { id } = req.params;
         const transactionData = { ...req.body };
-        const requesterRole = req.user?.role;
-        const requesterUserId = req.user?.sub || req.user?.userId || req.userId || '';
 
-        // Verificar propiedad de la transacción / cuenta origen para usuarios normales
         const existingTransaction = await Transaction.findById(id);
         if (!existingTransaction) {
             return res.status(404).json({ success: false, message: 'Transacción no encontrada' });
         }
 
-        if (requesterRole === 'USER_ROLE') {
-            const sourceAcc = await Account.findOne({ accountNumber: existingTransaction.sourceAccountNumber });
-            if (!sourceAcc) {
-                return res.status(404).json({ success: false, message: 'Cuenta origen no encontrada' });
-            }
-
-            if (String(sourceAcc.userId) !== String(requesterUserId)) {
-                    const ownAccounts = await Account.find({ userId: requesterUserId }).select('accountNumber');
-                    const ownAccountNumbers = ownAccounts.map(a => a.accountNumber);
-                    let txIds = [];
-                    if (ownAccountNumbers.length > 0) {
-                        const userTxs = await Transaction.find({ sourceAccountNumber: { $in: ownAccountNumbers } }).select('_id').limit(20);
-                        txIds = userTxs.map(t => String(t._id));
-                    }
-
-                    const idsText = txIds.length > 0 ? txIds.join(',') : 'ninguna';
-                    return res.status(403).json({
-                        success: false,
-                        message: `tus transacciones hechas son idTransaccion: ${idsText}`
-                    });
-            }
-
-            // Si intenta cambiar la cuenta origen a otra, validar que la nueva también le pertenezca
-            if (transactionData.sourceAccountNumber && transactionData.sourceAccountNumber !== existingTransaction.sourceAccountNumber) {
-                const newSource = await Account.findOne({ accountNumber: transactionData.sourceAccountNumber });
-                if (!newSource || String(newSource.userId) !== String(requesterUserId)) {
-                    const ownAccount = await Account.findOne({ userId: requesterUserId });
-                    const ownAccountNumber = ownAccount ? ownAccount.accountNumber : 'ACC-000-0000';
-
-                    return res.status(403).json({
-                        success: false,
-                        message: `esta cuenta no te pertenece la tuya es ${ownAccountNumber}`
-                    });
-                }
-            }
+        const ownership = await validateSourceAccountOwnership(req, existingTransaction.sourceAccountNumber);
+        if (ownership.notFound) {
+            return res.status(404).json({ success: false, message: 'Cuenta origen no encontrada' });
+        }
+        if (!ownership.allowed) {
+            return res.status(403).json({
+                success: false,
+                message: FORBIDDEN_TRANSACTION_MESSAGE
+            });
         }
 
         if (Object.prototype.hasOwnProperty.call(transactionData, 'favorito')) {
@@ -308,11 +304,10 @@ export const updateTransaction = async (req, res) => {
         });
     }
 }
-
 export const deleteTransaction = async (req, res) => {
     try {
         const { id } = req.params;
-        const transaction = await Transaction.findByIdAndDelete(id);
+        const transaction = await Transaction.findById(id);
 
         if (!transaction) {
             return res.status(404).json({
@@ -321,11 +316,24 @@ export const deleteTransaction = async (req, res) => {
             })
         }
 
+        const ownership = await validateSourceAccountOwnership(req, transaction.sourceAccountNumber);
+        if (ownership.notFound) {
+            return res.status(404).json({ success: false, message: 'Cuenta origen no encontrada' });
+        }
+        if (!ownership.allowed) {
+            return res.status(403).json({
+                success: false,
+                message: FORBIDDEN_TRANSACTION_MESSAGE
+            });
+        }
+
+        await Transaction.findByIdAndDelete(id);
+
         return res.status(200).json({
             success: true,
             message: 'Transacción eliminada exitosamente'
         });
-        
+
     } catch (error) {
         res.status(400).json({
             success: false,
@@ -334,13 +342,9 @@ export const deleteTransaction = async (req, res) => {
         })
     }
 }
-
 export const getTransactionById = async (req, res) => {
     try {
         const { id } = req.params;
-
-        const requesterRole = req.user?.role;
-        const requesterUserId = req.user?.sub || req.user?.userId || req.userId || '';
 
         const transaction = await Transaction.findById(id);
 
@@ -351,33 +355,15 @@ export const getTransactionById = async (req, res) => {
             });
         }
 
-        // Si el solicitante es un usuario normal, asegurar que la cuenta origen le pertenece
-        if (requesterRole === 'USER_ROLE') {
-            const sourceAccount = await Account.findOne({ accountNumber: transaction.sourceAccountNumber });
-
-            if (!sourceAccount) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Cuenta origen no encontrada'
-                });
-            }
-
-            if (String(sourceAccount.userId) !== String(requesterUserId)) {
-                // Obtener las cuentas del usuario y listar sus transacciones (ids)
-                const ownAccounts = await Account.find({ userId: requesterUserId }).select('accountNumber');
-                const ownAccountNumbers = ownAccounts.map(a => a.accountNumber);
-                let txIds = [];
-                if (ownAccountNumbers.length > 0) {
-                    const userTxs = await Transaction.find({ sourceAccountNumber: { $in: ownAccountNumbers } }).select('_id').limit(20);
-                    txIds = userTxs.map(t => String(t._id));
-                }
-
-                const idsText = txIds.length > 0 ? txIds.join(',') : 'ninguna';
-                return res.status(403).json({
-                    success: false,
-                    message: `tus transacciones hechas son idTransaccion: ${idsText}`
-                });
-            }
+        const ownership = await validateSourceAccountOwnership(req, transaction.sourceAccountNumber);
+        if (ownership.notFound) {
+            return res.status(404).json({ success: false, message: 'Cuenta origen no encontrada' });
+        }
+        if (!ownership.allowed) {
+            return res.status(403).json({
+                success: false,
+                message: FORBIDDEN_TRANSACTION_MESSAGE
+            });
         }
 
         res.status(200).json({

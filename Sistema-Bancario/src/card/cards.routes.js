@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createCard, getCards, updateCard, deleteCard, getCardById, changeCardStatus } from "./cards.controller.js";
-import { validateCreateCard, validateUpdateCard, validateCardById } from "../../middlewares/card-validators.js";
+import { validateCreateCard, validateUpdateCard, validateCardById, validateReadCardById } from "../../middlewares/card-validators.js";
 import { validateJWT } from "../../middlewares/validate-JWT.js";
 import { requireRole } from "../../middlewares/validate-role.js";
 const router = Router();
@@ -28,7 +28,7 @@ router.delete(
 )
 router.get(
     '/:id',
-    validateCardById,
+    validateReadCardById,
     getCardById
 )
 router.patch(

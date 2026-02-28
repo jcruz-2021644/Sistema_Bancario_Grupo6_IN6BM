@@ -92,3 +92,12 @@ export const validateCardById = [
         .withMessage('El ID de la tarjeta es requerido'),
     checkValidators,
 ];
+
+// Validacion para buscar tarjeta por ID (sin restriccion de rol)
+export const validateReadCardById = [
+    validateJWT,
+    param('id')
+        .notEmpty()
+        .withMessage('El ID de la tarjeta es requerido'),
+    checkValidators,
+];

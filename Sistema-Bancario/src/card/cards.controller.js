@@ -147,12 +147,27 @@ export const deleteCard = async (req, res) => {
 export const getCardById = async (req, res) => {
     try {
         const { id } = req.params;
+        const requesterUserId = req.user?.sub || req.user?.userId || req.userId || '';
         const card = await Card.findById(id);
 
         if (!card) {
             return res.status(404).json({
                 success: false,
                 message: 'Tarjeta no encontrada'
+            });
+        }
+
+        if (!requesterUserId) {
+            return res.status(401).json({
+                success: false,
+                message: 'Usuario no autenticado'
+            });
+        }
+
+        if (String(card.userId) !== String(requesterUserId)) {
+            return res.status(403).json({
+                success: false,
+                message: 'No puedes ver esta tarjeta'
             });
         }
 

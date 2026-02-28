@@ -16,8 +16,6 @@ const resolveRequesterUserId = (req) => (
     req.user?.sub || req.user?.userId || req.userId || ''
 );
 
-const roundToTwoDecimals = (value) => Number(Number(value || 0).toFixed(2));
-
 const validateExistingCurrencyCode = async (currencyCode) => {
     const currency = await Currency.findOne({ code: currencyCode, status: 'activa' });
 
@@ -31,9 +29,6 @@ export const createAccount = async (req, res) => {
     try {
 
         const accountData = req.body;
-        if (accountData.balance !== undefined) {
-            accountData.balance = roundToTwoDecimals(accountData.balance);
-        }
         accountData.currencyCode = normalizeCurrencyCode(accountData);
         await validateExistingCurrencyCode(accountData.currencyCode);
 
@@ -98,16 +93,6 @@ export const getAccounts = async (req, res) => {
     try {
         const { page = 1, limit = 10, status = 'activa' } = req.query;
         const filter = { status };
-        const requesterRole = req.user?.role;
-        const requesterUserId = resolveRequesterUserId(req);
-
-        // Solo ADMIN_ROLE puede listar todas las cuentas. Otros roles sólo ven sus propias cuentas.
-        if (requesterRole !== 'ADMIN_ROLE') {
-            if (!requesterUserId) {
-                return res.status(401).json({ success: false, message: 'No autorizado' });
-            }
-            filter.userId = String(requesterUserId);
-        }
         const options = {
             page: parseInt(page),
             limit: parseInt(limit),
@@ -144,7 +129,6 @@ export const updateAccount = async (req, res) => {
         const { accountNumber } = req.params;
         const accountData = req.body;
         const requesterRole = req.user?.role;
-        const requesterUserId = resolveRequesterUserId(req);
 
         if (requesterRole === 'USER_ROLE') {
             const allowedFieldsForUser = ['name', 'address', 'jobName', 'monthlyIncome'];
@@ -165,10 +149,6 @@ export const updateAccount = async (req, res) => {
             await validateExistingCurrencyCode(accountData.currencyCode);
         }
 
-        if (accountData.balance !== undefined) {
-            accountData.balance = roundToTwoDecimals(accountData.balance);
-        }
-
         // username no se actualiza desde cliente
         delete accountData.username;
 
@@ -176,29 +156,6 @@ export const updateAccount = async (req, res) => {
 
         if (accountData.monthlyIncome !== undefined) {
             validateMinimumIncome(accountData.monthlyIncome);
-        }
-
-        // Si el solicitante es un usuario normal, asegurarse que la cuenta pertenece a él
-        if (requesterRole === 'USER_ROLE') {
-            const existingAccount = await Account.findOne({ accountNumber });
-
-            if (!existingAccount) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Cuenta no encontrada'
-                });
-            }
-
-            if (String(existingAccount.userId) !== String(requesterUserId)) {
-                // Intentar obtener una cuenta propia para mostrar en el mensaje, si existe
-                const ownAccount = await Account.findOne({ userId: requesterUserId });
-                const ownAccountNumber = ownAccount ? ownAccount.accountNumber : 'ACC-000-0000';
-
-                return res.status(403).json({
-                    success: false,
-                    message: `esta cuenta no te pertenece la tuya es ${ownAccountNumber}`
-                });
-            }
         }
 
         const account = await Account.findOneAndUpdate(
