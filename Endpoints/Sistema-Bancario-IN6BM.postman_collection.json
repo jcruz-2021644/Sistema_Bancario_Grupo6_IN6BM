@@ -1,7 +1,7 @@
 {
   "info": {
     "_postman_id": "60c8ce0b-e014-49f8-984f-cd9e1ce5dbae",
-    "name": "Sistema-Bancario-IN6BM",
+    "name": "Sistema-Bancario",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "48332475",
     "_collection_link": "https://go.postman.co/collection/48332475-60c8ce0b-e014-49f8-984f-cd9e1ce5dbae?source=collection_link"
@@ -223,7 +223,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfZFd1TmVVcEpnNEI2IiwianRpIjoiMTE2NTBjYzQtMjFhMC00Y2Y4LWE4YWEtYTExN2VmMzA0MmUyIiwiaWF0IjoxNzcyMDU5NDMyLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MjA2MTIzMiwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.DpC13MYw95YKETkuVbwJIwoxwQ7GDX7-XbGxD9XnxUI",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfSDNmUWtRaUpBdlh4IiwianRpIjoiOWE5M2ZhMjAtMTE2Ny00YWI4LTg4MTItNjEzZTQzMjQ1YmJhIiwiaWF0IjoxNzcyMjI1ODYzLCJyb2xlIjoiTUFOQUdFUl9ST0xFIiwiZW1haWwiOiJqY3J1ei0yMDIxNjQ0QGtpbmFsLmVkdS5ndCIsIm5hbWUiOiJKZWZyeSIsInN1cm5hbWUiOiJDcnV6IiwiZXhwIjoxNzcyMjI3NjYzLCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.fUJp5buHJLAMqig6dKSif_-5BJ9BBo9_ndsxXjVjX1w",
                   "type": "string"
                 }
               ]
@@ -232,7 +232,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"accountType\": \"ahorro\",\r\n  \"balance\": 600000.5,\r\n  \"openingDate\": \"2026-02-25T00:00:00.000Z\",\r\n  \"status\": \"activa\",\r\n  \"dailyWithdrawalLimit\": 1000,\r\n  \"annualInterestRate\": 4.5,\r\n  \"currencyCode\": \"GTQ\",\r\n  \"userId\": \"usr_dWuNeUpJg4B6\",\r\n  \"dpi\": \"1234567890123\",\r\n  \"address\": \"Zona 1, Ciudad de Guatemala\",\r\n  \"phone\": \"55123456\",\r\n  \"jobName\": \"Desarrollador de Software\",\r\n  \"monthlyIncome\": 200.00\r\n}",
+              "raw": "{\r\n  \"accountType\": \"ahorro\",\r\n  \"balance\": 15000.0,\r\n  \"openingDate\": \"2026-02-25T00:00:00.000Z\",\r\n  \"status\": \"activa\",\r\n  \"dailyWithdrawalLimit\": 1000,\r\n  \"annualInterestRate\": 4.5,\r\n  \"currencyCode\": \"USD\",\r\n  \"userId\": \"usr_GMU4eCkQ2sAh\",\r\n  \"dpi\": \"1234567890123\",\r\n  \"address\": \"Zona 2, Ciudad de Guatemala\",\r\n  \"phone\": \"55123456\",\r\n  \"jobName\": \"La Estancia S.A\",\r\n  \"monthlyIncome\": 200.00\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -264,7 +264,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfZFd1TmVVcEpnNEI2IiwianRpIjoiMTE2NTBjYzQtMjFhMC00Y2Y4LWE4YWEtYTExN2VmMzA0MmUyIiwiaWF0IjoxNzcyMDU5NDMyLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MjA2MTIzMiwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.DpC13MYw95YKETkuVbwJIwoxwQ7GDX7-XbGxD9XnxUI",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdU5HaDNKZ3E1bnB4IiwianRpIjoiNTQwN2NiODctZTg0OC00YmUyLWJkYmMtNTU5ZTRkZTRmZWQ4IiwiaWF0IjoxNzcyMjQ4NDY5LCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyNTAyNjksImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ.ZmgG861GB9carHIEW75fnUQwNgLIa8lbwk7loXzOZ9o",
                   "type": "string"
                 }
               ]
@@ -289,47 +289,6 @@
           "response": []
         },
         {
-          "name": "Actualizar cuenta",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfQjQ2VkY5a2lyYTZVIiwianRpIjoiN2Y5Zjc1ODAtZWZiYy00ZmUxLTg3MWItNzI5ZDkyZWUwN2EwIiwiaWF0IjoxNzcyMDU5NTQwLCJyb2xlIjoiVVNFUl9ST0xFIiwiZXhwIjoxNzcyMDYxMzQwLCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.hsYrthvn1---phigVdBz3_R9ix2noAgvH-P6Jj9mVOo",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": " {\r\n            \r\n            \"name\": \"jefry\",\r\n            \"address\": \"Zona 1, Ciudad de Guatemala\",\r\n            \"jobName\": \"Desarrollador de Software\",\r\n            \"monthlyIncome\": 300\r\n        }",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3006/api/v1/accounts/ACC-229-0938",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3006",
-              "path": [
-                "api",
-                "v1",
-                "accounts",
-                "ACC-229-0938"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
           "name": "eliminar",
           "request": {
             "auth": {
@@ -337,7 +296,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfQjQ2VkY5a2lyYTZVIiwianRpIjoiN2Y5Zjc1ODAtZWZiYy00ZmUxLTg3MWItNzI5ZDkyZWUwN2EwIiwiaWF0IjoxNzcyMDU5NTQwLCJyb2xlIjoiVVNFUl9ST0xFIiwiZXhwIjoxNzcyMDYxMzQwLCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.hsYrthvn1---phigVdBz3_R9ix2noAgvH-P6Jj9mVOo",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfR01VNGVDa1Eyc0FoIiwianRpIjoiYmQ0Njc1MjYtZjI1Mi00ZmEwLTg5ODYtNzg1MGI5ZGVmNjk1IiwiaWF0IjoxNzcyMjQ4MjM2LCJyb2xlIjoiVVNFUl9ST0xFIiwiZW1haWwiOiJqZWZyeXl1NjdAZ21haWwuY29tIiwibmFtZSI6IlNoaW5qaSIsInN1cm5hbWUiOiJLIiwiZXhwIjoxNzcyMjUwMDM2LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.-AeD-VNTziqLyPaYvIu6aNnKNjADnuPYvpBTlvNfuSQ",
                   "type": "string"
                 }
               ]
@@ -356,6 +315,47 @@
                 "v1",
                 "accounts",
                 "ACC-936-9018"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar cuenta",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfR01VNGVDa1Eyc0FoIiwianRpIjoiYmQ0Njc1MjYtZjI1Mi00ZmEwLTg5ODYtNzg1MGI5ZGVmNjk1IiwiaWF0IjoxNzcyMjQ4MjM2LCJyb2xlIjoiVVNFUl9ST0xFIiwiZW1haWwiOiJqZWZyeXl1NjdAZ21haWwuY29tIiwibmFtZSI6IlNoaW5qaSIsInN1cm5hbWUiOiJLIiwiZXhwIjoxNzcyMjUwMDM2LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.-AeD-VNTziqLyPaYvIu6aNnKNjADnuPYvpBTlvNfuSQ",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": " {\r\n            \r\n            \"name\": \"Shinji\",\r\n            \"address\": \"Zona 1, Ciudad de Guatemala\",\r\n            \"jobName\": \"Desarrollador de Software\",\r\n            \"monthlyIncome\": 300\r\n            \r\n        }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3006/api/v1/accounts/ACC-216-7718",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3006",
+              "path": [
+                "api",
+                "v1",
+                "accounts",
+                "ACC-216-7718"
               ]
             }
           },
@@ -443,6 +443,50 @@
       "name": "Transaction/Transacciones",
       "item": [
         {
+          "name": "favoritos",
+          "item": [
+            {
+              "name": "listar fav",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfR01VNGVDa1Eyc0FoIiwianRpIjoiN2E4M2U3OTItY2IzMy00ZWU4LWFhYmYtYjE0ZDY3MzA0ZTE4IiwiaWF0IjoxNzcyMjI2Mzg3LCJyb2xlIjoiVVNFUl9ST0xFIiwiZW1haWwiOiJqZWZyeXl1NjdAZ21haWwuY29tIiwibmFtZSI6IlNoaW5qaSIsInN1cm5hbWUiOiJLIiwiZXhwIjoxNzcyMjI4MTg3LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.7k4e-O0NZEINnvJFwx5duBNB6eru_55yFP36tX7GJgg",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"emailOrUsername\": \"gestordeopinionesjcruz@gmail.com\",\r\n    \"password\": \"jcruz-2021644\"\r\n}"
+                },
+                "url": {
+                  "raw": "http://localhost:3006/api/v1/transaction/favorites",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3006",
+                  "path": [
+                    "api",
+                    "v1",
+                    "transaction",
+                    "favorites"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
           "name": "Crear-Transferencia",
           "request": {
             "auth": {
@@ -450,7 +494,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfZFd1TmVVcEpnNEI2IiwianRpIjoiYjI5ZTdlYzUtOGNmZi00ZmFmLWE0MmItMGMxNjM0Y2VmZjQ4IiwiaWF0IjoxNzcyMDYzNzk4LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MjA2NTU5OCwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.-hvVxRvk2PkeJawgWePMqurJ0vfmZRdO93YOGwNYuLE",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdU5HaDNKZ3E1bnB4IiwianRpIjoiNDM1MDNlZTUtMDkyOS00MTQ1LWIzZjktN2I4NWFhZTYwODc1IiwiaWF0IjoxNzcyMjUyNDA3LCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyNTQyMDcsImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ.i8lmW-2NGg5alHWcIBd4tKjb9RWBDXfPsyF-q8JN3wY",
                   "type": "string"
                 }
               ]
@@ -459,7 +503,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"sourceAccountId\": \"ACC-936-9018\",\r\n  \"destinationAccountId\": \"ACC-229-0938\",\r\n  \"transactionType\": \"transferencia\",\r\n  \"amount\": 1000.0,\r\n  \"currencyId\": \"GTQ\",\r\n  \"description\": \"Transferencia al jcruz por crear mi cuenta\",\r\n  \"status\": \"exitosa\",\r\n  \"userId\": \"usr_dWuNeUpJg4B6\"\r\n}",
+              "raw": "{\r\n    \"sourceAccountId\": \"ACC-048-8703\",\r\n    \"destinationAccountId\": \"ACC-216-7718\",\r\n    \"transactionType\": \"transferencia\",\r\n    \"amount\": 1000.0,\r\n    \"currencyId\": \"GTQ\",\r\n    \"description\": \"Test\",\r\n    \"status\": \"exitosa\",\r\n    \"favorito\": false,\r\n    \"alias\": \"Cuenta Admin\",\r\n    \"userId\": \"usr_GMU4eCkQ2sAh\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -494,7 +538,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfQjQ2VkY5a2lyYTZVIiwianRpIjoiZjg1YzA0ZTYtZjU5YS00N2Q0LTkzOWQtOWJkZmY5ZjBmZTYyIiwiaWF0IjoxNzcyMDYwNzE1LCJyb2xlIjoiVVNFUl9ST0xFIiwiZXhwIjoxNzcyMDYyNTE1LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.l-JmkFRuS4axWN7Egn_egsvBTc3XE4sg2qnhmbbgYAk",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdU5HaDNKZ3E1bnB4IiwianRpIjoiNDM1MDNlZTUtMDkyOS00MTQ1LWIzZjktN2I4NWFhZTYwODc1IiwiaWF0IjoxNzcyMjUyNDA3LCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyNTQyMDcsImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ.i8lmW-2NGg5alHWcIBd4tKjb9RWBDXfPsyF-q8JN3wY",
                   "type": "string"
                 }
               ]
@@ -530,7 +574,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfQjQ2VkY5a2lyYTZVIiwianRpIjoiZjg1YzA0ZTYtZjU5YS00N2Q0LTkzOWQtOWJkZmY5ZjBmZTYyIiwiaWF0IjoxNzcyMDYwNzE1LCJyb2xlIjoiVVNFUl9ST0xFIiwiZXhwIjoxNzcyMDYyNTE1LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.l-JmkFRuS4axWN7Egn_egsvBTc3XE4sg2qnhmbbgYAk",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfR01VNGVDa1Eyc0FoIiwianRpIjoiNjRlODU1ZjEtNGYzMC00YmU3LTgwOTYtM2Q0MWM2OWEwZTI3IiwiaWF0IjoxNzcyMjUxMjkxLCJyb2xlIjoiVVNFUl9ST0xFIiwiZW1haWwiOiJqZWZyeXl1NjdAZ21haWwuY29tIiwibmFtZSI6IlNoaW5qaSIsInN1cm5hbWUiOiJLIiwiZXhwIjoxNzcyMjUzMDkxLCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.rXkvj_FY2nim1i5lsY2fewhlJ0lUN9db-AAGmnw9v_Y",
                   "type": "string"
                 }
               ]
@@ -547,7 +591,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3006/api/v1/transaction/699f8053ecac67fae75a0c22",
+              "raw": "http://localhost:3006/api/v1/transaction/69a26d1686821929783c323f",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -557,7 +601,7 @@
                 "api",
                 "v1",
                 "transaction",
-                "699f8053ecac67fae75a0c22"
+                "69a26d1686821929783c323f"
               ]
             }
           },
@@ -571,7 +615,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfQjQ2VkY5a2lyYTZVIiwianRpIjoiMTI0YzJlNzItMzViZC00NmEyLThlNzMtZmU3OGUzYjg1NWZjIiwiaWF0IjoxNzcyMDYyMDA5LCJyb2xlIjoiVVNFUl9ST0xFIiwiZXhwIjoxNzcyMDYzODA5LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.i2kZEPRXmnEnBTSalvU-UGlI8Fv0XQ7TcTSWc1FptxI",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfR01VNGVDa1Eyc0FoIiwianRpIjoiNjRlODU1ZjEtNGYzMC00YmU3LTgwOTYtM2Q0MWM2OWEwZTI3IiwiaWF0IjoxNzcyMjUxMjkxLCJyb2xlIjoiVVNFUl9ST0xFIiwiZW1haWwiOiJqZWZyeXl1NjdAZ21haWwuY29tIiwibmFtZSI6IlNoaW5qaSIsInN1cm5hbWUiOiJLIiwiZXhwIjoxNzcyMjUzMDkxLCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.rXkvj_FY2nim1i5lsY2fewhlJ0lUN9db-AAGmnw9v_Y",
                   "type": "string"
                 }
               ]
@@ -583,7 +627,7 @@
               "raw": ""
             },
             "url": {
-              "raw": "http://localhost:3006/api/v1/transaction/699f85a9dd43c8ad2eb0d9dc",
+              "raw": "http://localhost:3006/api/v1/transaction/69a26d1686821929783c323f",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -593,7 +637,7 @@
                 "api",
                 "v1",
                 "transaction",
-                "699f85a9dd43c8ad2eb0d9dc"
+                "69a26d1686821929783c323f"
               ]
             }
           },
@@ -607,7 +651,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfQjQ2VkY5a2lyYTZVIiwianRpIjoiMTI0YzJlNzItMzViZC00NmEyLThlNzMtZmU3OGUzYjg1NWZjIiwiaWF0IjoxNzcyMDYyMDA5LCJyb2xlIjoiVVNFUl9ST0xFIiwiZXhwIjoxNzcyMDYzODA5LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.i2kZEPRXmnEnBTSalvU-UGlI8Fv0XQ7TcTSWc1FptxI",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfR01VNGVDa1Eyc0FoIiwianRpIjoiNjRlODU1ZjEtNGYzMC00YmU3LTgwOTYtM2Q0MWM2OWEwZTI3IiwiaWF0IjoxNzcyMjUxMjkxLCJyb2xlIjoiVVNFUl9ST0xFIiwiZW1haWwiOiJqZWZyeXl1NjdAZ21haWwuY29tIiwibmFtZSI6IlNoaW5qaSIsInN1cm5hbWUiOiJLIiwiZXhwIjoxNzcyMjUzMDkxLCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.rXkvj_FY2nim1i5lsY2fewhlJ0lUN9db-AAGmnw9v_Y",
                   "type": "string"
                 }
               ]
@@ -615,7 +659,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3006/api/v1/transaction/699f8035ecac67fae75a0c1a",
+              "raw": "http://localhost:3006/api/v1/transaction/69a26d1686821929783c323f",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -625,7 +669,7 @@
                 "api",
                 "v1",
                 "transaction",
-                "699f8035ecac67fae75a0c1a"
+                "69a26d1686821929783c323f"
               ]
             }
           },
@@ -644,7 +688,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{vault:authorization-secret}}",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdU5HaDNKZ3E1bnB4IiwianRpIjoiODMxODJlM2QtODI1NC00NGRlLWE1NDEtZWUwNWFlNzk5YWFmIiwiaWF0IjoxNzcyMjU0NzMxLCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyNTY1MzEsImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ.jYGNiSAwRnX9lxUxFPVLvbLBP4l6y5_hmnxk2ZHaf6U",
                   "type": "string"
                 }
               ]
@@ -653,7 +697,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"userId\": \"usr_iSSg8KmzCswx\",\r\n  \"cardType\": \"debito\",\r\n  \"cvv\": \"123\",\r\n  \"availableBalance\": 150.00,\r\n  \"expirationDate\": \"2028-12-31\",\r\n  \"pin\": \"1234\"\r\n}\r\n",
+              "raw": "{\r\n  \"userId\": \"usr_H3fQkQiJAvXx\",\r\n  \"cardType\": \"debito\",\r\n  \"cvv\": \"123\",\r\n  \"availableBalance\": 150.00,\r\n  \"expirationDate\": \"2028-12-31\",\r\n  \"pin\": \"1234\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -683,6 +727,16 @@
             "disableBodyPruning": true
           },
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdU5HaDNKZ3E1bnB4IiwianRpIjoiODMxODJlM2QtODI1NC00NGRlLWE1NDEtZWUwNWFlNzk5YWFmIiwiaWF0IjoxNzcyMjU0NzMxLCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyNTY1MzEsImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ.jYGNiSAwRnX9lxUxFPVLvbLBP4l6y5_hmnxk2ZHaf6U",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [],
             "body": {
@@ -719,7 +773,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{vault:authorization-secret}}",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfR01VNGVDa1Eyc0FoIiwianRpIjoiMzRjNjEwODUtNWY0MC00YzJiLWJiNDAtNzI2ZWIzM2VkMGZjIiwiaWF0IjoxNzcyMjU1NzA4LCJyb2xlIjoiVVNFUl9ST0xFIiwiZW1haWwiOiJqZWZyeXl1NjdAZ21haWwuY29tIiwibmFtZSI6IlNoaW5qaSIsInN1cm5hbWUiOiJLIiwiZXhwIjoxNzcyMjU3NTA4LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.hrecscEXYwrM_ri5D-j-zNu_uLsJB-bLsNMY4CPaQYs",
                   "type": "string"
                 }
               ]
@@ -728,7 +782,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"userId\": \"usr_iSSg8KmzCswx\",\r\n  \"cardType\": \"debito\",\r\n  \"cvv\": \"123\",\r\n  \"availableBalance\": 200.00,\r\n  \"expirationDate\": \"2028-12-31\",\r\n  \"pin\": \"1234\"\r\n}\r\n",
+              "raw": "{\r\n  \"userId\": \"usr_uNGh3Jgq5npx\",\r\n  \"cardType\": \"debito\",\r\n  \"cvv\": \"123\",\r\n  \"availableBalance\": 200.00,\r\n  \"expirationDate\": \"2028-12-31\",\r\n  \"pin\": \"1234\"\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -736,7 +790,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3006/api/v1/cards/699ba2f123afc65e80897aad",
+              "raw": "http://localhost:3006/api/v1/cards/69a2763530795e9805fc171b",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -746,7 +800,7 @@
                 "api",
                 "v1",
                 "cards",
-                "699ba2f123afc65e80897aad"
+                "69a2763530795e9805fc171b"
               ]
             }
           },
@@ -792,7 +846,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{vault:authorization-secret}}",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfR01VNGVDa1Eyc0FoIiwianRpIjoiMzRjNjEwODUtNWY0MC00YzJiLWJiNDAtNzI2ZWIzM2VkMGZjIiwiaWF0IjoxNzcyMjU1NzA4LCJyb2xlIjoiVVNFUl9ST0xFIiwiZW1haWwiOiJqZWZyeXl1NjdAZ21haWwuY29tIiwibmFtZSI6IlNoaW5qaSIsInN1cm5hbWUiOiJLIiwiZXhwIjoxNzcyMjU3NTA4LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.hrecscEXYwrM_ri5D-j-zNu_uLsJB-bLsNMY4CPaQYs",
                   "type": "string"
                 }
               ]
@@ -804,7 +858,7 @@
               "raw": "{\r\n  \"source_account_id\": \"ID_CUENTA_ORIGEN\",\r\n  \"destination_account_id\": \"ID_CUENTA_DESTINO\",\r\n  \"transaction_type\": \"transfer\",\r\n  \"amount\": 250.00,\r\n  \"currency_id\": \"ID_DE_MONEDA\",\r\n  \"description\": \"Transferencia a Juan\",\r\n  \"status\": \"exitosa\",\r\n  \"previous_balance\": 500.00,\r\n  \"new_balance\": 250.00,\r\n  \"executed_by_user_id\": \"ID_DE_USUARIO\"\r\n}"
             },
             "url": {
-              "raw": "http://localhost:3006/api/v1/cards/699ba2f123afc65e80897aad",
+              "raw": "http://localhost:3006/api/v1/cards/69a2763530795e9805fc171b",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -814,7 +868,7 @@
                 "api",
                 "v1",
                 "cards",
-                "699ba2f123afc65e80897aad"
+                "69a2763530795e9805fc171b"
               ]
             }
           },
@@ -828,7 +882,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{vault:authorization-secret}}",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfR01VNGVDa1Eyc0FoIiwianRpIjoiMzRjNjEwODUtNWY0MC00YzJiLWJiNDAtNzI2ZWIzM2VkMGZjIiwiaWF0IjoxNzcyMjU1NzA4LCJyb2xlIjoiVVNFUl9ST0xFIiwiZW1haWwiOiJqZWZyeXl1NjdAZ21haWwuY29tIiwibmFtZSI6IlNoaW5qaSIsInN1cm5hbWUiOiJLIiwiZXhwIjoxNzcyMjU3NTA4LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.hrecscEXYwrM_ri5D-j-zNu_uLsJB-bLsNMY4CPaQYs",
                   "type": "string"
                 }
               ]
@@ -836,7 +890,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3006/api/v1/cards/699ba2f123afc65e80897aad",
+              "raw": "http://localhost:3006/api/v1/cards/69a2763530795e9805fc171b",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -846,7 +900,7 @@
                 "api",
                 "v1",
                 "cards",
-                "699ba2f123afc65e80897aad"
+                "69a2763530795e9805fc171b"
               ]
             }
           },
@@ -909,7 +963,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfQjQ2VkY5a2lyYTZVIiwianRpIjoiMTI0YzJlNzItMzViZC00NmEyLThlNzMtZmU3OGUzYjg1NWZjIiwiaWF0IjoxNzcyMDYyMDA5LCJyb2xlIjoiVVNFUl9ST0xFIiwiZXhwIjoxNzcyMDYzODA5LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.i2kZEPRXmnEnBTSalvU-UGlI8Fv0XQ7TcTSWc1FptxI",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfR01VNGVDa1Eyc0FoIiwianRpIjoiYzhmYzM2MjUtMjcyYy00MzZkLWIyNDgtOTgzMjg2OTkyYmQ2IiwiaWF0IjoxNzcyMjUzOTkxLCJyb2xlIjoiVVNFUl9ST0xFIiwiZW1haWwiOiJqZWZyeXl1NjdAZ21haWwuY29tIiwibmFtZSI6IlNoaW5qaSIsInN1cm5hbWUiOiJLIiwiZXhwIjoxNzcyMjU1NzkxLCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.0cbtmEVHdSqEErCNiNSe1Ur0dGxRKdsPF4EG0LGZ3VE",
                   "type": "string"
                 }
               ]
@@ -953,7 +1007,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"userId\": \"usr_B46VF9kira6U\",\r\n  \"accountNumber\": \"ACC-229-0938\",\r\n  \"requestedAmount\": 20000,\r\n  \"approvedAmount\": 18000,\r\n  \"interestRate\": 12,\r\n  \"termMonths\": 24,\r\n  \"monthlyPayment\": 850,\r\n  \"outstandingBalance\": 18000,\r\n  \"requestDate\": \"2026-02-10T12:00:00.000Z\",\r\n  \"approvalDate\": \"2026-02-11T10:00:00.000Z\",\r\n  \"disbursementDate\": \"2026-02-12T09:00:00.000Z\",\r\n  \"status\": \"rechazado\",\r\n  \"loanPurpose\": \"Ya no lo necesito\",\r\n  \"approvedByUserId\": \"usr_dWuNeUpJg4B6\"\r\n}",
+              "raw": "{\r\n  \"userId\": \"usr_u3Yme1Azu4Fi\",\r\n  \"accountNumber\": \"ACC-795-6879\",\r\n  \"requestedAmount\": 20000,\r\n  \"approvedAmount\": 18000,\r\n  \"interestRate\": 12,\r\n  \"termMonths\": 24,\r\n  \"monthlyPayment\": 850,\r\n  \"outstandingBalance\": 18000,\r\n  \"requestDate\": \"2026-02-10T12:00:00.000Z\",\r\n  \"approvalDate\": \"2026-02-11T10:00:00.000Z\",\r\n  \"disbursementDate\": \"2026-02-12T09:00:00.000Z\",\r\n  \"status\": \"rechazado\",\r\n  \"loanPurpose\": \"Ya no lo necesito\",\r\n  \"approvedByUserId\": \"usr_u3Yme1Azu4Fi\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -961,7 +1015,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3006/api/v1/loan/699f86e6dd43c8ad2eb0d9e5",
+              "raw": "http://localhost:3006/api/v1/loan/69a1cc66c3c06583cecc64e4",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -971,7 +1025,7 @@
                 "api",
                 "v1",
                 "loan",
-                "699f86e6dd43c8ad2eb0d9e5"
+                "69a1cc66c3c06583cecc64e4"
               ]
             }
           },
@@ -1017,7 +1071,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{vault:authorization-secret}}",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdTNZbWUxQXp1NEZpIiwianRpIjoiYzdjYTk5NjQtYjhmYS00NDRkLWIyNjItNWU3YjIwOGQ3OTkzIiwiaWF0IjoxNzcyMjA5NTc2LCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyMTEzNzYsImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ.5qgVgVGfhhf68JNgqN_kJm16lAB66Fksu1MnkMvTpv8",
                   "type": "string"
                 }
               ]
@@ -1025,7 +1079,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3006/api/v1/loan/6993b0e0067cc5cc36781273",
+              "raw": "http://localhost:3006/api/v1/loan/69a1cc66c3c06583cecc64e4",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1035,191 +1089,7 @@
                 "api",
                 "v1",
                 "loan",
-                "6993b0e0067cc5cc36781273"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Notifications/notificaciones",
-      "item": [
-        {
-          "name": "Crear-notificacion",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfQjQ2VkY5a2lyYTZVIiwianRpIjoiZTZmMTZlMjQtN2U4Mi00ZDU1LWJjNmYtYzAzY2VmZjVlOTE1IiwiaWF0IjoxNzcyMDYyNDc0LCJyb2xlIjoiVVNFUl9ST0xFIiwiZXhwIjoxNzcyMDY0Mjc0LCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.r8ebqZbcqnv4pQUndeuosPEzuI-HTSHfYQoa7691org",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"userId\": \"usr_B46VF9kira6U\",\r\n  \"notificationType\": \"seguridad\",\r\n  \"title\": \"Inicio de sesión nuevo\",\r\n  \"message\": \"Tu cuenta fue accedida desde un nuevo dispositivo.\",\r\n  \"channel\": \"email\",\r\n  \"priority\": \"alta\",\r\n  \"relatedTransactionId\": \"698bda41bac2e470057ab46e\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3006/api/v1/notifications/create",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3006",
-              "path": [
-                "api",
-                "v1",
-                "notifications",
-                "create"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "New Request",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
-          "request": {
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"userId\": \"698bcde4bac2e470057ab45e\",\r\n  \"notificationType\": \"seguridad\",\r\n  \"title\": \"Inicio de sesión nuevo\",\r\n  \"message\": \"Tu cuenta fue accedida desde un nuevo dispositivo.\",\r\n  \"channel\": \"email\",\r\n  \"priority\": \"alta\",\r\n  \"relatedTransactionId\": \"698bda41bac2e470057ab46e\"\r\n}\r\n"
-            },
-            "url": {
-              "raw": "http://localhost:3006/api/v1/notifications/",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3006",
-              "path": [
-                "api",
-                "v1",
-                "notifications",
-                ""
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "New Request",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{vault:authorization-secret}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"userId\": \"698bcde4bac2e470057ab45e\",\r\n  \"notificationType\": \"seguridad\",\r\n  \"title\": \"Modificado 👻\",\r\n  \"message\": \"Tu cuenta fue accedida desde un nuevo dispositivo.\",\r\n  \"channel\": \"email\",\r\n  \"priority\": \"alta\",\r\n  \"relatedTransactionId\": \"698bda41bac2e470057ab46e\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3006/api/v1/notifications/6993b26f6fc7fee42790fcaa",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3006",
-              "path": [
-                "api",
-                "v1",
-                "notifications",
-                "6993b26f6fc7fee42790fcaa"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "buscar-nofificacion",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{vault:authorization-secret}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3006/api/v1/notifications/6993b26f6fc7fee42790fcaa",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3006",
-              "path": [
-                "api",
-                "v1",
-                "notifications",
-                "6993b26f6fc7fee42790fcaa"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "borrar",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{vault:authorization-secret}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "DELETE",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"userId\": \"698bcde4bac2e470057ab45e\",\r\n  \"notificationType\": \"seguridad\",\r\n  \"title\": \"Modificado 👻\",\r\n  \"message\": \"Tu cuenta fue accedida desde un nuevo dispositivo.\",\r\n  \"channel\": \"email\",\r\n  \"priority\": \"alta\",\r\n  \"relatedTransactionId\": \"698bda41bac2e470057ab46e\"\r\n}\r\n"
-            },
-            "url": {
-              "raw": "http://localhost:3006/api/v1/notifications/6993b26f6fc7fee42790fcaa",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3006",
-              "path": [
-                "api",
-                "v1",
-                "notifications",
-                "6993b26f6fc7fee42790fcaa"
+                "69a1cc66c3c06583cecc64e4"
               ]
             }
           },
@@ -1238,7 +1108,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "{{vault:authorization-secret}}",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdU5HaDNKZ3E1bnB4IiwianRpIjoiZGU0YWQ5YTYtYzQ4OS00MDg0LWEwM2MtMjBkZDE0NTIxOTdjIiwiaWF0IjoxNzcyMjI4OTI4LCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyMzA3MjgsImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ.tOBrlgDJiZHF6I4uimY1e6s7iua5LMNdRB9R9rFULKc",
                   "type": "string"
                 }
               ]
@@ -1247,7 +1117,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"accountId\": \"698bcde4bac2e470057ab45e\",\r\n  \"userId\": \"698bcde4bac2e470057ab460\",\r\n  \"lockReason\": \"seguridad\",\r\n  \"description\": \"Prque si 👻.\",\r\n  \"lockDate\": \"2026-02-10T15:30:00.000Z\",\r\n  \"unlockDate\": \"2026-02-10T15:30:00.000Z\",\r\n  \"lockedBy\": \"698bcdeebac2e470057ab460\",\r\n  \"unlockedBy\": null,\r\n  \"status\": \"bloqueado\",\r\n  \"automatic\": true,\r\n  \"failedAttempts\": 5\r\n}",
+              "raw": "{\r\n  \"accountId\": \"ACC-216-7718\",\r\n  \"userId\": \"usr_GMU4eCkQ2sAh\",\r\n  \"lockReason\": \"seguridad\",\r\n  \"description\": \"Prque si 👻.\",\r\n  \"lockDate\": \"2026-02-10T15:30:00.000Z\",\r\n  \"unlockDate\": \"2026-02-10T15:30:00.000Z\",\r\n  \"lockedBy\": \"usr_uNGh3Jgq5npx\",\r\n  \"unlockedBy\": null,\r\n  \"status\": \"bloqueado\",\r\n  \"automatic\": true,\r\n  \"failedAttempts\": 5\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1274,6 +1144,16 @@
         {
           "name": "listar",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdU5HaDNKZ3E1bnB4IiwianRpIjoiZGU0YWQ5YTYtYzQ4OS00MDg0LWEwM2MtMjBkZDE0NTIxOTdjIiwiaWF0IjoxNzcyMjI4OTI4LCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyMzA3MjgsImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ.tOBrlgDJiZHF6I4uimY1e6s7iua5LMNdRB9R9rFULKc",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [],
             "url": {
@@ -1310,7 +1190,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"accountId\": \"698bcde4bac2e470057ab45e\",\r\n  \"userId\": \"698bcde4bac2e470057ab460\",\r\n  \"lockReason\": \"seguridad\",\r\n  \"description\": \"Prque si o porque no 👻.\",\r\n  \"lockDate\": \"2026-02-10T15:30:00.000Z\",\r\n  \"unlockDate\": \"2026-02-10T15:30:00.000Z\",\r\n  \"lockedBy\": \"698bcdeebac2e470057ab460\",\r\n  \"unlockedBy\": \"698bcdeebac2e470057ab460\",\r\n  \"status\": \"bloqueado\",\r\n  \"automatic\": true,\r\n  \"failedAttempts\": 5\r\n}",
+              "raw": "{\r\n  \"accountId\": \"ACC-216-7718 \",\r\n  \"userId\": \"usr_GMU4eCkQ2sAh\",\r\n  \"lockReason\": \"seguridad\",\r\n  \"description\": \"Prque si o porque no 👻.\",\r\n  \"lockDate\": \"2026-02-10T15:30:00.000Z\",\r\n  \"unlockDate\": \"2026-02-10T15:30:00.000Z\",\r\n  \"lockedBy\": \"usr_uNGh3Jgq5npx\",\r\n  \"unlockedBy\": \"usr_H3fQkQiJAvXx\",\r\n  \"status\": \"bloqueado\",\r\n  \"automatic\": true,\r\n  \"failedAttempts\": 5\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1318,7 +1198,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:3006/api/v1/accountLocks/6993a86d698753ee12486a6b",
+              "raw": "http://localhost:3006/api/v1/accountLocks/69a212868837653281425b5a",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1328,7 +1208,7 @@
                 "api",
                 "v1",
                 "accountLocks",
-                "6993a86d698753ee12486a6b"
+                "69a212868837653281425b5a"
               ]
             }
           },
@@ -1350,7 +1230,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3006/api/v1/accountLocks/6993a86d698753ee12486a6b",
+              "raw": "http://localhost:3006/api/v1/accountLocks/69a212868837653281425b5a",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1360,7 +1240,7 @@
                 "api",
                 "v1",
                 "accountLocks",
-                "6993a86d698753ee12486a6b"
+                "69a212868837653281425b5a"
               ]
             }
           },
@@ -1382,7 +1262,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3006/api/v1/accountLocks/6993a86d698753ee12486a6b",
+              "raw": "http://localhost:3006/api/v1/accountLocks/69a212868837653281425b5a",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1392,7 +1272,7 @@
                 "api",
                 "v1",
                 "accountLocks",
-                "6993a86d698753ee12486a6b"
+                "69a212868837653281425b5a"
               ]
             }
           },
@@ -1411,7 +1291,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfZFd1TmVVcEpnNEI2IiwianRpIjoiZjY0M2JmOWMtMDJlMS00MzQ2LWFlNzQtNDljZTgzNDFlNzRlIiwiaWF0IjoxNzcyMDYzMDIzLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MjA2NDgyMywiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.O_98UycyENtFYsTKie6Jgxo2XJolgex4RgCntIGO-10",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdU5HaDNKZ3E1bnB4IiwianRpIjoiOWU2ZWQ1NWEtNmNlNC00YjQyLWJmNGMtZTk2M2I2ZTUyOThhIiwiaWF0IjoxNzcyMjMyODA5LCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyMzQ2MDksImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ.GqKIWdeNI0gYglsEMhUuTwnVhYaXPEL27SvrXkvJ_Og",
                   "type": "string"
                 }
               ]
@@ -1420,7 +1300,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"accountNumber\": \"ACC-936-9018\",\r\n  \"amount\": 59.59\r\n}",
+              "raw": "{\r\n  \"accountNumber\": \"ACC-287-7637\",\r\n  \"amount\": 59.59\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1452,7 +1332,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfaTU4QTQ0NWg1MmFUIiwianRpIjoiNzI4MWZjYTQtMWRmMS00NWJmLWFjMDAtNjZmMWRiMzgwZWFlIiwiaWF0IjoxNzcyMDUwNzY2LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MjA1MjU2NiwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.J8FT6iOc4m88knV0sQAOUy7ZL6UZVpw1HfS_30i2wHs",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfSDNmUWtRaUpBdlh4IiwianRpIjoiYjJhNzQzYjEtYTlhOC00ODNhLWJmNmYtMDJhNDAyNDc0ODNjIiwiaWF0IjoxNzcyMjI4OTAzLCJyb2xlIjoiTUFOQUdFUl9ST0xFIiwiZW1haWwiOiJqY3J1ei0yMDIxNjQ0QGtpbmFsLmVkdS5ndCIsIm5hbWUiOiJKZWZyeSIsInN1cm5hbWUiOiJDcnV6IiwiZXhwIjoxNzcyMjMwNzAzLCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.AiL_6HljyUzx3AtiQyRnp78MwMHo9bE6ZM543xBuyFU",
                   "type": "string"
                 }
               ]
@@ -1460,7 +1340,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3006/api/v1/withdrawal/statement/ACC-774-7892",
+              "raw": "http://localhost:3006/api/v1/withdrawal/statement/ACC-287-7637",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1471,7 +1351,7 @@
                 "v1",
                 "withdrawal",
                 "statement",
-                "ACC-774-7892"
+                "ACC-287-7637"
               ]
             }
           },
@@ -1480,17 +1360,17 @@
       ]
     },
     {
-      "name": "beneficios/servicios",
+      "name": "service/servicios",
       "item": [
         {
-          "name": "list benefits",
+          "name": "list servicios",
           "request": {
             "auth": {
               "type": "bearer",
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfZFd1TmVVcEpnNEI2IiwianRpIjoiZjY0M2JmOWMtMDJlMS00MzQ2LWFlNzQtNDljZTgzNDFlNzRlIiwiaWF0IjoxNzcyMDYzMDIzLCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MjA2NDgyMywiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.O_98UycyENtFYsTKie6Jgxo2XJolgex4RgCntIGO-10",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdU5HaDNKZ3E1bnB4IiwianRpIjoiZGIxZmNiMWMtNGMxNS00YjJlLTk0MWEtZWY2YjVjNjJhMzk5IiwiaWF0IjoxNzcyMjI1Mzc1LCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyMjcxNzUsImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ.YNm9oJAbjrnYQg7vFNP6mj0tebmkEPIF7Ir-yGL1HC4",
                   "type": "string"
                 }
               ]
@@ -1498,7 +1378,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3006/api/v1/benefits/",
+              "raw": "http://localhost:3006/api/v1/service/",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1507,7 +1387,7 @@
               "path": [
                 "api",
                 "v1",
-                "benefits",
+                "service",
                 ""
               ]
             }
@@ -1527,7 +1407,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfZFd1TmVVcEpnNEI2IiwianRpIjoiMGJiMjRmNDUtMDIzYS00ZjVhLWFiN2QtOGY3Yjg4Yzc0NDdhIiwiaWF0IjoxNzcyMDYzMjI2LCJyb2xlIjoiQURNSU5fUk9MRSIsImV4cCI6MTc3MjA2NTAyNiwiYXVkIjoiQXV0aFNlcnZpY2UiLCJpc3MiOiJBdXRoU2VydmljZSJ9.c68eGQMNmTaPY_7AAXWkeXcdy8nyjDi8Xo0jMJMGJao",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdU5HaDNKZ3E1bnB4IiwianRpIjoiOWU2ZWQ1NWEtNmNlNC00YjQyLWJmNGMtZTk2M2I2ZTUyOThhIiwiaWF0IjoxNzcyMjMyODA5LCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyMzQ2MDksImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ.GqKIWdeNI0gYglsEMhUuTwnVhYaXPEL27SvrXkvJ_Og",
                   "type": "string"
                 }
               ]
@@ -1536,7 +1416,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"accountNumber\": \"ACC-229-0938\",\r\n  \"amount\": 20,\r\n  \"currencyCode\": \"GTQ\",\r\n  \"description\": \"porque si \"\r\n}",
+              "raw": "{\r\n  \"accountNumber\": \"ACC-048-8703\",\r\n  \"amount\": 50,\r\n  \"currencyCode\": \"USD\",\r\n  \"description\": \"porque si \"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1604,7 +1484,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfQjQ2VkY5a2lyYTZVIiwianRpIjoiYzIzNTM1ZDctNTliOC00ZmMzLTg5MmYtODNlYzk1NTBkNDYwIiwiaWF0IjoxNzcyMDYzNDcwLCJyb2xlIjoiVVNFUl9ST0xFIiwiZXhwIjoxNzcyMDY1MjcwLCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.34stQAPV7n9yJZf7WnTiBjow5WRfMjnxhXe6mQReGF8",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdU5HaDNKZ3E1bnB4IiwianRpIjoiOWU2ZWQ1NWEtNmNlNC00YjQyLWJmNGMtZTk2M2I2ZTUyOThhIiwiaWF0IjoxNzcyMjMyODA5LCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyMzQ2MDksImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ.GqKIWdeNI0gYglsEMhUuTwnVhYaXPEL27SvrXkvJ_Og",
                   "type": "string"
                 }
               ]
@@ -1612,7 +1492,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:3006/api/v1/accountStatements/account/ACC-936-9018/pdf",
+              "raw": "http://localhost:3006/api/v1/accountStatements/account/ACC-048-8703/pdf",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -1623,7 +1503,7 @@
                 "v1",
                 "accountStatements",
                 "account",
-                "ACC-936-9018",
+                "ACC-048-8703",
                 "pdf"
               ]
             }
@@ -1645,25 +1525,25 @@
               "formdata": [
                 {
                   "key": "name",
-                  "value": "Diego",
+                  "value": "Shinji",
                   "type": "text",
                   "uuid": "2a5a730c-61e0-4d3e-9637-abb05b3bcb2c"
                 },
                 {
                   "key": "surname",
-                  "value": "lopez",
+                  "value": "K",
                   "type": "text",
                   "uuid": "f48a7522-117c-42f1-abb3-e443ff530613"
                 },
                 {
                   "key": "username",
-                  "value": "Dlopez",
+                  "value": "Shinji",
                   "type": "text",
                   "uuid": "9f92c7b1-1deb-4b1b-8c10-036e57b89752"
                 },
                 {
                   "key": "email",
-                  "value": "diegigutierrez46@gmail.com",
+                  "value": "jefryyu67@gmail.com",
                   "type": "text",
                   "uuid": "522ea40b-267f-4c90-b2ed-7775f569b33c"
                 },
@@ -1705,7 +1585,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"token\": \"jFoJROWGw0WcxipYhpIhcmncX8Wg0vFNlj2i1sbHxXU\"\r\n}",
+              "raw": "{\r\n    \"token\": \"hbur3Fm7p7dOa-clDj4VxZg7xNwEllHlyFDBRZ3hdIo\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1785,7 +1665,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"emailOrUsername\": \"sistemabancarioin@gmail.com\",\r\n  \"password\": \"admin\"\r\n}",
+              "raw": "{\r\n  \"emailOrUsername\": \"jefryyu67@gmail.com\",\r\n  \"password\": \"admin123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1804,6 +1684,190 @@
                 "v1",
                 "auth",
                 "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "change role",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfR01VNGVDa1Eyc0FoIiwianRpIjoiNzY0NDcxZjEtOTczOS00Mzc2LWE2NWItYmU1NjNhYzY4MjNiIiwiaWF0IjoxNzcyMjQ0OTQxLCJyb2xlIjoiVVNFUl9ST0xFIiwiZW1haWwiOiJqZWZyeXl1NjdAZ21haWwuY29tIiwibmFtZSI6IlNoaW5qaSIsInN1cm5hbWUiOiJLIiwiZXhwIjoxNzcyMjQ2NzQxLCJhdWQiOiJBdXRoU2VydmljZSIsImlzcyI6IkF1dGhTZXJ2aWNlIn0.n5UgNb8jck-9QjUb8zHAluQLh56P4eRBMa6EWBMyZcA",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"roleName\": \"MANAGER_ROLE\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3005/api/v1/users/change-role/usr_H3fQkQiJAvXx",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3005",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "change-role",
+                "usr_H3fQkQiJAvXx"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Resend verification",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"jefryyu67@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3005/api/v1/auth/resend-verification",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3005",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "resend-verification"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"jcruz-2021644@kinal.edu.gt\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3005/api/v1/auth/forgot-password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3005",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "forgot-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"token\": \"qCZQbcEYyJasu71vA1dx3IOLsWeTJDymAk_gOAdVXyY\",\r\n    \"newPassword\": \"jcruz123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3005/api/v1/auth/reset-password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3005",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "reset-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Profile",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfdU5HaDNKZ3E1bnB4IiwianRpIjoiNWVlMjA5ODctOTUwOC00N2NlLTk3ZTAtNTIxZDlkNTk3NjE4IiwiaWF0IjoxNzcyMjIzNTQyLCJyb2xlIjoiQURNSU5fUk9MRSIsImVtYWlsIjoic2lzdGVtYWJhbmNhcmlvaW5AZ21haWwuY29tIiwibmFtZSI6IkFkbWluIiwic3VybmFtZSI6IlNpc3RlbWEgQmFuY2FyaW8iLCJleHAiOjE3NzIyMjUzNDIsImF1ZCI6IkF1dGhTZXJ2aWNlIiwiaXNzIjoiQXV0aFNlcnZpY2UifQ._M8VFmTOYTNLpXw7NQghZ_A7TCURfYWz9ifteqHFUqM",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"emailOrUsername\": \"gestordeopinionesjcruz@gmail.com\",\r\n    \"password\": \"jcruz-2021644\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3005/api/v1/auth/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3005",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "profile"
               ]
             }
           },
