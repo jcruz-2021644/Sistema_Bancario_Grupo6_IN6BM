@@ -130,6 +130,9 @@ export const updateAccount = async (req, res) => {
         const accountData = req.body;
         const requesterRole = req.user?.role;
 
+            // resolve the user id from the JWT so we can enforce ownership later
+        const requesterUserId = resolveRequesterUserId(req);
+
         if (requesterRole === 'USER_ROLE') {
             const allowedFieldsForUser = ['name', 'address', 'jobName', 'monthlyIncome'];
             const payloadKeys = Object.keys(accountData);
@@ -158,13 +161,36 @@ export const updateAccount = async (req, res) => {
             validateMinimumIncome(accountData.monthlyIncome);
         }
 
-        const account = await Account.findOneAndUpdate(
+        // before performing the update we need to ensure that a normal user
+        // can only modify their own account.  Admins/managers/atm roles are
+        // allowed to update any record as before.
+        const account = await Account.findOne({ accountNumber });
+
+        if (!account) {
+            return res.status(404).json({
+                success: false,
+                message: 'Cuenta no encontrada'
+            });
+        }
+
+        if (requesterRole === 'USER_ROLE' && String(account.userId) !== String(requesterUserId)) {
+            return res.status(403).json({
+                success: false,
+                message: 'Esta cuenta no te pertenece'
+            });
+        }
+
+        // perform the update after ownership check
+        const updated = await Account.findOneAndUpdate(
             { accountNumber },
             accountData,
             { new: true, runValidators: true }
         );
 
-        if (!account) {
+        // `updated` is guaranteed to exist because we already fetched `account`
+        // above and returned early if it didn't.  Still, keep the response
+        // structure consistent.
+        if (!updated) {
             return res.status(404).json({
                 success: false,
                 message: 'Cuenta no encontrada'
@@ -174,7 +200,7 @@ export const updateAccount = async (req, res) => {
         res.status(200).json({
             success: true,
             message: 'Cuenta actualizada exitosamente',
-            data: account
+            data: updated
         });
 
     } catch (error) {
