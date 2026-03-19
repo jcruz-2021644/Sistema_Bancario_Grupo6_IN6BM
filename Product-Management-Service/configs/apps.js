@@ -1,24 +1,16 @@
-'use strict';
-
-import express from 'express';
+'use strict'
+import express, { response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { dbConnection } from './db.js';
-// Ensure models are registered before DB sync
-import '../src/users/user.model.js';
-import '../src/auth/role.model.js';
-import { requestLimit } from '../middlewares/request-limit.js';
 import { corsOptions } from './cors-configuration.js';
 import { helmetConfiguration } from './helmet-configuration.js';
-import {
-    errorHandler,
-    notFound,
-} from '../middlewares/server-genericError-handler.js';
-import authRoutes from '../src/auth/auth.routes.js';
-import userRoutes from '../src/users/user.routes.js';
+
+import cardRoutes from '../src/card/cards.routes.js';
+import loanRoutes from '../src/loan/loans.routes.js';
 import { registerOpenApiRoutes } from '../../docs/register-openapi-routes.js';
-import { buildAuthServiceOpenApi } from '../../docs/specs/auth-service.openapi.js';
+import { buildProductServiceOpenApi } from '../../docs/specs/product-service.openapi.js';
 
 const BASE_PATH = '/api/v1';
 
@@ -27,46 +19,43 @@ const middlewares = (app) => {
     app.use(express.json({ limit: '10mb' }));
     app.use(cors(corsOptions));
     app.use(helmet(helmetConfiguration));
-    app.use(requestLimit);
-    app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'combined'));
-};
+    app.use(morgan('dev'));
+}
 
+//rutas para conectar los enpoint
 const routes = (app) => {
-    const openApiSpec = buildAuthServiceOpenApi({
+    const openApiSpec = buildProductServiceOpenApi({
         port: process.env.PORT,
         basePath: BASE_PATH
     });
 
     registerOpenApiRoutes(app, BASE_PATH, openApiSpec, import.meta.url);
-    app.use(`${BASE_PATH}/auth`, authRoutes);
-    app.use(`${BASE_PATH}/users`, userRoutes);
+    app.use(`${BASE_PATH}/cards`, cardRoutes);
+    app.use(`${BASE_PATH}/loan`, loanRoutes);
 
-    app.get(`${BASE_PATH}/health`, (req, res) => {
-        res.status(200).json({
+    app.get(`${BASE_PATH}/health`, (request, response) => {
+        response.status(200).json({
             status: 'Healthy',
             timestamp: new Date().toISOString(),
-            service: 'SistemaBancario Authentication Service',
-        });
-    });
-    // 404 handler (standardized)
-    app.use(notFound);
-};
+            service: 'Sistema Bancario API'
+        })
+    })
+
+    app.use((req, res) => {
+        res.status(404).json({
+            success: false,
+            message: 'Endpoint no encontrado'
+        })
+    })
+}
 
 export const initServer = async () => {
     const app = express();
     const PORT = process.env.PORT;
-    app.set('trust proxy', 1); // Corregido el typo 'trus'
+    app.set('trust proxy', 1);
 
     try {
         await dbConnection();
-
-        // Seed de roles y admin
-        const { seedRoles } = await import('../helpers/role-seed.js');
-        await seedRoles();
-
-        const { seedDefaultAdmin } = await import('../helpers/admin-seed.js');
-        await seedDefaultAdmin();
-
         middlewares(app);
         routes(app);
 
@@ -80,4 +69,3 @@ export const initServer = async () => {
         process.exit(1);
     }
 }
-
